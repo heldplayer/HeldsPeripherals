@@ -1,0 +1,18 @@
+[
+{
+  "modid" : "CCheldsPeripherals",
+  "name" : "CC Held's Peripherals",
+  "version" : "1.09.03.02",
+  "credits" : "Dan200 and Cloudy for ComputerCraft and the ComputerCraft API",
+  "authors": [
+    "heldplayer"
+  ],
+  "description": "CC Held's Peripherals adds some peripherals that extend the possibilities of ComputerCraft",
+  "updateUrl" : "http://www.computercraft.info/forums2/index.php?/topic/4882-mc-132-cc-143-trans-world-wireless-modems/",
+  "url" : "http://www.computercraft.info/forums2/index.php?/topic/4882-mc-132-cc-143-trans-world-wireless-modems/",
+  "parent" : "ComputerCraft",
+  "screenshots": [
+  ],
+  "depencies": "after: Thaumcraft"
+}
+]

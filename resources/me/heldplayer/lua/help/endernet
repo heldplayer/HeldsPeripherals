@@ -1,0 +1,16 @@
+The endernet API provides a way to use Trans-World Wireless Modems
+
+Functions for transporting messages:
+endernet.send( receiverID, message, side ) -- Sends message to receiverID if attached
+endernet.receive( timeout ) -- Returns the senderID, dimension of origin and sent message
+
+Functions for transporting matter:
+endernet.transport( receiverID, side ) -- Sends the item on the sending end of the modem to a modem attached to the receiver
+endernet.waitForItem( timeout ) -- Returns the senderID and dimension of origin
+
+Functions for modem maintenance:
+endernet.getChargeLevel( side ) -- Returns the charge level of the modem
+endernet.inputOccupied( side ) -- Returns true if there is an item in the receiving end of the modem
+endernet.outputOccupied( side ) -- Returns true if there is an item in the sending end of the modem
+You can handle the "transworld_receive" event to receive the messages without calling .receive()
+You can also handle the "transworld_item" event to receive notifications for items being delivered without calling waitForItem()
