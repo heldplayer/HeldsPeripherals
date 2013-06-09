@@ -7,7 +7,6 @@ import me.heldplayer.mods.HeldsPeripherals.api.ITransWorldModem;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.liquids.LiquidStack;
 import net.minecraftforge.liquids.LiquidTank;
-import xfel.mods.cccable.api.IPeripheralCable;
 import dan200.computer.api.IComputerAccess;
 
 public class Network {
@@ -101,12 +100,6 @@ public class Network {
             this.connections.add(connection);
         }
 
-        public void attach(IPeripheralCable cable, int side, int colorTag) {
-            ComputerConnection connection = new ComputerConnection(cable, colorTag);
-
-            this.connections.add(connection);
-        }
-
         public void detach(IComputerAccess computer) {
             for (int i = 0; i < this.connections.size(); i++) {
                 if (this.connections.get(i).matches(computer)) {
@@ -115,16 +108,6 @@ public class Network {
             }
 
             this.connections.remove(computer);
-        }
-
-        public void detach(IPeripheralCable cable) {
-            for (int i = 0; i < this.connections.size(); i++) {
-                if (this.connections.get(i).matches(cable)) {
-                    this.connections.remove(i);
-                }
-            }
-
-            this.connections.remove(cable);
         }
 
         public boolean send(int senderId, int dimension, int target, String args) {

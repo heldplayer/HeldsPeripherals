@@ -4,10 +4,9 @@ package me.heldplayer.mods.HeldsPeripherals.common.tileentity;
 import me.heldplayer.mods.HeldsPeripherals.api.IHeldsPeripheral;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
-import xfel.mods.cccable.api.ICableConnectable;
 import dan200.computer.api.IPeripheral;
 
-public abstract class TileEntityHeldsPeripheral extends TileEntity implements IPeripheral, ICableConnectable, IHeldsPeripheral {
+public abstract class TileEntityHeldsPeripheral extends TileEntity implements IPeripheral, IHeldsPeripheral {
 
     @Override
     public void updateEntity() {

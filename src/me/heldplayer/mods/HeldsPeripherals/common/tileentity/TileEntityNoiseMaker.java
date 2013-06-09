@@ -3,7 +3,6 @@ package me.heldplayer.mods.HeldsPeripherals.common.tileentity;
 
 import me.heldplayer.mods.HeldsPeripherals.api.INoiseMaker;
 import me.heldplayer.mods.HeldsPeripherals.common.LogicHandler;
-import xfel.mods.cccable.api.IPeripheralCable;
 import dan200.computer.api.IComputerAccess;
 
 public class TileEntityNoiseMaker extends TileEntityHeldsPeripheral implements INoiseMaker {
@@ -38,19 +37,6 @@ public class TileEntityNoiseMaker extends TileEntityHeldsPeripheral implements I
 
     @Override
     public void detach(IComputerAccess computer) {}
-
-    @Override
-    public boolean canAttachCableToSide(int side) {
-        return true;
-    }
-
-    // ICableConnectable
-
-    @Override
-    public void attach(IPeripheralCable cable, int side, int colorTag) {}
-
-    @Override
-    public void detach(IPeripheralCable cable) {}
 
     // IHeldsPeripheral
 

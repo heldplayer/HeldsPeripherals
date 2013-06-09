@@ -20,7 +20,6 @@ import net.minecraftforge.liquids.LiquidDictionary;
 import net.minecraftforge.liquids.LiquidStack;
 import net.minecraftforge.liquids.LiquidTank;
 import net.minecraftforge.oredict.OreDictionary;
-import xfel.mods.cccable.api.IPeripheralCable;
 import dan200.computer.api.IComputerAccess;
 
 public class TileEntityFireworksLighter extends TileEntityHeldsPeripheral implements IInventory, IElectricalFireworksLighter, ITankContainer {
@@ -393,19 +392,6 @@ public class TileEntityFireworksLighter extends TileEntityHeldsPeripheral implem
 
     @Override
     public void detach(IComputerAccess computer) {}
-
-    // ICableConnectable
-
-    @Override
-    public void attach(IPeripheralCable cable, int side, int colorTag) {}
-
-    @Override
-    public boolean canAttachCableToSide(int side) {
-        return true;
-    }
-
-    @Override
-    public void detach(IPeripheralCable cable) {}
 
     // IHeldsPeripheral
 

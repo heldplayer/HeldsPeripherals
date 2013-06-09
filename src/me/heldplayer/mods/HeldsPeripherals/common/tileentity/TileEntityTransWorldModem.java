@@ -18,7 +18,6 @@ import net.minecraftforge.liquids.ILiquidTank;
 import net.minecraftforge.liquids.ITankContainer;
 import net.minecraftforge.liquids.LiquidStack;
 import net.minecraftforge.liquids.LiquidTank;
-import xfel.mods.cccable.api.IPeripheralCable;
 import dan200.computer.api.IComputerAccess;
 
 public class TileEntityTransWorldModem extends TileEntityHeldsPeripheral implements ISidedInventory, ITransWorldModem, ITankContainer {
@@ -328,23 +327,6 @@ public class TileEntityTransWorldModem extends TileEntityHeldsPeripheral impleme
     @Override
     public void detach(IComputerAccess computer) {
         this.modem.detach(computer);
-    }
-
-    // ICableConnectable
-
-    @Override
-    public void attach(IPeripheralCable cable, int side, int colorTag) {
-        this.modem.attach(cable, side, colorTag);
-    }
-
-    @Override
-    public boolean canAttachCableToSide(int side) {
-        return true;
-    }
-
-    @Override
-    public void detach(IPeripheralCable cable) {
-        this.modem.detach(cable);
     }
 
     // IHeldsperipheral

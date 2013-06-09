@@ -3,7 +3,6 @@ package me.heldplayer.mods.HeldsPeripherals.common.tileentity;
 
 import me.heldplayer.mods.HeldsPeripherals.api.IThaumicScanner;
 import me.heldplayer.mods.HeldsPeripherals.common.LogicHandler;
-import xfel.mods.cccable.api.IPeripheralCable;
 import dan200.computer.api.IComputerAccess;
 
 public class TileEntityThaumicScanner extends TileEntityHeldsPeripheral implements IThaumicScanner {
@@ -35,19 +34,6 @@ public class TileEntityThaumicScanner extends TileEntityHeldsPeripheral implemen
 
     @Override
     public void detach(IComputerAccess computer) {}
-
-    @Override
-    public boolean canAttachCableToSide(int side) {
-        return true;
-    }
-
-    // ICableConnectable
-
-    @Override
-    public void attach(IPeripheralCable cable, int side, int colorTag) {}
-
-    @Override
-    public void detach(IPeripheralCable cable) {}
 
     // IHeldsPeripheral
 
