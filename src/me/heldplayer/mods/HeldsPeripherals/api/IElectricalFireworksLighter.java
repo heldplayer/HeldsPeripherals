@@ -62,6 +62,8 @@ public interface IElectricalFireworksLighter extends IHeldsPeripheral {
     /**
      * Sets the liquid level in the specified tank.
      * 
+     * @see #getLiquidLevel(int)
+     * 
      * @param tankId
      *        The ID of the tank.
      * @param amount
