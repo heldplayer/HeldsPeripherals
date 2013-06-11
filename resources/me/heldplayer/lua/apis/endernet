@@ -92,7 +92,7 @@ function transport( recipient, side )
   return false
 end
 
-function receive( timeout )
+function receive( nTimeout )
   local timer = nil
   if nTimeout then
     timer = os.startTimer( nTimeout )
@@ -108,7 +108,7 @@ function receive( timeout )
   end
 end
 
-function waitForItem( timeout )
+function waitForItem( nTimeout )
   local timer = nil
   if nTimeout then
     timer = os.startTimer( nTimeout )
