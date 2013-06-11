@@ -74,7 +74,7 @@ public class CommonProxy implements IGuiHandler {
             OutputStream output = null;
             try {
                 api.createNewFile();
-                data = ModHeldsPeripherals.class.getResourceAsStream("/me/heldplayer/lua/apis/endernet");
+                data = ModHeldsPeripherals.class.getResourceAsStream("/me/heldplayer/lua/apis/endernet.lua");
                 output = new FileOutputStream(api);
 
                 while (data.available() > 0) {
