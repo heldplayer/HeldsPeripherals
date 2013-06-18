@@ -122,10 +122,12 @@ public class ModHeldsPeripherals {
 
     @PostInit
     public void postInit(FMLPostInitializationEvent event) {
-        Thread thread = new Thread(reporter, Objects.MOD_ID + " usage reporter");
-        thread.setDaemon(true);
-        thread.setPriority(Thread.MIN_PRIORITY);
-        thread.start();
+        if (optOut.getValue()) {
+            Thread thread = new Thread(reporter, Objects.MOD_ID + " usage reporter");
+            thread.setDaemon(true);
+            thread.setPriority(Thread.MIN_PRIORITY);
+            thread.start();
+        }
 
         proxy.postInit(event);
     }
