@@ -40,7 +40,6 @@ public class ModHeldsPeripherals {
     // HeldCore Objects
     private UsageReporter reporter;
     private Config config;
-    public static ConfigValue<Boolean> silentUpdates;
     public static ConfigValue<Integer> blockTransWorldModemId;
     public static ConfigValue<Integer> blockMulti1Id;
     public static ConfigValue<Integer> itemEnderChargeId;
@@ -55,6 +54,10 @@ public class ModHeldsPeripherals {
     public static ConfigValue<Integer> chargeCostostTransportLiquid;
     public static ConfigValue<Boolean> enhancedFireworksEntity;
     public static ConfigValue<Boolean> enhancedEnderChargeRenderer;
+    // Config values for HeldCore
+    public static ConfigValue<Boolean> silentUpdates;
+    public static ConfigValue<Boolean> optOut;
+    public static ConfigValue<String> modPack;
 
     @PreInit
     public void preInit(FMLPreInitializationEvent event) {
@@ -66,10 +69,7 @@ public class ModHeldsPeripherals {
 
         Objects.log = event.getModLog();
 
-        reporter = new UsageReporter(Objects.MOD_ID, Objects.MOD_VERSION, FMLCommonHandler.instance().getSide(), file);
-
         // Config
-        silentUpdates = new ConfigValue<Boolean>("silentUpdates", Configuration.CATEGORY_GENERAL, null, Boolean.TRUE, "Set this to true to hide update messages in the main menu");
         blockTransWorldModemId = new ConfigValue<Integer>("TransWorldModem", Configuration.CATEGORY_BLOCK, null, 2050, "The block ID for the Trans-World Modem");
         blockMulti1Id = new ConfigValue<Integer>("MultiBlock1", Configuration.CATEGORY_BLOCK, null, 2051, "The block ID for the Electrical Fireworks Lighter, Noise Maker and thaumic scanner");
         itemEnderChargeId = new ConfigValue<Integer>("EnderCharge", Configuration.CATEGORY_ITEM, null, 5230, "The item ID for the ender charge");
@@ -84,8 +84,10 @@ public class ModHeldsPeripherals {
         chargeCostostTransportLiquid = new ConfigValue<Integer>("CostTransportLiquid", "charges", null, 4, "The amount of charges that are required to send a liquid");
         enhancedFireworksEntity = new ConfigValue<Boolean>("EnhancedFireworks", Configuration.CATEGORY_GENERAL, Side.CLIENT, Boolean.TRUE, "Determines whether fireworks launched by the Electrical Fireworks Lighter create grouped particles");
         enhancedEnderChargeRenderer = new ConfigValue<Boolean>("EnhancedEnderChargeRenderer", Configuration.CATEGORY_GENERAL, Side.CLIENT, Boolean.TRUE, "Determines whether ender charges render with a charge amount counter");
+        silentUpdates = new ConfigValue<Boolean>("silentUpdates", Configuration.CATEGORY_GENERAL, null, Boolean.TRUE, "Set this to true to hide update messages in the main menu");
+        optOut = new ConfigValue<Boolean>("optOut", Configuration.CATEGORY_GENERAL, null, Boolean.FALSE, "Set this to true to opt-out from statistics gathering. If you are configuring this mod for a modpack, please leave it set to false");
+        modPack = new ConfigValue<String>("modPack", Configuration.CATEGORY_GENERAL, null, "", "If this mod is running in a modpack, please set this config value to the name of the modpack");
         config = new Config(event.getSuggestedConfigurationFile());
-        config.addConfigKey(silentUpdates);
         config.addConfigKey(blockTransWorldModemId);
         config.addConfigKey(blockMulti1Id);
         config.addConfigKey(itemEnderChargeId);
@@ -100,8 +102,13 @@ public class ModHeldsPeripherals {
         config.addConfigKey(chargeCostostTransportLiquid);
         config.addConfigKey(enhancedFireworksEntity);
         config.addConfigKey(enhancedEnderChargeRenderer);
+        config.addConfigKey(silentUpdates);
+        config.addConfigKey(optOut);
+        config.addConfigKey(modPack);
         config.load();
         config.saveOnChange();
+
+        reporter = new UsageReporter(Objects.MOD_ID, Objects.MOD_VERSION, modPack.getValue(), FMLCommonHandler.instance().getSide(), file);
 
         Updater.initializeUpdater(Objects.MOD_ID, Objects.MOD_VERSION, silentUpdates.getValue());
 
