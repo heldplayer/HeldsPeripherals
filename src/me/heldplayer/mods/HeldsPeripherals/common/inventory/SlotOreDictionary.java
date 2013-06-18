@@ -24,7 +24,7 @@ public class SlotOreDictionary extends Slot {
     @Override
     public boolean isItemValid(ItemStack stack) {
         int id = OreDictionary.getOreID(stack);
-        int id2 = OreDictionary.getOreID(ore);
+        int id2 = OreDictionary.getOreID(this.ore);
 
         if (id == id2 && id > 0) {
             return true;
@@ -33,6 +33,7 @@ public class SlotOreDictionary extends Slot {
         return false;
     }
 
+    @Override
     @SideOnly(Side.CLIENT)
     public Icon getBackgroundIconIndex() {
         return this.icon;

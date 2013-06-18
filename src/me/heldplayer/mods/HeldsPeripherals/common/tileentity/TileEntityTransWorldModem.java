@@ -132,6 +132,7 @@ public class TileEntityTransWorldModem extends TileEntityHeldsPeripheral impleme
         }
     }
 
+    @Override
     public String getInvName() {
         return this.isInvNameLocalized() ? this.name : "tile.HP.transWorldModem.name";
     }

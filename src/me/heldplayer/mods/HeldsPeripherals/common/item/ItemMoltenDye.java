@@ -26,6 +26,7 @@ public class ItemMoltenDye extends Item {
         this.setHasSubtypes(true);
     }
 
+    @Override
     public String getUnlocalizedName(ItemStack stack) {
         switch (stack.getItemDamage()) {
         case 11:
@@ -54,7 +55,7 @@ public class ItemMoltenDye extends Item {
     @Override
     @SideOnly(Side.CLIENT)
     public Icon getIconFromDamage(int damage) {
-        return icon;
+        return this.icon;
     }
 
     @Override

@@ -108,7 +108,7 @@ public class BlockRendererHeldsPeripheral implements ISimpleBlockRenderingHandle
 
     @Override
     public int getRenderId() {
-        return renderId;
+        return this.renderId;
     }
 
 }

@@ -79,7 +79,7 @@ public class GuiTransWorldModem extends GuiContainer {
             }
 
             this.zLevel = 300.0F;
-            GuiHelper.drawTooltip(messages, fontRenderer, x, y, this.guiTop, this.height);
+            GuiHelper.drawTooltip(messages, this.fontRenderer, x, y, this.guiTop, this.height);
             this.zLevel = 0.0F;
         }
     }

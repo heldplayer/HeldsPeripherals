@@ -79,9 +79,9 @@ public class BlockMulti1 extends BlockHeldsPeripheral {
         if ((metadata & 0x3) == 0) {
             switch (side) {
             case 0:
-                return bottom[type];
+                return this.bottom[type];
             case 1:
-                return top[type];
+                return this.top[type];
             case 2:
                 return this.back[type];
             case 3:
@@ -95,9 +95,9 @@ public class BlockMulti1 extends BlockHeldsPeripheral {
         if ((metadata & 0x3) == 1) {
             switch (side) {
             case 0:
-                return bottom[type];
+                return this.bottom[type];
             case 1:
-                return top[type];
+                return this.top[type];
             case 2:
                 return this.left[type];
             case 3:
@@ -111,9 +111,9 @@ public class BlockMulti1 extends BlockHeldsPeripheral {
         if ((metadata & 0x3) == 2) {
             switch (side) {
             case 0:
-                return bottom[type];
+                return this.bottom[type];
             case 1:
-                return top[type];
+                return this.top[type];
             case 2:
                 return this.front[type];
             case 3:
@@ -126,9 +126,9 @@ public class BlockMulti1 extends BlockHeldsPeripheral {
         }
         switch (side) {
         case 0:
-            return bottom[type];
+            return this.bottom[type];
         case 1:
-            return top[type];
+            return this.top[type];
         case 2:
             return this.right[type];
         case 3:

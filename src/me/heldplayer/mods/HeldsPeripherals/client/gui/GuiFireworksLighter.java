@@ -72,7 +72,7 @@ public class GuiFireworksLighter extends GuiContainer {
                 messages.add("0 / " + this.lighter.getTank(0).getCapacity() + " mB");
             }
 
-            GuiHelper.drawTooltip(messages, fontRenderer, x, y, this.guiTop, this.height);
+            GuiHelper.drawTooltip(messages, this.fontRenderer, x, y, this.guiTop, this.height);
         }
 
         if (x > 96 + this.guiLeft && x < 115 + this.guiLeft && y > 13 + this.guiTop && y < 49 + this.guiTop) {
@@ -105,7 +105,7 @@ public class GuiFireworksLighter extends GuiContainer {
                 messages.add("0 / " + this.lighter.getTank(1).getCapacity() + " mB");
             }
 
-            GuiHelper.drawTooltip(messages, fontRenderer, x, y, this.guiTop, this.height);
+            GuiHelper.drawTooltip(messages, this.fontRenderer, x, y, this.guiTop, this.height);
         }
 
         if (x > 132 + this.guiLeft && x < 151 + this.guiLeft && y > 13 + this.guiTop && y < 49 + this.guiTop) {
@@ -138,7 +138,7 @@ public class GuiFireworksLighter extends GuiContainer {
                 messages.add("0 / " + this.lighter.getTank(2).getCapacity() + " mB");
             }
 
-            GuiHelper.drawTooltip(messages, fontRenderer, x, y, this.guiTop, this.height);
+            GuiHelper.drawTooltip(messages, this.fontRenderer, x, y, this.guiTop, this.height);
         }
     }
 

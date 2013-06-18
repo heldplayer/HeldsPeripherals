@@ -3,11 +3,8 @@ package me.heldplayer.mods.HeldsPeripherals.common.block;
 
 import java.util.Random;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-
-import me.heldplayer.mods.HeldsPeripherals.common.Objects;
 import me.heldplayer.mods.HeldsPeripherals.common.ModHeldsPeripherals;
+import me.heldplayer.mods.HeldsPeripherals.common.Objects;
 import me.heldplayer.mods.HeldsPeripherals.common.tileentity.TileEntityTransWorldModem;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.item.EntityItem;
@@ -16,6 +13,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Icon;
 import net.minecraft.world.World;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class BlockTransWorldModem extends BlockHeldsPeripheral {
     private Random rnd = new Random();
@@ -63,10 +62,10 @@ public class BlockTransWorldModem extends BlockHeldsPeripheral {
         }
 
         if (side == 0) {
-            return bottom[offset];
+            return this.bottom[offset];
         }
         if (side == 1) {
-            return top[offset];
+            return this.top[offset];
         }
 
         metadata = metadata & 0x3;

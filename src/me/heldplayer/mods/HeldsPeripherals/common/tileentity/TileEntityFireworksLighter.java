@@ -33,20 +33,20 @@ public class TileEntityFireworksLighter extends TileEntityHeldsPeripheral implem
     private String name;
 
     public TileEntityFireworksLighter() {
-        for (int i = 0; i < tanks.length; i++) {
-            tanks[i] = new RestrictedLiquidTank(null, 2000, 0, 0, this);
+        for (int i = 0; i < this.tanks.length; i++) {
+            this.tanks[i] = new RestrictedLiquidTank(null, 2000, 0, 0, this);
         }
 
-        tanks[0].setAllowedType(LiquidDictionary.getLiquid("Molten Red Dye", 1000));
-        tanks[0].setLiquid(LiquidDictionary.getLiquid("Molten Red Dye", 0));
-        tanks[1].setAllowedType(LiquidDictionary.getLiquid("Molten Green Dye", 1000));
-        tanks[1].setLiquid(LiquidDictionary.getLiquid("Molten Green Dye", 0));
-        tanks[2].setAllowedType(LiquidDictionary.getLiquid("Molten Blue Dye", 1000));
-        tanks[2].setLiquid(LiquidDictionary.getLiquid("Molten Blue Dye", 0));
+        this.tanks[0].setAllowedType(LiquidDictionary.getLiquid("Molten Red Dye", 1000));
+        this.tanks[0].setLiquid(LiquidDictionary.getLiquid("Molten Red Dye", 0));
+        this.tanks[1].setAllowedType(LiquidDictionary.getLiquid("Molten Green Dye", 1000));
+        this.tanks[1].setLiquid(LiquidDictionary.getLiquid("Molten Green Dye", 0));
+        this.tanks[2].setAllowedType(LiquidDictionary.getLiquid("Molten Blue Dye", 1000));
+        this.tanks[2].setLiquid(LiquidDictionary.getLiquid("Molten Blue Dye", 0));
     }
 
     private LiquidTank getTank(LiquidStack resource) {
-        for (RestrictedLiquidTank tank : tanks) {
+        for (RestrictedLiquidTank tank : this.tanks) {
             if (tank != null) {
                 if (tank.isAllowed(resource)) {
                     return tank;
@@ -235,7 +235,7 @@ public class TileEntityFireworksLighter extends TileEntityHeldsPeripheral implem
 
     @Override
     public int fill(int tankIndex, LiquidStack resource, boolean doFill) {
-        if (canInsert(tankIndex, resource)) {
+        if (this.canInsert(tankIndex, resource)) {
             LiquidTank tank = this.tanks[tankIndex];
 
             if (tank.getLiquid() == null) {
@@ -413,7 +413,7 @@ public class TileEntityFireworksLighter extends TileEntityHeldsPeripheral implem
 
         if (stack != null) {
             if (this.tanks[0].getLiquid() == null) {
-                tanks[0].setLiquid(LiquidDictionary.getLiquid("Molten Red Dye", 0));
+                this.tanks[0].setLiquid(LiquidDictionary.getLiquid("Molten Red Dye", 0));
             }
 
             if (this.tanks[0].getLiquid().amount <= 1800 && OreDictionary.getOreName(OreDictionary.getOreID(stack)).equalsIgnoreCase("dyeRed")) {
@@ -430,7 +430,7 @@ public class TileEntityFireworksLighter extends TileEntityHeldsPeripheral implem
 
         if (stack != null) {
             if (this.tanks[1].getLiquid() == null) {
-                tanks[1].setLiquid(LiquidDictionary.getLiquid("Molten Green Dye", 0));
+                this.tanks[1].setLiquid(LiquidDictionary.getLiquid("Molten Green Dye", 0));
             }
 
             if (this.tanks[1].getLiquid().amount <= 1800 && OreDictionary.getOreName(OreDictionary.getOreID(stack)).equalsIgnoreCase("dyeGreen")) {
@@ -447,7 +447,7 @@ public class TileEntityFireworksLighter extends TileEntityHeldsPeripheral implem
 
         if (stack != null) {
             if (this.tanks[2].getLiquid() == null) {
-                tanks[2].setLiquid(LiquidDictionary.getLiquid("Molten Blue Dye", 0));
+                this.tanks[2].setLiquid(LiquidDictionary.getLiquid("Molten Blue Dye", 0));
             }
 
             if (this.tanks[2].getLiquid().amount <= 1800 && OreDictionary.getOreName(OreDictionary.getOreID(stack)).equalsIgnoreCase("dyeBlue")) {

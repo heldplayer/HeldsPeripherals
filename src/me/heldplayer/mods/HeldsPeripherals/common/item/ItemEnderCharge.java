@@ -68,7 +68,7 @@ public class ItemEnderCharge extends Item {
     @Override
     @SideOnly(Side.CLIENT)
     public Icon getIconFromDamage(int damage) {
-        return icon;
+        return this.icon;
     }
 
     @Override

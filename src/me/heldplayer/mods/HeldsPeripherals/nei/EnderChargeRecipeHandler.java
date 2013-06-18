@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Random;
 
-import me.heldplayer.mods.HeldsPeripherals.common.Objects;
 import me.heldplayer.mods.HeldsPeripherals.common.ModHeldsPeripherals;
+import me.heldplayer.mods.HeldsPeripherals.common.Objects;
 import me.heldplayer.mods.HeldsPeripherals.common.RecipeEnderCharge;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
@@ -131,6 +131,7 @@ public class EnderChargeRecipeHandler extends ShapelessRecipeHandler {
         }
     }
 
+    @Override
     public void loadCraftingRecipes(ItemStack result) {
         for (CachedEnderChargeRecipe recipe : this.recipes) {
             //if (recipe.result.item.itemID == result.itemID && recipe.result.item.getItemDamage() == result.getItemDamage()) {
@@ -155,6 +156,7 @@ public class EnderChargeRecipeHandler extends ShapelessRecipeHandler {
         }
     }
 
+    @Override
     public void loadUsageRecipes(ItemStack ingredient) {
         for (CachedEnderChargeRecipe recipe : this.recipes) {
             //if (recipe.contains(recipe.ingredients, ingredient)) {
@@ -175,6 +177,7 @@ public class EnderChargeRecipeHandler extends ShapelessRecipeHandler {
         }
     }
 
+    @Override
     public void onUpdate() {
         if (!NEIClientUtils.shiftKey()) {
             this.cycleticks++;
@@ -186,6 +189,7 @@ public class EnderChargeRecipeHandler extends ShapelessRecipeHandler {
         }
     }
 
+    @Override
     public String getRecipeName() {
         return "Ender Charges";
     }

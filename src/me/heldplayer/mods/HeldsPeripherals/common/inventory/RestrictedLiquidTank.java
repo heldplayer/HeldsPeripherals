@@ -28,14 +28,14 @@ public class RestrictedLiquidTank extends LiquidTank {
 
     @Override
     public void setLiquid(LiquidStack liquid) {
-        if (isAllowed(liquid)) {
+        if (this.isAllowed(liquid)) {
             super.setLiquid(liquid);
         }
     }
 
     @Override
     public int fill(LiquidStack resource, boolean doFill) {
-        if (isAllowed(resource)) {
+        if (this.isAllowed(resource)) {
             return super.fill(resource, doFill);
         }
         return 0;
@@ -53,7 +53,7 @@ public class RestrictedLiquidTank extends LiquidTank {
         if (stack == null || this.allowedType == null) {
             return false;
         }
-        return stack.isLiquidEqual(allowedType);
+        return stack.isLiquidEqual(this.allowedType);
     }
 
 }
