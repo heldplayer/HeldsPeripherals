@@ -8,6 +8,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.logging.Level;
 
 import me.heldplayer.mods.HeldsPeripherals.api.HeldsPeripheralAPI;
 import me.heldplayer.mods.HeldsPeripherals.client.BlockRendererHeldsPeripheral;
@@ -82,8 +83,7 @@ public class CommonProxy implements IGuiHandler {
                 }
             }
             catch (IOException e) {
-                Objects.log.warning("Failed injecting endernet API to ComputerCraft");
-                e.printStackTrace();
+                Objects.log.log(Level.WARNING, "Failed injecting endernet API to ComputerCraft", e);
             }
             finally {
                 try {
@@ -95,8 +95,7 @@ public class CommonProxy implements IGuiHandler {
                     }
                 }
                 catch (IOException e) {
-                    Objects.log.warning("Failed injecting endernet API to ComputerCraft");
-                    e.printStackTrace();
+                    Objects.log.log(Level.WARNING, "Failed injecting endernet API to ComputerCraft", e);
                 }
             }
         }
@@ -120,8 +119,7 @@ public class CommonProxy implements IGuiHandler {
                 }
             }
             catch (IOException e) {
-                Objects.log.warning("Failed injecting endernet help file to ComputerCraft");
-                e.printStackTrace();
+                Objects.log.log(Level.WARNING, "Failed injecting endernet help file to ComputerCraft", e);
             }
             finally {
                 try {
@@ -133,8 +131,7 @@ public class CommonProxy implements IGuiHandler {
                     }
                 }
                 catch (IOException e) {
-                    Objects.log.warning("Failed injecting endernet help file to ComputerCraft");
-                    e.printStackTrace();
+                    Objects.log.log(Level.WARNING, "Failed injecting endernet help file to ComputerCraft", e);
                 }
             }
         }
