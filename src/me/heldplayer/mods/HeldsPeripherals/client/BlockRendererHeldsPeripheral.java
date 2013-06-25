@@ -1,7 +1,7 @@
 
 package me.heldplayer.mods.HeldsPeripherals.client;
 
-import me.heldplayer.mods.HeldsPeripherals.common.block.BlockHeldsPeripheral;
+import me.heldplayer.mods.HeldsPeripherals.block.BlockHeldsPeripheral;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.client.renderer.Tessellator;

@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import me.heldplayer.mods.HeldsPeripherals.client.ClientProxy;
-import me.heldplayer.mods.HeldsPeripherals.common.inventory.ContainerFireworksLauncher;
-import me.heldplayer.mods.HeldsPeripherals.common.tileentity.TileEntityFireworksLighter;
+import me.heldplayer.mods.HeldsPeripherals.inventory.ContainerFireworksLauncher;
+import me.heldplayer.mods.HeldsPeripherals.tileentity.TileEntityFireworksLighter;
 import me.heldplayer.util.HeldCore.client.GuiHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiContainer;

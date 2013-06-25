@@ -3,7 +3,7 @@ package me.heldplayer.mods.HeldsPeripherals.client.particle;
 
 import java.util.ArrayList;
 
-import me.heldplayer.mods.HeldsPeripherals.common.ModHeldsPeripherals;
+import me.heldplayer.mods.HeldsPeripherals.ModHeldsPeripherals;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.EffectRenderer;
 import net.minecraft.client.particle.EntityFX;

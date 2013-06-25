@@ -3,7 +3,7 @@ package me.heldplayer.mods.HeldsPeripherals.client;
 
 import java.lang.reflect.Constructor;
 
-import me.heldplayer.mods.HeldsPeripherals.common.Objects;
+import me.heldplayer.mods.HeldsPeripherals.Objects;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.Tessellator;

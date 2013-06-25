@@ -7,14 +7,14 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.logging.Level;
 
+import me.heldplayer.mods.HeldsPeripherals.CommonProxy;
+import me.heldplayer.mods.HeldsPeripherals.ModHeldsPeripherals;
+import me.heldplayer.mods.HeldsPeripherals.Objects;
 import me.heldplayer.mods.HeldsPeripherals.client.gui.GuiFireworksLighter;
 import me.heldplayer.mods.HeldsPeripherals.client.gui.GuiTransWorldModem;
-import me.heldplayer.mods.HeldsPeripherals.common.CommonProxy;
-import me.heldplayer.mods.HeldsPeripherals.common.ModHeldsPeripherals;
-import me.heldplayer.mods.HeldsPeripherals.common.Objects;
-import me.heldplayer.mods.HeldsPeripherals.common.inventory.SlotOreDictionary;
-import me.heldplayer.mods.HeldsPeripherals.common.tileentity.TileEntityFireworksLighter;
-import me.heldplayer.mods.HeldsPeripherals.common.tileentity.TileEntityTransWorldModem;
+import me.heldplayer.mods.HeldsPeripherals.inventory.SlotOreDictionary;
+import me.heldplayer.mods.HeldsPeripherals.tileentity.TileEntityFireworksLighter;
+import me.heldplayer.mods.HeldsPeripherals.tileentity.TileEntityTransWorldModem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
@@ -46,7 +46,7 @@ public class ClientProxy extends CommonProxy {
 
         Render render = new RenderSnowball(Item.firework);
         render.setRenderManager(RenderManager.instance);
-        RenderManager.instance.entityRenderMap.put(me.heldplayer.mods.HeldsPeripherals.common.entity.EntityFireworkRocket.class, render);
+        RenderManager.instance.entityRenderMap.put(me.heldplayer.mods.HeldsPeripherals.entity.EntityFireworkRocket.class, render);
 
         if (ModHeldsPeripherals.enhancedEnderChargeRenderer.getValue()) {
             MinecraftForgeClient.registerItemRenderer(Objects.itemEnderCharge.itemID, new ItemRendererEnderCharge());

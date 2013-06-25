@@ -5,9 +5,9 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Random;
 
-import me.heldplayer.mods.HeldsPeripherals.common.ModHeldsPeripherals;
-import me.heldplayer.mods.HeldsPeripherals.common.Objects;
-import me.heldplayer.mods.HeldsPeripherals.common.RecipeEnderCharge;
+import me.heldplayer.mods.HeldsPeripherals.ModHeldsPeripherals;
+import me.heldplayer.mods.HeldsPeripherals.Objects;
+import me.heldplayer.mods.HeldsPeripherals.RecipeEnderCharge;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
 import codechicken.nei.InventoryCraftingDummy;
