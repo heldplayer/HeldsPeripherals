@@ -14,23 +14,6 @@ local function callBasic( ... )
   return false
 end
 
-local function callAdvanced( ... )
-  lastResult = nil
-  
-  for index, side in ipairs( sides ) do
-    for index2, color in ipairs( colorNames ) do
-      if peripheral.isPresent( side .. ":" .. color ) and peripheral.getType( side .. ":" .. color ) == "TransWorldModem" then
-        if peripheral.call( side .. ":" .. color, unpack(arg) ) then
-          lastResult = true
-          return
-        end
-      end
-    end
-  end
-  
-  lastResult = false
-end
-
 function send( recipient, message, side )
   if recipient ~= nil and (type( recipient ) ~= "number" or recipient < 0) then
     error( "Positive number expected" )
@@ -46,15 +29,10 @@ function send( recipient, message, side )
   end
   
   if side == nil then
-    if not callBasic( "send", recipient, message ) then
-      result, err = pcall( callAdvanced, "send", recipient, message )
-      if result then
-        return lastResult
-      else
-        return false
-      end
-    else
+    if callBasic( "send", recipient, message ) then
       return true
+    else
+      return false
     end
   else
     return peripheral.call( side, "send", recipient, message )
@@ -75,18 +53,37 @@ function transport( recipient, side )
   end
   
   if side == nil then
-    if not callBasic( "transport", recipient ) then
-      result, err = pcall( callAdvanced, "transport", recipient )
-      if result then
-        return lastResult
-      else
-        return false
-      end
-    else
+    if callBasic( "transport", recipient, message ) then
       return true
+    else
+      return false
     end
   else
     return peripheral.call( side, "transport", recipient )
+  end
+  
+  return false
+end
+
+function transportLiquid( recipient, side )
+  if recipient ~= nil and (type( recipient ) ~= "number" or recipient < 0) then
+    error( "Positive number expected" )
+  end
+  if recipient == nil then
+    error( "Positive number expected" )
+  end
+  if side ~= nil and type( side ) ~= "string" then
+    error( "String expected" )
+  end
+  
+  if side == nil then
+    if callBasic( "transportLiquid", recipient, message ) then
+      return true
+    else
+      return false
+    end
+  else
+    return peripheral.call( side, "transportLiquid", recipient )
   end
   
   return false
@@ -117,6 +114,22 @@ function waitForItem( nTimeout )
     local e, p1, p2 = os.pullEvent()
     
     if e == "transworld_item" then
+      return p1, p2
+    elseif e == "timer" and p1 == timer then
+      return nil, nil
+    end
+  end
+end
+
+function waitForLiquid( nTimeout )
+  local timer = nil
+  if nTimeout then
+    timer = os.startTimer( nTimeout )
+  end
+  while true do
+    local e, p1, p2 = os.pullEvent()
+    
+    if e == "transworld_liquid" then
       return p1, p2
     elseif e == "timer" and p1 == timer then
       return nil, nil
@@ -170,6 +183,23 @@ function outputOccupied( side )
     end
   else
     return peripheral.call( side, "getOutputOccupied" )
+  end
+  
+  return false
+end
+
+function getLiquidInfo( side )
+  if side ~= nil and type( side ) ~= "string" then
+    error( "String expected" )
+  end
+  if side == nil then
+    for index,value in ipairs(sides) do
+      if peripheral.isPresent( value ) and peripheral.getType( value ) == "TransWorldModem" then
+        return peripheral.call( value, "getLiquidInfo" )
+      end
+    end
+  else
+    return peripheral.call( side, "getLiquidInfo" )
   end
   
   return false
