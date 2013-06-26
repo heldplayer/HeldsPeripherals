@@ -446,6 +446,8 @@ public class LogicHandler {
 
             peripheral.increaseCoolingTime();
 
+            // FIXME: increase string sound size
+
             peripheral.getWorld().playSoundEffect((double) peripheral.getX() + 0.5D, (double) peripheral.getY() + 0.5D, (double) peripheral.getZ() + 0.5D, name, volume, pitch);
             return null;
         default:
