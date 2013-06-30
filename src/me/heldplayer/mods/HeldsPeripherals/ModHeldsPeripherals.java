@@ -5,6 +5,7 @@ import java.io.File;
 import java.util.Iterator;
 
 import me.heldplayer.mods.HeldsPeripherals.network.Network;
+import me.heldplayer.mods.HeldsPeripherals.packet.PacketHandler;
 import me.heldplayer.util.HeldCore.Updater;
 import me.heldplayer.util.HeldCore.UsageReporter;
 import me.heldplayer.util.HeldCore.config.Config;
@@ -29,7 +30,7 @@ import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.relauncher.Side;
 
 @Mod(name = Objects.MOD_NAME, modid = Objects.MOD_ID, version = Objects.MOD_VERSION, dependencies = Objects.MOD_DEPENCIES)
-@NetworkMod(clientSideRequired = true, serverSideRequired = false)
+@NetworkMod(clientSideRequired = true, serverSideRequired = false, channels = { Objects.MOD_CHANNEL }, packetHandler = PacketHandler.class)
 public class ModHeldsPeripherals {
 
     @Instance(value = Objects.MOD_ID)

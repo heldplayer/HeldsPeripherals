@@ -7,11 +7,14 @@ import me.heldplayer.mods.HeldsPeripherals.api.IThaumicScanner;
 import me.heldplayer.mods.HeldsPeripherals.api.ITransWorldModem;
 import me.heldplayer.mods.HeldsPeripherals.entity.EntityFireworkRocket;
 import me.heldplayer.mods.HeldsPeripherals.network.Network;
+import me.heldplayer.mods.HeldsPeripherals.packet.Packet1PlaySound;
+import me.heldplayer.mods.HeldsPeripherals.packet.PacketHandler;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagDouble;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.MathHelper;
+import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.liquids.LiquidDictionary;
 import net.minecraftforge.liquids.LiquidStack;
 import net.minecraftforge.liquids.LiquidTank;
@@ -448,7 +451,10 @@ public class LogicHandler {
 
             // FIXME: increase string sound size
 
-            peripheral.getWorld().playSoundEffect((double) peripheral.getX() + 0.5D, (double) peripheral.getY() + 0.5D, (double) peripheral.getZ() + 0.5D, name, volume, pitch);
+            Chunk chunk = peripheral.getWorld().getChunkFromBlockCoords(peripheral.getX(), peripheral.getZ());
+            Packet1PlaySound packet = new Packet1PlaySound((double) peripheral.getX() + 0.5D, (double) peripheral.getY() + 0.5D, (double) peripheral.getZ() + 0.5D, name, volume, pitch);
+            PacketHandler.sendPacketToPlayersWatching(PacketHandler.instance.createPacket(packet), peripheral.getWorld().provider.dimensionId, chunk.xPosition, chunk.zPosition);
+            //peripheral.getWorld().playSoundEffect((double) peripheral.getX() + 0.5D, (double) peripheral.getY() + 0.5D, (double) peripheral.getZ() + 0.5D, name, volume, pitch);
             return null;
         default:
             throw new Exception("Error calling method: unknown method ID");

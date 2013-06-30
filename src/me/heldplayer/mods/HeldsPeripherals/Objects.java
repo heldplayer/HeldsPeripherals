@@ -19,6 +19,7 @@ public class Objects {
     public static final String MOD_NAME = "CC Held's Peripherals";
     public static final String MOD_VERSION = "1.09.03.02";
     public static final String MOD_DEPENCIES = "after:Thaumcraft";
+    public static final String MOD_CHANNEL = "CCHPChannel";
     public static final String CLIENT_PROXY = "me.heldplayer.mods.HeldsPeripherals.client.ClientProxy";
     public static final String SERVER_PROXY = "me.heldplayer.mods.HeldsPeripherals.common.CommonProxy";
 
