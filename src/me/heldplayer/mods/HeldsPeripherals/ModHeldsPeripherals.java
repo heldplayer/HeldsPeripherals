@@ -16,11 +16,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.Configuration;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
-import cpw.mods.fml.common.Mod.Init;
+import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
-import cpw.mods.fml.common.Mod.PostInit;
-import cpw.mods.fml.common.Mod.PreInit;
-import cpw.mods.fml.common.Mod.ServerStopping;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
@@ -60,7 +57,7 @@ public class ModHeldsPeripherals {
     public static ConfigValue<Boolean> optOut;
     public static ConfigValue<String> modPack;
 
-    @PreInit
+    @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
         File file = new File(event.getModConfigurationDirectory(), "HeldCore");
 
@@ -116,12 +113,12 @@ public class ModHeldsPeripherals {
         proxy.preInit(event);
     }
 
-    @Init
+    @EventHandler
     public void init(FMLInitializationEvent event) {
         proxy.init(event);
     }
 
-    @PostInit
+    @EventHandler
     public void postInit(FMLPostInitializationEvent event) {
         if (optOut.getValue()) {
             Thread thread = new Thread(this.reporter, Objects.MOD_ID + " usage reporter");
@@ -133,7 +130,7 @@ public class ModHeldsPeripherals {
         proxy.postInit(event);
     }
 
-    @ServerStopping
+    @EventHandler
     public void onServerStopping(FMLServerStoppingEvent event) {
         Network.clearModems();
     }

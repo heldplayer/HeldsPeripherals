@@ -101,9 +101,10 @@ public class ClientProxy extends CommonProxy {
 
     @ForgeSubscribe
     public void onSoundLoaded(SoundLoadEvent event) {
+        File resources = new File(Minecraft.getMinecraft().mcDataDir, "assets");
         for (String sound : Objects.SOUNDS) {
             try {
-                File file = new File(Minecraft.getMinecraftDir(), "resources/" + Objects.SOUND_RESOURCE_PATH + sound + ".ogg");
+                File file = new File(resources, Objects.SOUND_RESOURCE_PATH + sound + ".ogg");
 
                 if (!file.exists()) {
                     file.getParentFile().mkdirs();
@@ -133,8 +134,9 @@ public class ClientProxy extends CommonProxy {
                     throw new RuntimeException("Sound file missing");
                 }
                 else {
-                    Objects.log.log(Level.INFO, "Added sound '" + Objects.PREFIX + sound + ".ogg' as " + file.getPath());
-                    event.manager.addSound((Objects.PREFIX + sound).replace(".", "/") + ".ogg", file);
+                    //Objects.log.log(Level.INFO, "Added sound '" + Objects.PREFIX + sound + ".ogg' as " + file.getPath());
+                    Objects.log.log(Level.WARNING, "Couldn't add sound '" + Objects.PREFIX + sound + ".ogg'");
+                    //event.manager.addSound((Objects.PREFIX + sound).replace(".", "/") + ".ogg", file);
                 }
             }
             catch (Exception e) {

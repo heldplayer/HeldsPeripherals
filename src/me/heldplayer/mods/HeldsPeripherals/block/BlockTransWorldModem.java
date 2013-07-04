@@ -19,19 +19,12 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class BlockTransWorldModem extends BlockHeldsPeripheral {
     private Random rnd = new Random();
 
-    //private int topIndex = 16;
-    //private int bottomIndex = 0;
-    //private int[] frontIndex = new int[] { 32, 33, 34, 35 };
-    //private int[] backIndex = new int[] { 48, 49 };
-    //private int[] leftIndex = new int[] { 64, 65 };
-    //private int[] rightIndex = new int[] { 80, 81 };
-
-    private Icon top[] = new Icon[4];
-    private Icon bottom[] = new Icon[4];
-    private Icon front[] = new Icon[4];
-    private Icon back[] = new Icon[4];
-    private Icon left[] = new Icon[4];
-    private Icon right[] = new Icon[4];
+    private Icon top;
+    private Icon bottom;
+    private Icon front[];
+    private Icon back[];
+    private Icon left[];
+    private Icon right[];
 
     public BlockTransWorldModem(int blockId) {
         super(blockId);
@@ -39,33 +32,20 @@ public class BlockTransWorldModem extends BlockHeldsPeripheral {
 
     @Override
     public Icon getIcon(int side, int metadata) {
-        // Bytes: ABCD
-        // AB = orientation
-        // C = holding power
-        // D = holding reserve
-
-        // Sides
-        // 0: bottom
-        // 1: top
-        // 2: North
-        // 3: South
-        // 4: West
-        // 5: East
+        if (side == 0) {
+            return this.bottom;
+        }
+        if (side == 1) {
+            return this.top;
+        }
 
         int offset = 0x0;
 
         if (((metadata >> 2) & 0x1) == 1) {
-            offset = offset & 0x1;
+            offset |= 0x1;
         }
         if (((metadata >> 3) & 0x1) == 1) {
-            offset = offset & 0x2;
-        }
-
-        if (side == 0) {
-            return this.bottom[offset];
-        }
-        if (side == 1) {
-            return this.top[offset];
+            offset |= 0x2;
         }
 
         metadata = metadata & 0x3;
@@ -73,25 +53,25 @@ public class BlockTransWorldModem extends BlockHeldsPeripheral {
         if (metadata == 0) {
             switch (side) {
             case 2:
-                return this.back[offset];
+                return this.back[offset & 0x1];
             case 3:
                 return this.front[offset];
             case 4:
-                return this.left[offset];
+                return this.left[offset & 0x1];
             case 5:
-                return this.right[offset];
+                return this.right[offset & 0x1];
             }
         }
         if (metadata == 1) {
             switch (side) {
             case 2:
-                return this.left[offset];
+                return this.left[offset & 0x1];
             case 3:
-                return this.right[offset];
+                return this.right[offset & 0x1];
             case 4:
                 return this.front[offset];
             case 5:
-                return this.back[offset];
+                return this.back[offset & 0x1];
             }
         }
         if (metadata == 2) {
@@ -99,25 +79,25 @@ public class BlockTransWorldModem extends BlockHeldsPeripheral {
             case 2:
                 return this.front[offset];
             case 3:
-                return this.back[offset];
+                return this.back[offset & 0x1];
             case 4:
-                return this.right[offset];
+                return this.right[offset & 0x1];
             case 5:
-                return this.left[offset];
+                return this.left[offset & 0x1];
             }
         }
         switch (side) {
         case 2:
-            return this.right[offset];
+            return this.right[offset & 0x1];
         case 3:
-            return this.left[offset];
+            return this.left[offset & 0x1];
         case 4:
-            return this.back[offset];
+            return this.back[offset & 0x1];
         case 5:
             return this.front[offset];
         }
 
-        return this.front[3];
+        return this.top;
     }
 
     @Override
@@ -204,24 +184,27 @@ public class BlockTransWorldModem extends BlockHeldsPeripheral {
     @Override
     @SideOnly(Side.CLIENT)
     public void registerIcons(IconRegister register) {
-        for (int i = 0; i < 4; i++) {
-            this.top[i] = register.registerIcon("heldsperipherals:twm-top-" + i);
-        }
-        for (int i = 0; i < 4; i++) {
-            this.bottom[i] = register.registerIcon("heldsperipherals:twm-bottom-" + i);
-        }
-        for (int i = 0; i < 4; i++) {
-            this.front[i] = register.registerIcon("heldsperipherals:twm-front-" + i);
-        }
-        for (int i = 0; i < 4; i++) {
-            this.back[i] = register.registerIcon("heldsperipherals:twm-back-" + i);
-        }
-        for (int i = 0; i < 4; i++) {
-            this.left[i] = register.registerIcon("heldsperipherals:twm-left-" + i);
-        }
-        for (int i = 0; i < 4; i++) {
-            this.right[i] = register.registerIcon("heldsperipherals:twm-right-" + i);
-        }
+        this.top = register.registerIcon("heldsperipherals:transworldmodem_top");
+
+        this.bottom = register.registerIcon("heldsperipherals:transworldmodem_bottom");
+
+        this.front = new Icon[4];
+        this.front[0] = register.registerIcon("heldsperipherals:transworldmodem_front_off_empty");
+        this.front[1] = register.registerIcon("heldsperipherals:transworldmodem_front_off_filled");
+        this.front[2] = register.registerIcon("heldsperipherals:transworldmodem_front_on_empty");
+        this.front[3] = register.registerIcon("heldsperipherals:transworldmodem_front_on_filled");
+
+        this.back = new Icon[2];
+        this.back[0] = register.registerIcon("heldsperipherals:transworldmodem_back_off");
+        this.back[1] = register.registerIcon("heldsperipherals:transworldmodem_back_on");
+
+        this.left = new Icon[2];
+        this.left[0] = register.registerIcon("heldsperipherals:transworldmodem_left_off");
+        this.left[1] = register.registerIcon("heldsperipherals:transworldmodem_left_off");
+
+        this.right = new Icon[2];
+        this.right[0] = register.registerIcon("heldsperipherals:transworldmodem_right_off");
+        this.right[1] = register.registerIcon("heldsperipherals:transworldmodem_right_off");
     }
 
 }

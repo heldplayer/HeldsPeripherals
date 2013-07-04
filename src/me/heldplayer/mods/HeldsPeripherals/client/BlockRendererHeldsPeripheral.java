@@ -2,6 +2,7 @@
 package me.heldplayer.mods.HeldsPeripherals.client;
 
 import me.heldplayer.mods.HeldsPeripherals.block.BlockHeldsPeripheral;
+import me.heldplayer.util.HeldCore.client.RenderHelper;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.client.renderer.Tessellator;
@@ -49,22 +50,22 @@ public class BlockRendererHeldsPeripheral implements ISimpleBlockRenderingHandle
         tessellator.startDrawingQuads();
 
         tessellator.setNormal(0.0F, -1.0F, 0.0F);
-        renderer.renderFaceYNeg(block, 0, 0, 0, block.getIcon(0, metadata));
+        renderer.renderFaceYNeg(block, 0, 0, 0, RenderHelper.getIconSafe(block.getIcon(0, metadata), false));
 
         tessellator.setNormal(0.0F, 1.0F, 0.0F);
-        renderer.renderFaceYPos(block, 0, 0, 0, block.getIcon(1, metadata));
+        renderer.renderFaceYPos(block, 0, 0, 0, RenderHelper.getIconSafe(block.getIcon(1, metadata), false));
 
         tessellator.setNormal(0.0F, 0.0F, -1.0F);
-        renderer.renderFaceZNeg(block, 0, 0, 0, block.getIcon(5, metadata));
+        renderer.renderFaceZNeg(block, 0, 0, 0, RenderHelper.getIconSafe(block.getIcon(5, metadata), false));
 
         tessellator.setNormal(0.0F, 0.0F, 1.0F);
-        renderer.renderFaceZPos(block, 0, 0, 0, block.getIcon(4, metadata));
+        renderer.renderFaceZPos(block, 0, 0, 0, RenderHelper.getIconSafe(block.getIcon(4, metadata), false));
 
         tessellator.setNormal(-1.0F, 0.0F, 0.0F);
-        renderer.renderFaceXNeg(block, 0, 0, 0, block.getIcon(2, metadata));
+        renderer.renderFaceXNeg(block, 0, 0, 0, RenderHelper.getIconSafe(block.getIcon(2, metadata), false));
 
         tessellator.setNormal(1.0F, 0.0F, 0.0F);
-        renderer.renderFaceXPos(block, 0, 0, 0, block.getIcon(3, metadata));
+        renderer.renderFaceXPos(block, 0, 0, 0, RenderHelper.getIconSafe(block.getIcon(3, metadata), false));
 
         tessellator.draw();
 

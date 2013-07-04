@@ -10,7 +10,7 @@ import me.heldplayer.mods.HeldsPeripherals.tileentity.TileEntityFireworksLighter
 import me.heldplayer.mods.HeldsPeripherals.tileentity.TileEntityNoiseMaker;
 import me.heldplayer.mods.HeldsPeripherals.tileentity.TileEntityThaumicScanner;
 import net.minecraft.client.renderer.texture.IconRegister;
-import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -25,26 +25,19 @@ public class BlockMulti1 extends BlockHeldsPeripheral {
 
     private Random rnd = new Random();
 
-    //private int[] topIndex = new int[] { 20, 22 };
-    //private int[] bottomIndex = new int[] { 4, 6 };
-    //private int[] frontIndex = new int[] { 36, 38 };
-    //private int[] backIndex = new int[] { 52, 54 };
-    //private int[] leftIndex = new int[] { 68, 70 };
-    //private int[] rightIndex = new int[] { 84, 86 };
-
-    private Icon top[] = new Icon[3];
-    private Icon bottom[] = new Icon[3];
-    private Icon front[] = new Icon[3];
-    private Icon back[] = new Icon[3];
-    private Icon left[] = new Icon[3];
-    private Icon right[] = new Icon[3];
+    private Icon top[];
+    private Icon bottom[];
+    private Icon front[];
+    private Icon back[];
+    private Icon left[];
+    private Icon right[];
 
     public BlockMulti1(int blockId) {
         super(blockId);
     }
 
     @Override
-    public void onBlockPlacedBy(World world, int x, int y, int z, EntityLiving placer, ItemStack stack) {
+    public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase placer, ItemStack stack) {
         int meta = world.getBlockMetadata(x, y, z);
 
         int rotation = ((MathHelper.floor_double((placer.rotationYaw * 4.0F / 360.0F) + 0.5D) & 0x3) + 2) % 4;
@@ -62,18 +55,6 @@ public class BlockMulti1 extends BlockHeldsPeripheral {
 
     @Override
     public Icon getIcon(int side, int metadata) {
-        // Bytes: ABCD
-        // AB = orientation
-        // C = type, 0 == fireworks lighter; 1 == noise maker
-
-        // Sides
-        // 0: bottom
-        // 1: top
-        // 2: North
-        // 3: South
-        // 4: West
-        // 5: East
-
         int type = (metadata >> 2 & 0x3) % 3;
 
         if ((metadata & 0x3) == 0) {
@@ -261,18 +242,24 @@ public class BlockMulti1 extends BlockHeldsPeripheral {
     @Override
     @SideOnly(Side.CLIENT)
     public void registerIcons(IconRegister register) {
-        String[] prefixes = new String[] { "efl", "nm", "ts" };
+        String[] prefixes = new String[] { "fireworkslighter", "noisemaker", "thaumicscanner" };
+        this.top = new Icon[prefixes.length];
+        this.bottom = new Icon[prefixes.length];
+        this.front = new Icon[prefixes.length];
+        this.back = new Icon[prefixes.length];
+        this.left = new Icon[prefixes.length];
+        this.right = new Icon[prefixes.length];
 
         for (int i = 0; i < prefixes.length; i++) {
-            this.top[i] = register.registerIcon("heldsperipherals:" + prefixes[i] + "-top");
-            this.bottom[i] = register.registerIcon("heldsperipherals:" + prefixes[i] + "-bottom");
-            this.front[i] = register.registerIcon("heldsperipherals:" + prefixes[i] + "-front");
-            this.back[i] = register.registerIcon("heldsperipherals:" + prefixes[i] + "-back");
-            this.left[i] = register.registerIcon("heldsperipherals:" + prefixes[i] + "-left");
-            this.right[i] = register.registerIcon("heldsperipherals:" + prefixes[i] + "-right");
+            this.top[i] = register.registerIcon("heldsperipherals:" + prefixes[i] + "_top");
+            this.bottom[i] = register.registerIcon("heldsperipherals:" + prefixes[i] + "_bottom");
+            this.front[i] = register.registerIcon("heldsperipherals:" + prefixes[i] + "_front");
+            this.back[i] = register.registerIcon("heldsperipherals:" + prefixes[i] + "_back");
+            this.left[i] = register.registerIcon("heldsperipherals:" + prefixes[i] + "_left");
+            this.right[i] = register.registerIcon("heldsperipherals:" + prefixes[i] + "_right");
         }
 
-        ClientProxy.fireworksUpgrade = register.registerIcon("heldsperipherals:efl-peripheral");
+        ClientProxy.fireworksUpgrade = register.registerIcon("heldsperipherals:fireworkslighter_peripheral");
     }
 
 }

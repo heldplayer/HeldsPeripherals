@@ -10,7 +10,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Icon;
-import cpw.mods.fml.common.registry.LanguageRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -49,11 +48,11 @@ public class ItemEnderCharge extends Item {
     }
 
     @Override
-    public String getItemDisplayName(ItemStack stack) {
-        String name = LanguageRegistry.instance().getStringLocalization("item.HP.enderCharge.name");
+    public String getUnlocalizedName(ItemStack stack) {
+        String name = "item.HP.enderCharge";
 
         if (stack.getItemDamage() > 0) {
-            name = LanguageRegistry.instance().getStringLocalization("item.HP.enderCharge.compactPrefix") + " " + name;
+            name = name + ".compact";
         }
 
         return name;

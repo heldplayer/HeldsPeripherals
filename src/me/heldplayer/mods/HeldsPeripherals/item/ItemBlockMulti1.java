@@ -8,7 +8,7 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Icon;
-import net.minecraft.util.StringTranslate;
+import net.minecraft.util.StatCollector;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -49,7 +49,8 @@ public class ItemBlockMulti1 extends ItemBlock {
         break;
         }
 
-        return StringTranslate.getInstance().translateKey(name);
+        return ("" + StatCollector.translateToLocal(name)).trim();
+        //return StringTranslate.getInstance().translateKey(name);
     }
 
     @Override

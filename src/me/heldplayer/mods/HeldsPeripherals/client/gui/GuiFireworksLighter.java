@@ -11,6 +11,7 @@ import me.heldplayer.util.HeldCore.client.GuiHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.RenderHelper;
+import net.minecraft.client.resources.ResourceLocation;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.ItemStack;
@@ -27,6 +28,8 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class GuiFireworksLighter extends GuiContainer {
     private TileEntityFireworksLighter lighter;
     private InventoryPlayer playerInv;
+
+    public static final ResourceLocation background = new ResourceLocation("heldsperipherals:textures/gui/container/gui_fireworks.png");
 
     public GuiFireworksLighter(EntityPlayer player, TileEntityFireworksLighter lighter) {
         super(new ContainerFireworksLauncher(player.inventory, lighter));
@@ -162,7 +165,7 @@ public class GuiFireworksLighter extends GuiContainer {
 
     @Override
     protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
-        this.mc.renderEngine.bindTexture(ClientProxy.textureLocation + "gui_fireworks.png");
+        this.mc.renderEngine.func_110577_a(background);
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize);
 
@@ -186,7 +189,7 @@ public class GuiFireworksLighter extends GuiContainer {
 
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 
-        this.mc.renderEngine.bindTexture(ClientProxy.textureLocation + "gui_fireworks.png");
+        this.mc.renderEngine.func_110577_a(background);
 
         this.drawTexturedModalRect(this.guiLeft + 61, this.guiTop + 14, this.xSize, 0, 18, 34);
         this.drawTexturedModalRect(this.guiLeft + 97, this.guiTop + 14, this.xSize, 0, 18, 34);

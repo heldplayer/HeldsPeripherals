@@ -11,6 +11,7 @@ import me.heldplayer.util.HeldCore.client.GuiHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.RenderHelper;
+import net.minecraft.client.resources.ResourceLocation;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.ItemStack;
@@ -27,6 +28,8 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class GuiTransWorldModem extends GuiContainer {
     private TileEntityTransWorldModem modem;
     private InventoryPlayer playerInv;
+
+    public static final ResourceLocation background = new ResourceLocation("heldsperipherals:textures/gui/container/gui_modem.png");
 
     public GuiTransWorldModem(EntityPlayer player, TileEntityTransWorldModem modem) {
         super(new ContainerTransWorldModem(player.inventory, modem));
@@ -109,7 +112,7 @@ public class GuiTransWorldModem extends GuiContainer {
 
     @Override
     protected void drawGuiContainerBackgroundLayer(float var1, int var2, int var3) {
-        this.mc.renderEngine.bindTexture(ClientProxy.textureLocation + "gui_modem.png");
+        this.mc.renderEngine.func_110577_a(background);
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize);
 
@@ -125,7 +128,7 @@ public class GuiTransWorldModem extends GuiContainer {
 
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 
-        this.mc.renderEngine.bindTexture(ClientProxy.textureLocation + "gui_modem.png");
+        this.mc.renderEngine.func_110577_a(background);
 
         this.drawTexturedModalRect(this.guiLeft + 151, this.guiTop + 36, this.xSize, 24, 18, 34);
     }

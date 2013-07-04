@@ -4,6 +4,7 @@ package me.heldplayer.mods.HeldsPeripherals.client;
 import java.lang.reflect.Constructor;
 
 import me.heldplayer.mods.HeldsPeripherals.Objects;
+import me.heldplayer.util.HeldCore.client.RenderHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.Tessellator;
@@ -53,7 +54,7 @@ public class ItemRendererEnderCharge implements IItemRenderer {
     @Override
     public void renderItem(ItemRenderType type, ItemStack item, Object... data) {
         if (type == ItemRenderType.INVENTORY && item.itemID == Objects.itemEnderCharge.itemID) {
-            Icon icon = item.getIconIndex();
+            Icon icon = RenderHelper.getIconSafe(item.getIconIndex(), false);
 
             Tessellator tes = Tessellator.instance;
             tes.startDrawingQuads();

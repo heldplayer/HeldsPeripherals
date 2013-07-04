@@ -43,12 +43,12 @@ public class ItemMoltenDye extends Item {
     @Override
     @SideOnly(Side.CLIENT)
     public void registerIcons(IconRegister register) {
-        this.icon = register.registerIcon("heldsperipherals:HP-molten-dye");
+        this.icon = register.registerIcon("heldsperipherals:molten_dye");
 
-        String[] icons = new String[] { "gunpowder", "red", "green", "blue" };
+        String[] icons = new String[] { "dust", "red", "green", "blue" };
 
         for (int i = 0; i < icons.length; i++) {
-            ClientProxy.icons[i] = register.registerIcon("heldsperipherals:HP-back-" + icons[i]);
+            ClientProxy.icons[i] = register.registerIcon("heldsperipherals:background_" + icons[i]);
         }
     }
 
