@@ -10,6 +10,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Icon;
+import net.minecraft.util.StatCollector;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -43,7 +44,8 @@ public class ItemEnderCharge extends Item {
         super.addInformation(stack, player, list, advanced);
 
         if (stack.getItemDamage() > 0) {
-            list.add("Contains " + (stack.getItemDamage() + 1) + " charges");
+            list.add(StatCollector.translateToLocalFormatted("item.HP.enderCharge.compact.text", stack.getItemDamage() + 1));
+            //list.add("Contains " + (stack.getItemDamage() + 1) + " charges");
         }
     }
 

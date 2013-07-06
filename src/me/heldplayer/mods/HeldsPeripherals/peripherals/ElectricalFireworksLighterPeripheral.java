@@ -126,12 +126,12 @@ public class ElectricalFireworksLighterPeripheral implements IHostedPeripheral, 
     }
 
     @Override
-    public int getLiquidLevel(int tankId) {
+    public int getFluidLevel(int tankId) {
         return 1000;
     }
 
     @Override
-    public void setLiquidLevel(int tankId, int amount) {}
+    public void setFluidLevel(int tankId, int amount) {}
 
     @Override
     public ItemStack getStack(int slot) {

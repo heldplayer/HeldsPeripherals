@@ -1,0 +1,48 @@
+itemGroup.CCHeldsPeripherals=Held's Peripherals
+
+tile.HP.transWorldModem.name=Trans-World Modem
+tile.HP.fireworksLighter.name=Electrical Fireworks Lighter
+tile.HP.noiseMaker.name=Noise Maker
+tile.HP.thaumicScanner.name=Thaumic Scanner
+
+item.HP.enderCharge.name=Ender Charge
+item.HP.enderCharge.compact.name=Compact Ender Charge
+item.HP.enderCharge.compact.text=Contains %s charges
+item.HP.moltenDye.name=Molten Dye
+
+item.HP.moltenDye.white.name=Molten White Dye
+item.HP.moltenDye.orange.name=Molten Orange Dye
+item.HP.moltenDye.magenta.name=Molten Magenta Dye
+item.HP.moltenDye.lightBlue.name=Molten Light Blue Dye
+item.HP.moltenDye.yellow.name=Molten Yellow Dye
+item.HP.moltenDye.lime.name=Molten Lime Dye
+item.HP.moltenDye.pink.name=Molten Pink Dye
+item.HP.moltenDye.gray.name=Molten Gray Dye
+item.HP.moltenDye.lightGray.name=Molten Light Gray Dye
+item.HP.moltenDye.cyan.name=Molten Cyan Dye
+item.HP.moltenDye.purple.name=Molten Purple Dye
+item.HP.moltenDye.blue.name=Molten Blue Dye
+item.HP.moltenDye.brown.name=Molten Brown Dye
+item.HP.moltenDye.green.name=Molten Green Dye
+item.HP.moltenDye.red.name=Molten Red Dye
+item.HP.moltenDye.black.name=Molten Black Dye
+
+gui.container.fluid.empty=Empty
+gui.container.fluid.filled=%s / %s mb
+
+fluid.dye.molten.white=Molten White Dye
+fluid.dye.molten.orange=Molten Orange Dye
+fluid.dye.molten.magenta=Molten Magenta Dye
+fluid.dye.molten.lightBlue=Molten Light Blue Dye
+fluid.dye.molten.yellow=Molten Yellow Dye
+fluid.dye.molten.lime=Molten Lime Dye
+fluid.dye.molten.pink=Molten Pink Dye
+fluid.dye.molten.gray=Molten Gray Dye
+fluid.dye.molten.lightGray=Molten Light Gray Dye
+fluid.dye.molten.cyan=Molten Cyan Dye
+fluid.dye.molten.purple=Molten Purple Dye
+fluid.dye.molten.blue=Molten Blue Dye
+fluid.dye.molten.brown=Molten Brown Dye
+fluid.dye.molten.green=Molten Green Dye
+fluid.dye.molten.red=Molten Red Dye
+fluid.dye.molten.black=Molten Black Dye

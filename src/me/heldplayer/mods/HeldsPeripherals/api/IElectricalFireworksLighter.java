@@ -45,7 +45,7 @@ public interface IElectricalFireworksLighter extends IHeldsPeripheral {
     public abstract void setCoolingTime(int time);
 
     /**
-     * Gets the liquid level in the specified tank.<br/>
+     * Gets the fluid level in the specified tank.<br/>
      * Tank IDs:
      * <ol>
      * <li>Red dye tank</li>
@@ -55,21 +55,21 @@ public interface IElectricalFireworksLighter extends IHeldsPeripheral {
      * 
      * @param tankId
      *        The ID of the tank.
-     * @return The liquid level in the specified tank.
+     * @return The fluid level in the specified tank.
      */
-    public abstract int getLiquidLevel(int tankId);
+    public abstract int getFluidLevel(int tankId);
 
     /**
-     * Sets the liquid level in the specified tank.
+     * Sets the fluid level in the specified tank.
      * 
-     * @see #getLiquidLevel(int)
+     * @see #getFluidLevel(int)
      * 
      * @param tankId
      *        The ID of the tank.
      * @param amount
-     *        The new amount of liquid in the tank.
+     *        The new amount of fluid in the tank.
      */
-    public abstract void setLiquidLevel(int tankId, int amount);
+    public abstract void setFluidLevel(int tankId, int amount);
 
     /**
      * Returns the direct stack in the specified slot.

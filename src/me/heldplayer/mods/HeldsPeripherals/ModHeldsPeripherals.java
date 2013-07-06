@@ -49,7 +49,7 @@ public class ModHeldsPeripherals {
     public static ConfigValue<Integer> chargeYieldEyeOfEnderDust;
     public static ConfigValue<Integer> chargeCostSend;
     public static ConfigValue<Integer> chargeCostTransport;
-    public static ConfigValue<Integer> chargeCostostTransportLiquid;
+    public static ConfigValue<Integer> chargeCostostTransportFluid;
     public static ConfigValue<Boolean> enhancedFireworksEntity;
     public static ConfigValue<Boolean> enhancedEnderChargeRenderer;
     // Config values for HeldCore
@@ -79,7 +79,7 @@ public class ModHeldsPeripherals {
         chargeYieldEyeOfEnderDust = new ConfigValue<Integer>("YieldEyeOfEnderDust", "charges", null, 30, "The amount of charges one eye of ender dust is worth (GrehTech Compat)");
         chargeCostSend = new ConfigValue<Integer>("CostSend", "charges", null, 1, "The amount of charges that are required to send a text message");
         chargeCostTransport = new ConfigValue<Integer>("CostTransport", "charges", null, 5, "The amount of charges that are required to send matter");
-        chargeCostostTransportLiquid = new ConfigValue<Integer>("CostTransportLiquid", "charges", null, 4, "The amount of charges that are required to send a liquid");
+        chargeCostostTransportFluid = new ConfigValue<Integer>("CostTransportFluid", "charges", null, 4, "The amount of charges that are required to send a fluid");
         enhancedFireworksEntity = new ConfigValue<Boolean>("EnhancedFireworks", Configuration.CATEGORY_GENERAL, Side.CLIENT, Boolean.TRUE, "Determines whether fireworks launched by the Electrical Fireworks Lighter create grouped particles");
         enhancedEnderChargeRenderer = new ConfigValue<Boolean>("EnhancedEnderChargeRenderer", Configuration.CATEGORY_GENERAL, Side.CLIENT, Boolean.TRUE, "Determines whether ender charges render with a charge amount counter");
         silentUpdates = new ConfigValue<Boolean>("silentUpdates", Configuration.CATEGORY_GENERAL, null, Boolean.TRUE, "Set this to true to hide update messages in the main menu");
@@ -97,7 +97,7 @@ public class ModHeldsPeripherals {
         this.config.addConfigKey(chargeYieldEyeOfEnderDust);
         this.config.addConfigKey(chargeCostSend);
         this.config.addConfigKey(chargeCostTransport);
-        this.config.addConfigKey(chargeCostostTransportLiquid);
+        this.config.addConfigKey(chargeCostostTransportFluid);
         this.config.addConfigKey(enhancedFireworksEntity);
         this.config.addConfigKey(enhancedEnderChargeRenderer);
         this.config.addConfigKey(silentUpdates);

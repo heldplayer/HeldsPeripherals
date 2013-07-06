@@ -5,8 +5,8 @@ import java.util.ArrayList;
 
 import me.heldplayer.mods.HeldsPeripherals.api.ITransWorldModem;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.liquids.LiquidStack;
-import net.minecraftforge.liquids.LiquidTank;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.FluidTank;
 import dan200.computer.api.IComputerAccess;
 
 public class Network {
@@ -63,10 +63,10 @@ public class Network {
         return origStack;
     }
 
-    public static LiquidStack transport(int senderId, int dimension, LiquidStack origStack, int target) {
-        if (origStack != null && origStack.amount > 0 && origStack.itemID > 0) {
-            LiquidStack newStack = origStack.copy();
-            LiquidStack sentStack = origStack.copy();
+    public static FluidStack transport(int senderId, int dimension, FluidStack origStack, int target) {
+        if (origStack != null && origStack.amount > 0) {
+            FluidStack newStack = origStack.copy();
+            FluidStack sentStack = origStack.copy();
 
             for (int i = 0; i < modems.size(); i++) {
                 Modem modem = modems.get(i);
@@ -163,32 +163,34 @@ public class Network {
             return false;
         }
 
-        public boolean transport(int senderId, int dimension, LiquidStack sentStack, LiquidStack newStack, int target) {
+        public boolean transport(int senderId, int dimension, FluidStack sentStack, FluidStack newStack, int target) {
             for (int i = 0; i < this.connections.size(); i++) {
                 ComputerConnection connection = this.connections.get(i);
 
                 if (connection.isConnected(target)) {
-                    LiquidTank tank = this.modem.getLiquidTank();
+                    FluidTank tank = this.modem.getFluidTank();
 
-                    if (tank != null && tank.getLiquid() == null) {
+                    if (tank != null && tank.getFluid() == null) {
                         connection.queueEvent(target, "transworld_liquid", new Object[] { Double.valueOf(senderId), Double.valueOf(dimension) });
+                        connection.queueEvent(target, "transworld_fluid", new Object[] { Double.valueOf(senderId), Double.valueOf(dimension) });
 
                         //this.modem
 
-                        tank.setLiquid(sentStack);
+                        tank.setFluid(sentStack);
 
                         newStack.amount = 0;
 
                         return true;
                     }
                     else if (tank != null) {
-                        LiquidStack stack = tank.getLiquid();
+                        FluidStack stack = tank.getFluid();
 
-                        if (stack != null && stack.isLiquidEqual(sentStack)) {
+                        if (stack != null && stack.isFluidEqual(sentStack)) {
                             int amount = tank.fill(sentStack, false);
 
                             if (amount > 0) {
                                 connection.queueEvent(target, "transworld_liquid", new Object[] { Double.valueOf(senderId), Double.valueOf(dimension) });
+                                connection.queueEvent(target, "transworld_fluid", new Object[] { Double.valueOf(senderId), Double.valueOf(dimension) });
 
                                 tank.fill(sentStack, true);
 

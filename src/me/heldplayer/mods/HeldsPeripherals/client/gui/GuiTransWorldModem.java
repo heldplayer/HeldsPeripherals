@@ -1,22 +1,16 @@
 
 package me.heldplayer.mods.HeldsPeripherals.client.gui;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import me.heldplayer.mods.HeldsPeripherals.client.ClientProxy;
 import me.heldplayer.mods.HeldsPeripherals.inventory.ContainerTransWorldModem;
 import me.heldplayer.mods.HeldsPeripherals.tileentity.TileEntityTransWorldModem;
 import me.heldplayer.util.HeldCore.client.GuiHelper;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.resources.ResourceLocation;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.StatCollector;
-import net.minecraftforge.liquids.LiquidStack;
+import net.minecraftforge.fluids.FluidStack;
 
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
@@ -38,7 +32,6 @@ public class GuiTransWorldModem extends GuiContainer {
         this.playerInv = player.inventory;
     }
 
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     public void drawScreen(int x, int y, float partialTicks) {
         super.drawScreen(x, y, partialTicks);
@@ -46,44 +39,7 @@ public class GuiTransWorldModem extends GuiContainer {
         RenderHelper.disableStandardItemLighting();
 
         if (x > 150 + this.guiLeft && x < 169 + this.guiLeft && y > 35 + this.guiTop && y < 71 + this.guiTop) {
-            ArrayList<String> messages = new ArrayList<String>();
-
-            LiquidStack stack = this.modem.getTanks(null)[0].getLiquid();
-
-            if (stack != null) {
-                ItemStack itemStack = stack.asItemStack();
-
-                if (itemStack.getItem() != null) {
-                    List tooltip = itemStack.getTooltip(null, Minecraft.getMinecraft().gameSettings.advancedItemTooltips);
-
-                    String suffix = "";
-
-                    if (ClientProxy.renderItemId()) {
-                        suffix = " " + itemStack.itemID;
-
-                        if (itemStack.getItemDamage() != 0) {
-                            suffix += ":" + itemStack.getItemDamage();
-                        }
-                    }
-
-                    tooltip.set(0, tooltip.get(0) + suffix);
-
-                    messages.addAll(tooltip);
-                    messages.add(stack.amount + " / " + this.modem.getTanks(null)[0].getCapacity() + " mB");
-                }
-                else {
-                    messages.add("Empty");
-                    messages.add("0 / " + this.modem.getTanks(null)[0].getCapacity() + " mB");
-                }
-            }
-            else {
-                messages.add("Empty");
-                messages.add("0 / " + this.modem.getTanks(null)[0].getCapacity() + " mB");
-            }
-
-            this.zLevel = 300.0F;
-            GuiHelper.drawTooltip(messages, this.fontRenderer, x, y, this.guiTop, this.height);
-            this.zLevel = 0.0F;
+            GuiHelper.drawTooltip(GuiHelper.getFluidString(this.modem.getFluidTank()), this.fontRenderer, x, y, this.guiTop, this.height);
         }
     }
 
@@ -101,7 +57,7 @@ public class GuiTransWorldModem extends GuiContainer {
 
         this.fontRenderer.drawString("Remaining Sends: " + (this.modem.chargeCostSend == -1 ? "\u221E" : this.modem.chargeCostSend), 28, 17, 0xFF606060);
         this.fontRenderer.drawString("Remaining Transports: " + (this.modem.chargeCostTransport == -1 ? "\u221E" : this.modem.chargeCostTransport), 28, 27, 0xFF606060);
-        this.fontRenderer.drawString("Remaining Liquid Tps: " + (this.modem.chargeCostTransportLiquid == -1 ? "\u221E" : this.modem.chargeCostTransportLiquid), 28, 37, 0xFF606060);
+        this.fontRenderer.drawString("Remaining Fluid Tps: " + (this.modem.chargeCostTransportFluid == -1 ? "\u221E" : this.modem.chargeCostTransportFluid), 28, 37, 0xFF606060);
 
         GL11.glEnable(GL11.GL_DEPTH_TEST);
         GL11.glEnable(GL11.GL_LIGHTING);
@@ -119,11 +75,11 @@ public class GuiTransWorldModem extends GuiContainer {
         int height = GuiHelper.getScaled(11, this.modem.charge, 120);
         this.drawTexturedModalRect(this.guiLeft + 28, this.guiTop + 67 - height, 176, 24 - height, 12, height);
 
-        LiquidStack stack = this.modem.getTanks(null)[0].getLiquid();
+        FluidStack stack = this.modem.getFluidTank().getFluid();
 
         if (stack != null) {
             int scaled = GuiHelper.getScaled(32, stack.amount, 4000);
-            GuiHelper.drawLiquid(stack.itemID, stack.itemMeta, this.guiLeft + 152, this.guiTop + 37 + 32 - scaled, 16, scaled);
+            GuiHelper.drawFluid(stack.getFluid(), this.guiLeft + 152, this.guiTop + 37 + 32 - scaled, 16, scaled);
         }
 
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);

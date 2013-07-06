@@ -8,27 +8,30 @@ import me.heldplayer.mods.HeldsPeripherals.Objects;
 import me.heldplayer.mods.HeldsPeripherals.api.ITransWorldModem;
 import me.heldplayer.mods.HeldsPeripherals.network.Network;
 import me.heldplayer.mods.HeldsPeripherals.network.Network.Modem;
+import me.heldplayer.util.HeldCore.MathHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraftforge.common.ForgeDirection;
-import net.minecraftforge.liquids.ILiquidTank;
-import net.minecraftforge.liquids.ITankContainer;
-import net.minecraftforge.liquids.LiquidStack;
-import net.minecraftforge.liquids.LiquidTank;
+import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.FluidTank;
+import net.minecraftforge.fluids.FluidTankInfo;
+import net.minecraftforge.fluids.IFluidHandler;
 import dan200.computer.api.IComputerAccess;
 
-public class TileEntityTransWorldModem extends TileEntityHeldsPeripheral implements ISidedInventory, ITransWorldModem, ITankContainer {
+public class TileEntityTransWorldModem extends TileEntityHeldsPeripheral implements ISidedInventory, ITransWorldModem, IFluidHandler {
 
     private ItemStack[] inventory = new ItemStack[5];
-    private LiquidTank[] tanks;
+    private FluidTank[] tanks;
+    private FluidTankInfo[] tank_infos;
     private Modem modem;
     public int charge = 0;
     public int chargeCostSend;
     public int chargeCostTransport;
-    public int chargeCostTransportLiquid;
+    public int chargeCostTransportFluid;
     private String name;
     private static int[] slotsTop = new int[] { 3 };
     private static int[] slotsBottom = new int[] { 4 };
@@ -36,7 +39,8 @@ public class TileEntityTransWorldModem extends TileEntityHeldsPeripheral impleme
 
     public TileEntityTransWorldModem() {
         this.modem = Network.registerModem(this);
-        this.tanks = new LiquidTank[] { new LiquidTank(4000) };
+        this.tanks = new FluidTank[] { new FluidTank(4000) };
+        this.tank_infos = new FluidTankInfo[] { new FluidTankInfo(this.tanks[0]) };
     }
 
     public void updateBlock() {
@@ -59,7 +63,7 @@ public class TileEntityTransWorldModem extends TileEntityHeldsPeripheral impleme
         }
     }
 
-    public LiquidTank getTank() {
+    public FluidTank getTank() {
         return this.tanks[0];
     }
 
@@ -195,36 +199,45 @@ public class TileEntityTransWorldModem extends TileEntityHeldsPeripheral impleme
         return true;
     }
 
-    // ITankContainer
+    // IFluidHandler
 
     @Override
-    public int fill(ForgeDirection from, LiquidStack resource, boolean doFill) {
+    public int fill(ForgeDirection from, FluidStack resource, boolean doFill) {
         return this.tanks[0].fill(resource, doFill);
     }
 
     @Override
-    public int fill(int tankIndex, LiquidStack resource, boolean doFill) {
-        return this.tanks[0].fill(resource, doFill);
-    }
-
-    @Override
-    public LiquidStack drain(ForgeDirection from, int maxDrain, boolean doDrain) {
+    public FluidStack drain(ForgeDirection from, int maxDrain, boolean doDrain) {
         return this.tanks[0].drain(maxDrain, doDrain);
     }
 
     @Override
-    public LiquidStack drain(int tankIndex, int maxDrain, boolean doDrain) {
-        return this.tanks[0].drain(maxDrain, doDrain);
+    public FluidStack drain(ForgeDirection from, FluidStack resource, boolean doDrain) {
+        FluidStack stack = this.tanks[0].getFluid();
+        if (stack != null && resource != null && stack.isFluidEqual(resource)) {
+            int maxDrain = MathHelper.min(resource.amount, stack.amount);
+            return this.tanks[0].drain(maxDrain, doDrain);
+        }
+        return null;
     }
 
     @Override
-    public ILiquidTank[] getTanks(ForgeDirection direction) {
-        return new ILiquidTank[] { this.tanks[0] };
+    public boolean canFill(ForgeDirection from, Fluid fluid) {
+        FluidStack stack = this.tanks[0].getFluid();
+        if (stack != null && fluid != null && stack.getFluid().getID() == fluid.getID()) {
+            return true;
+        }
+        return false;
     }
 
     @Override
-    public ILiquidTank getTank(ForgeDirection direction, LiquidStack type) {
-        return this.tanks[0];
+    public boolean canDrain(ForgeDirection from, Fluid fluid) {
+        return true;
+    }
+
+    @Override
+    public FluidTankInfo[] getTankInfo(ForgeDirection from) {
+        return this.tank_infos;
     }
 
     // TileEntity
@@ -251,7 +264,7 @@ public class TileEntityTransWorldModem extends TileEntityHeldsPeripheral impleme
             byte index = tankCompound.getByte("Index");
 
             if (index >= 0 && index < this.tanks.length) {
-                this.tanks[index].setLiquid(LiquidStack.loadLiquidStackFromNBT(tankCompound));
+                this.tanks[index].setFluid(FluidStack.loadFluidStackFromNBT(tankCompound));
             }
         }
 
@@ -281,10 +294,10 @@ public class TileEntityTransWorldModem extends TileEntityHeldsPeripheral impleme
         NBTTagList tanks = new NBTTagList();
 
         for (int index = 0; index < this.tanks.length; index++) {
-            if (this.tanks[index].getLiquid() != null) {
+            if (this.tanks[index].getFluid() != null) {
                 NBTTagCompound tankCompound = new NBTTagCompound();
                 tankCompound.setByte("Index", (byte) index);
-                this.tanks[index].getLiquid().writeToNBT(tankCompound);
+                this.tanks[index].getFluid().writeToNBT(tankCompound);
                 tanks.appendTag(tankCompound);
             }
         }
@@ -307,7 +320,7 @@ public class TileEntityTransWorldModem extends TileEntityHeldsPeripheral impleme
 
     @Override
     public String[] getMethodNames() {
-        return new String[] { "send", "getChargeLevel", "transport", "getInputOccupied", "getOutputOccupied", "transportLiquid", "getLiquidInfo" };
+        return new String[] { "send", "getChargeLevel", "transport", "getInputOccupied", "getOutputOccupied", "transportLiquid", "getLiquidInfo", "transportFluid", "getFluidInfo" };
     }
 
     @Override
@@ -387,11 +400,11 @@ public class TileEntityTransWorldModem extends TileEntityHeldsPeripheral impleme
         else {
             this.chargeCostTransport = this.charge / ModHeldsPeripherals.chargeCostTransport.getValue();
         }
-        if (ModHeldsPeripherals.chargeCostostTransportLiquid.getValue() <= 0) {
-            this.chargeCostTransportLiquid = -1;
+        if (ModHeldsPeripherals.chargeCostostTransportFluid.getValue() <= 0) {
+            this.chargeCostTransportFluid = -1;
         }
         else {
-            this.chargeCostTransportLiquid = this.charge / ModHeldsPeripherals.chargeCostostTransportLiquid.getValue();
+            this.chargeCostTransportFluid = this.charge / ModHeldsPeripherals.chargeCostostTransportFluid.getValue();
         }
     }
 
@@ -418,8 +431,8 @@ public class TileEntityTransWorldModem extends TileEntityHeldsPeripheral impleme
     }
 
     @Override
-    public int getRemainingLiquidTransports() {
-        return this.chargeCostTransportLiquid;
+    public int getRemainingFluidTransports() {
+        return this.chargeCostTransportFluid;
     }
 
     @Override
@@ -433,7 +446,7 @@ public class TileEntityTransWorldModem extends TileEntityHeldsPeripheral impleme
     }
 
     @Override
-    public LiquidTank getLiquidTank() {
+    public FluidTank getFluidTank() {
         return this.tanks[0];
     }
 

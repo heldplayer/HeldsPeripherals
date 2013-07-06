@@ -11,7 +11,7 @@ import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.liquids.LiquidStack;
+import net.minecraftforge.fluids.FluidStack;
 
 public class ContainerTransWorldModem extends Container {
     private TileEntityTransWorldModem modem;
@@ -19,10 +19,9 @@ public class ContainerTransWorldModem extends Container {
     private int prevCharge;
     private int prevChargeCostSend;
     private int prevChargeCostTransport;
-    private int prevChargeCostTransportLiquid;
+    private int prevChargeCostTransportFluid;
     private int prevAmount;
-    private int prevItemId;
-    private int prevItemMeta;
+    private int prevFluidId;
 
     public ContainerTransWorldModem(IInventory playerInventory, IInventory tileInventory) {
         this.modem = (TileEntityTransWorldModem) tileInventory;
@@ -64,18 +63,17 @@ public class ContainerTransWorldModem extends Container {
         crafter.sendProgressBarUpdate(this, 0, this.modem.charge);
         crafter.sendProgressBarUpdate(this, 1, this.modem.chargeCostSend);
         crafter.sendProgressBarUpdate(this, 2, this.modem.chargeCostTransport);
-        crafter.sendProgressBarUpdate(this, 3, this.modem.chargeCostTransportLiquid);
+        crafter.sendProgressBarUpdate(this, 3, this.modem.chargeCostTransportFluid);
 
-        LiquidStack stack = this.modem.getTank().getLiquid();
+        FluidStack stack = this.modem.getTank().getFluid();
 
         crafter.sendProgressBarUpdate(this, 4, stack != null ? stack.amount : 0);
-        crafter.sendProgressBarUpdate(this, 5, stack != null ? stack.itemID : 0);
-        crafter.sendProgressBarUpdate(this, 6, stack != null ? stack.itemMeta : 0);
+        crafter.sendProgressBarUpdate(this, 5, stack != null ? stack.getFluid().getID() : 0);
     }
 
     @Override
     public void updateProgressBar(int barId, int barValue) {
-        LiquidStack stack = this.modem.getTank().getLiquid();
+        FluidStack stack = this.modem.getTank().getFluid();
 
         switch (barId) {
         case 0:
@@ -88,49 +86,35 @@ public class ContainerTransWorldModem extends Container {
             this.modem.chargeCostTransport = this.prevChargeCostTransport = barValue;
         break;
         case 3:
-            this.modem.chargeCostTransportLiquid = this.prevChargeCostTransportLiquid = barValue;
+            this.modem.chargeCostTransportFluid = this.prevChargeCostTransportFluid = barValue;
         break;
         case 4:
             if (barValue <= 0) {
-                this.modem.getTank().setLiquid(null);
+                this.modem.getTank().setFluid(null);
             }
             else if (stack != null) {
                 stack.amount = barValue;
             }
             else {
-                this.modem.getTank().setLiquid(new LiquidStack(0, barValue));
+                this.modem.getTank().setFluid(new FluidStack(0, barValue));
             }
 
             this.prevAmount = barValue;
         break;
         case 5:
             if (barValue <= 0) {
-                this.modem.getTank().setLiquid(null);
+                this.modem.getTank().setFluid(null);
             }
             else if (stack != null) {
                 int amount = stack.amount;
-                int itemId = barValue;
-                int meta = stack.itemMeta;
-                this.modem.getTank().setLiquid(new LiquidStack(amount, itemId, meta));
+                int fluidID = barValue;
+                this.modem.getTank().setFluid(new FluidStack(amount, fluidID));
             }
             else {
-                this.modem.getTank().setLiquid(new LiquidStack(barValue, 0));
+                this.modem.getTank().setFluid(new FluidStack(barValue, 0));
             }
 
-            this.prevItemId = barValue;
-        break;
-        case 6:
-            if (stack != null) {
-                int amount = stack.amount;
-                int itemId = stack.itemID;
-                int meta = barValue;
-                this.modem.getTank().setLiquid(new LiquidStack(amount, itemId, meta));
-            }
-            else {
-                this.modem.getTank().setLiquid(new LiquidStack(0, 0, barValue));
-            }
-
-            this.prevItemMeta = barValue;
+            this.prevFluidId = barValue;
         break;
         }
     }
@@ -141,7 +125,7 @@ public class ContainerTransWorldModem extends Container {
         super.detectAndSendChanges();
         Iterator iterator = this.crafters.iterator();
 
-        LiquidStack stack = this.modem.getTank().getLiquid();
+        FluidStack stack = this.modem.getTank().getFluid();
 
         while (iterator.hasNext()) {
             ICrafting crafter = (ICrafting) iterator.next();
@@ -155,26 +139,22 @@ public class ContainerTransWorldModem extends Container {
             if (this.prevChargeCostTransport != this.modem.chargeCostTransport) {
                 crafter.sendProgressBarUpdate(this, 2, this.modem.chargeCostTransport);
             }
-            if (this.prevChargeCostTransportLiquid != this.modem.chargeCostTransportLiquid) {
-                crafter.sendProgressBarUpdate(this, 3, this.modem.chargeCostTransportLiquid);
+            if (this.prevChargeCostTransportFluid != this.modem.chargeCostTransportFluid) {
+                crafter.sendProgressBarUpdate(this, 3, this.modem.chargeCostTransportFluid);
             }
 
             if (stack != null) {
                 if (this.prevAmount != stack.amount) {
                     crafter.sendProgressBarUpdate(this, 4, stack.amount);
                 }
-                if (this.prevItemId != stack.itemID) {
-                    crafter.sendProgressBarUpdate(this, 5, stack.itemID);
-                }
-                if (this.prevItemMeta != stack.itemMeta) {
-                    crafter.sendProgressBarUpdate(this, 6, stack.itemMeta);
+                if (this.prevFluidId != stack.fluidID) {
+                    crafter.sendProgressBarUpdate(this, 5, stack.fluidID);
                 }
             }
             else {
-                if (this.prevAmount > 0 || this.prevItemId > 0) {
+                if (this.prevAmount > 0 || this.prevFluidId > 0) {
                     crafter.sendProgressBarUpdate(this, 4, 0);
                     crafter.sendProgressBarUpdate(this, 5, 0);
-                    crafter.sendProgressBarUpdate(this, 6, 0);
                 }
             }
         }
@@ -182,17 +162,15 @@ public class ContainerTransWorldModem extends Container {
         this.prevCharge = this.modem.charge;
         this.prevChargeCostSend = this.modem.chargeCostSend;
         this.prevChargeCostTransport = this.modem.chargeCostTransport;
-        this.prevChargeCostTransportLiquid = this.modem.chargeCostTransportLiquid;
+        this.prevChargeCostTransportFluid = this.modem.chargeCostTransportFluid;
 
         if (stack != null) {
             this.prevAmount = stack.amount;
-            this.prevItemId = stack.itemID;
-            this.prevItemMeta = stack.itemMeta;
+            this.prevFluidId = stack.fluidID;
         }
         else {
             this.prevAmount = 0;
-            this.prevItemId = 0;
-            this.prevItemMeta = 0;
+            this.prevFluidId = 0;
         }
     }
 

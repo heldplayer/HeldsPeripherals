@@ -8,16 +8,16 @@ Functions for transporting matter:
 endernet.transport( receiverID, side ) -- Sends the item on the sending end of the modem to a modem attached to the receiver
 endernet.waitForItem( timeout ) -- Returns the senderID and dimension of origin
 
-Functions for transporting liquids:
-endernet.transportLiquid( receiverID, side ) -- Sends the liquid on the sending end of the modem to a modem attached to the receiver
-endernet.waitLiquid( timeout ) -- Returns the senderID and dimension of origin
+Functions for transporting fluids:
+endernet.transportFluid( receiverID, side ) -- Sends the fluid on the sending end of the modem to a modem attached to the receiver
+endernet.waitForFluid( timeout ) -- Returns the senderID and dimension of origin
 
 Functions for modem maintenance:
 endernet.getChargeLevel( side ) -- Returns the charge level of the modem
 endernet.inputOccupied( side ) -- Returns true if there is an item in the receiving end of the modem
 endernet.outputOccupied( side ) -- Returns true if there is an item in the sending end of the modem
-endernet.getLiquidInfo( side ) -- Returns the name of the liquid and the amount
+endernet.getFluidInfo( side ) -- Returns the name of the fluid and the amount
 
 You can handle the "transworld_receive" event to receive the messages without calling .receive()
 You can also handle the "transworld_item" event to receive notifications for items being delivered without calling waitForItem()
-You can also handle the "transworld_liquid" event to receive notifications for liquids being delivered without calling waitForLiquid()
+You can also handle the "transworld_fluid" event to receive notifications for fluids being delivered without calling watForFluid()

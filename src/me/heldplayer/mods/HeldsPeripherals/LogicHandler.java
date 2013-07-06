@@ -15,9 +15,9 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.chunk.Chunk;
-import net.minecraftforge.liquids.LiquidDictionary;
-import net.minecraftforge.liquids.LiquidStack;
-import net.minecraftforge.liquids.LiquidTank;
+import net.minecraftforge.fluids.FluidRegistry;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.FluidTank;
 import thaumcraft.api.EnumTag;
 import thaumcraft.api.ObjectTags;
 import thaumcraft.api.ThaumcraftApi;
@@ -26,7 +26,7 @@ import dan200.computer.api.IComputerAccess;
 
 public class LogicHandler {
 
-    // { "send", "getChargeLevel", "transport", "getInputOccupied", "getOutputOccupied", "transportLiquid", "getLiquidInfo" }
+    // { "send", "getChargeLevel", "transport", "getInputOccupied", "getOutputOccupied", "transportLiquid", "getLiquidInfo", "transportFluid", "getFluidInfo"  }
     public static Object[] callMethod(IComputerAccess computer, int method, Object[] arguments, ITransWorldModem peripheral) throws Exception {
         switch (method) {
         case 0: // send
@@ -123,6 +123,7 @@ public class LogicHandler {
             }
             return new Object[] { Boolean.TRUE };
         case 5: // transportLiquid
+        case 7: // transportFluid
             if (arguments.length < 1) {
                 throw new Exception("Too little arguments, expected 1 argument");
             }
@@ -135,28 +136,28 @@ public class LogicHandler {
                 throw new Exception("Invalid data type for argument 1, expected a number");
             }
 
-            LiquidTank tank = peripheral.getLiquidTank();
+            FluidTank tank = peripheral.getFluidTank();
 
-            LiquidStack liquidStack = tank.getLiquid();
+            FluidStack fluidStack = tank.getFluid();
 
-            if (liquidStack == null || liquidStack.amount <= 0 || liquidStack.itemID <= 0) {
+            if (fluidStack == null || fluidStack.amount <= 0) {
                 return new Object[] { Boolean.FALSE };
             }
 
-            if (peripheral.getRemainingTransports() > 0 || ModHeldsPeripherals.chargeCostostTransportLiquid.getValue() <= 0) {
-                LiquidStack returned = Network.transport(computer.getID(), peripheral.getWorld().provider.dimensionId, liquidStack, ((Double) arguments[0]).intValue());
+            if (peripheral.getRemainingTransports() > 0 || ModHeldsPeripherals.chargeCostostTransportFluid.getValue() <= 0) {
+                FluidStack returned = Network.transport(computer.getID(), peripheral.getWorld().provider.dimensionId, fluidStack, ((Double) arguments[0]).intValue());
 
-                if (liquidStack != returned) {
-                    liquidStack = returned;
+                if (fluidStack != returned) {
+                    fluidStack = returned;
 
-                    tank.setLiquid(liquidStack);
+                    tank.setFluid(fluidStack);
 
                     if (returned == null || returned.amount <= 0) {
-                        tank.setLiquid(null);
+                        tank.setFluid(null);
                     }
 
-                    if (ModHeldsPeripherals.chargeCostostTransportLiquid.getValue() > 0) {
-                        peripheral.decreaseCharge(ModHeldsPeripherals.chargeCostostTransportLiquid.getValue());
+                    if (ModHeldsPeripherals.chargeCostostTransportFluid.getValue() > 0) {
+                        peripheral.decreaseCharge(ModHeldsPeripherals.chargeCostostTransportFluid.getValue());
                     }
 
                     peripheral.getWorld().playSoundEffect(peripheral.getX() + 0.5D, peripheral.getY() + 0.5D, peripheral.getZ() + 0.5D, "mob.endermen.portal", 0.8F, 0.65F);
@@ -169,12 +170,13 @@ public class LogicHandler {
 
             return new Object[] { Boolean.FALSE };
         case 6: // getLiquidInfo
-            tank = peripheral.getLiquidTank();
+        case 8: // getFluidInfo
+            tank = peripheral.getFluidTank();
 
-            liquidStack = tank.getLiquid();
+            fluidStack = tank.getFluid();
 
-            if (liquidStack != null && liquidStack.amount > 0 && liquidStack.itemID > 0) {
-                return new Object[] { LiquidDictionary.findLiquidName(liquidStack), liquidStack.amount };
+            if (fluidStack != null && fluidStack.amount > 0) {
+                return new Object[] { FluidRegistry.getFluidName(fluidStack), fluidStack.amount };
             }
 
             return new Object[] { null, 0 };
@@ -338,9 +340,9 @@ public class LogicHandler {
                 int green = (color & 0xFF00) >> 8;
                 int blue = color & 0xFF;
 
-                int tankRed = peripheral.getLiquidLevel(0);
-                int tankGreen = peripheral.getLiquidLevel(1);
-                int tankBlue = peripheral.getLiquidLevel(2);
+                int tankRed = peripheral.getFluidLevel(0);
+                int tankGreen = peripheral.getFluidLevel(1);
+                int tankBlue = peripheral.getFluidLevel(2);
 
                 if (tankRed < red) {
                     red = tankRed;
@@ -356,9 +358,9 @@ public class LogicHandler {
                 tankGreen -= green;
                 tankBlue -= blue;
 
-                peripheral.setLiquidLevel(0, tankRed);
-                peripheral.setLiquidLevel(1, tankGreen);
-                peripheral.setLiquidLevel(2, tankBlue);
+                peripheral.setFluidLevel(0, tankRed);
+                peripheral.setFluidLevel(1, tankGreen);
+                peripheral.setFluidLevel(2, tankBlue);
 
                 color = red << 16 | green << 8 | blue;
                 firePattern.star.primaryColors[i] = color;
@@ -370,9 +372,9 @@ public class LogicHandler {
                 int green = (color & 0xFF00) >> 8;
                 int blue = color & 0xFF;
 
-                int tankRed = peripheral.getLiquidLevel(0);
-                int tankGreen = peripheral.getLiquidLevel(1);
-                int tankBlue = peripheral.getLiquidLevel(2);
+                int tankRed = peripheral.getFluidLevel(0);
+                int tankGreen = peripheral.getFluidLevel(1);
+                int tankBlue = peripheral.getFluidLevel(2);
 
                 if (tankRed < red) {
                     red = tankRed;
@@ -388,9 +390,9 @@ public class LogicHandler {
                 tankGreen -= green;
                 tankBlue -= blue;
 
-                peripheral.setLiquidLevel(0, tankRed);
-                peripheral.setLiquidLevel(1, tankGreen);
-                peripheral.setLiquidLevel(2, tankBlue);
+                peripheral.setFluidLevel(0, tankRed);
+                peripheral.setFluidLevel(1, tankGreen);
+                peripheral.setFluidLevel(2, tankBlue);
 
                 color = red << 16 | green << 8 | blue;
                 firePattern.star.secondaryColors[i] = color;
@@ -453,7 +455,7 @@ public class LogicHandler {
 
             Chunk chunk = peripheral.getWorld().getChunkFromBlockCoords(peripheral.getX(), peripheral.getZ());
             Packet1PlaySound packet = new Packet1PlaySound((double) peripheral.getX() + 0.5D, (double) peripheral.getY() + 0.5D, (double) peripheral.getZ() + 0.5D, name, volume, pitch);
-            PacketHandler.sendPacketToPlayersWatching(PacketHandler.instance.createPacket(packet), peripheral.getWorld().provider.dimensionId, chunk.xPosition, chunk.zPosition);
+            me.heldplayer.util.HeldCore.packet.PacketHandler.sendPacketToPlayersWatching(PacketHandler.instance.createPacket(packet), peripheral.getWorld().provider.dimensionId, chunk.xPosition, chunk.zPosition);
             //peripheral.getWorld().playSoundEffect((double) peripheral.getX() + 0.5D, (double) peripheral.getY() + 0.5D, (double) peripheral.getZ() + 0.5D, name, volume, pitch);
             return null;
         default:

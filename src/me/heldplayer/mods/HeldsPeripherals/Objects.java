@@ -5,6 +5,7 @@ import java.util.logging.Logger;
 
 import me.heldplayer.mods.HeldsPeripherals.block.BlockMulti1;
 import me.heldplayer.mods.HeldsPeripherals.block.BlockTransWorldModem;
+import me.heldplayer.mods.HeldsPeripherals.client.IconReference;
 import me.heldplayer.mods.HeldsPeripherals.client.gui.CreativeTab;
 import me.heldplayer.mods.HeldsPeripherals.item.ItemEnderCharge;
 import me.heldplayer.mods.HeldsPeripherals.item.ItemMoltenDye;
@@ -37,5 +38,8 @@ public class Objects {
     public static final String SIREN = PREFIX + "siren";
     public static final String BELL = PREFIX + "bell";
     public static Logger log;
+
+    public static final IconReference ICON_MOLTEN_DYE_STILL = new IconReference();
+    public static final IconReference ICON_MOLTEN_DYE_FLOW = new IconReference();
 
 }

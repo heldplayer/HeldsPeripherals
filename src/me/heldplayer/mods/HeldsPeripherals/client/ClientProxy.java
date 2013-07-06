@@ -27,7 +27,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.client.MinecraftForgeClient;
 import net.minecraftforge.client.event.sound.SoundLoadEvent;
 import net.minecraftforge.event.ForgeSubscribe;
-import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -90,13 +89,6 @@ public class ClientProxy extends CommonProxy {
 
             return null;
         }
-    }
-
-    public static boolean renderItemId() {
-        if (Loader.isModLoaded("NotEnoughItems")) {
-            return codechicken.nei.NEIClientConfig.showIDs();
-        }
-        return false;
     }
 
     @ForgeSubscribe

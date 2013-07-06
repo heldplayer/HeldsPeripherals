@@ -72,7 +72,7 @@ public class Packet1PlaySound extends HeldCorePacket {
     @Override
     public void onData(INetworkManager manager, EntityPlayer player) {
         World world = player.worldObj;
-        world.playSound(posX, posY, posZ, sound, volume, pitch, false);
+        world.playSound(this.posX, this.posY, this.posZ, this.sound, this.volume, this.pitch, false);
     }
 
 }

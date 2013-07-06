@@ -1,22 +1,16 @@
 
 package me.heldplayer.mods.HeldsPeripherals.client.gui;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import me.heldplayer.mods.HeldsPeripherals.client.ClientProxy;
 import me.heldplayer.mods.HeldsPeripherals.inventory.ContainerFireworksLauncher;
 import me.heldplayer.mods.HeldsPeripherals.tileentity.TileEntityFireworksLighter;
 import me.heldplayer.util.HeldCore.client.GuiHelper;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.resources.ResourceLocation;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.StatCollector;
-import net.minecraftforge.liquids.LiquidStack;
+import net.minecraftforge.fluids.FluidStack;
 
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
@@ -38,7 +32,6 @@ public class GuiFireworksLighter extends GuiContainer {
         this.playerInv = player.inventory;
     }
 
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     public void drawScreen(int x, int y, float partialTicks) {
         super.drawScreen(x, y, partialTicks);
@@ -46,102 +39,15 @@ public class GuiFireworksLighter extends GuiContainer {
         RenderHelper.disableStandardItemLighting();
 
         if (x > 60 + this.guiLeft && x < 79 + this.guiLeft && y > 13 + this.guiTop && y < 49 + this.guiTop) {
-            ArrayList<String> messages = new ArrayList<String>();
-
-            LiquidStack stack = this.lighter.getTank(0).getLiquid();
-
-            if (stack != null) {
-                ItemStack itemStack = stack.asItemStack();
-
-                List tooltip = itemStack.getTooltip(null, Minecraft.getMinecraft().gameSettings.advancedItemTooltips);
-
-                String suffix = "";
-
-                if (ClientProxy.renderItemId()) {
-                    suffix = " " + itemStack.itemID;
-
-                    if (itemStack.getItemDamage() != 0) {
-                        suffix += ":" + itemStack.getItemDamage();
-                    }
-                }
-
-                tooltip.set(0, tooltip.get(0) + suffix);
-
-                messages.addAll(tooltip);
-                messages.add(stack.amount + " / " + this.lighter.getTank(1).getCapacity() + " mB");
-            }
-            else {
-                messages.add("Empty");
-                messages.add("0 / " + this.lighter.getTank(0).getCapacity() + " mB");
-            }
-
-            GuiHelper.drawTooltip(messages, this.fontRenderer, x, y, this.guiTop, this.height);
+            GuiHelper.drawTooltip(GuiHelper.getFluidString(this.lighter.getTank(0)), this.fontRenderer, x, y, this.guiTop, this.height);
         }
 
         if (x > 96 + this.guiLeft && x < 115 + this.guiLeft && y > 13 + this.guiTop && y < 49 + this.guiTop) {
-            ArrayList<String> messages = new ArrayList<String>();
-
-            LiquidStack stack = this.lighter.getTank(1).getLiquid();
-
-            if (stack != null) {
-                ItemStack itemStack = stack.asItemStack();
-
-                List tooltip = itemStack.getTooltip(null, Minecraft.getMinecraft().gameSettings.advancedItemTooltips);
-
-                String suffix = "";
-
-                if (ClientProxy.renderItemId()) {
-                    suffix = " " + itemStack.itemID;
-
-                    if (itemStack.getItemDamage() != 0) {
-                        suffix += ":" + itemStack.getItemDamage();
-                    }
-                }
-
-                tooltip.set(0, tooltip.get(0) + suffix);
-
-                messages.addAll(tooltip);
-                messages.add(stack.amount + " / " + this.lighter.getTank(1).getCapacity() + " mB");
-            }
-            else {
-                messages.add("Empty");
-                messages.add("0 / " + this.lighter.getTank(1).getCapacity() + " mB");
-            }
-
-            GuiHelper.drawTooltip(messages, this.fontRenderer, x, y, this.guiTop, this.height);
+            GuiHelper.drawTooltip(GuiHelper.getFluidString(this.lighter.getTank(1)), this.fontRenderer, x, y, this.guiTop, this.height);
         }
 
         if (x > 132 + this.guiLeft && x < 151 + this.guiLeft && y > 13 + this.guiTop && y < 49 + this.guiTop) {
-            ArrayList<String> messages = new ArrayList<String>();
-
-            LiquidStack stack = this.lighter.getTank(2).getLiquid();
-
-            if (stack != null) {
-                ItemStack itemStack = stack.asItemStack();
-
-                List tooltip = itemStack.getTooltip(null, Minecraft.getMinecraft().gameSettings.advancedItemTooltips);
-
-                String suffix = "";
-
-                if (ClientProxy.renderItemId()) {
-                    suffix = " " + itemStack.itemID;
-
-                    if (itemStack.getItemDamage() != 0) {
-                        suffix += ":" + itemStack.getItemDamage();
-                    }
-                }
-
-                tooltip.set(0, tooltip.get(0) + suffix);
-
-                messages.addAll(tooltip);
-                messages.add(stack.amount + " / " + this.lighter.getTank(1).getCapacity() + " mB");
-            }
-            else {
-                messages.add("Empty");
-                messages.add("0 / " + this.lighter.getTank(2).getCapacity() + " mB");
-            }
-
-            GuiHelper.drawTooltip(messages, this.fontRenderer, x, y, this.guiTop, this.height);
+            GuiHelper.drawTooltip(GuiHelper.getFluidString(this.lighter.getTank(2)), this.fontRenderer, x, y, this.guiTop, this.height);
         }
     }
 
@@ -169,22 +75,22 @@ public class GuiFireworksLighter extends GuiContainer {
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize);
 
-        LiquidStack stack = this.lighter.getTank(0).getLiquid();
+        FluidStack stack = this.lighter.getTank(0).getFluid();
         if (stack != null && stack.amount > 0) {
             int scaled = GuiHelper.getScaled(32, stack.amount, 2000);
-            GuiHelper.drawLiquid(stack.itemID, stack.itemMeta, this.guiLeft + 62, this.guiTop + 15 + 32 - scaled, 16, scaled);
+            GuiHelper.drawFluid(stack.getFluid(), this.guiLeft + 62, this.guiTop + 15 + 32 - scaled, 16, scaled);
         }
 
-        stack = this.lighter.getTank(1).getLiquid();
+        stack = this.lighter.getTank(1).getFluid();
         if (stack != null && stack.amount > 0) {
             int scaled = GuiHelper.getScaled(32, stack.amount, 2000);
-            GuiHelper.drawLiquid(stack.itemID, stack.itemMeta, this.guiLeft + 98, this.guiTop + 15 + 32 - scaled, 16, scaled);
+            GuiHelper.drawFluid(stack.getFluid(), this.guiLeft + 98, this.guiTop + 15 + 32 - scaled, 16, scaled);
         }
 
-        stack = this.lighter.getTank(2).getLiquid();
+        stack = this.lighter.getTank(2).getFluid();
         if (stack != null && stack.amount > 0) {
             int scaled = GuiHelper.getScaled(32, stack.amount, 2000);
-            GuiHelper.drawLiquid(stack.itemID, stack.itemMeta, this.guiLeft + 134, this.guiTop + 15 + 32 - scaled, 16, scaled);
+            GuiHelper.drawFluid(stack.getFluid(), this.guiLeft + 134, this.guiTop + 15 + 32 - scaled, 16, scaled);
         }
 
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);

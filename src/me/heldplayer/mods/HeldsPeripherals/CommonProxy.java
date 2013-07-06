@@ -8,6 +8,7 @@ import me.heldplayer.mods.HeldsPeripherals.api.HeldsPeripheralAPI;
 import me.heldplayer.mods.HeldsPeripherals.block.BlockMulti1;
 import me.heldplayer.mods.HeldsPeripherals.block.BlockTransWorldModem;
 import me.heldplayer.mods.HeldsPeripherals.client.BlockRendererHeldsPeripheral;
+import me.heldplayer.mods.HeldsPeripherals.client.ClientProxy;
 import me.heldplayer.mods.HeldsPeripherals.client.gui.CreativeTab;
 import me.heldplayer.mods.HeldsPeripherals.entity.EntityFireworkRocket;
 import me.heldplayer.mods.HeldsPeripherals.inventory.ContainerFireworksLauncher;
@@ -26,9 +27,9 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
+import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.liquids.LiquidDictionary;
-import net.minecraftforge.liquids.LiquidStack;
+import net.minecraftforge.event.ForgeSubscribe;
 import net.minecraftforge.oredict.OreDictionary;
 import thaumcraft.api.ItemApi;
 import thaumcraft.api.ThaumcraftApi;
@@ -41,7 +42,6 @@ import cpw.mods.fml.common.network.IGuiHandler;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
-import cpw.mods.fml.common.registry.LanguageRegistry;
 import dan200.turtle.api.TurtleAPI;
 
 public class CommonProxy implements IGuiHandler {
@@ -72,35 +72,25 @@ public class CommonProxy implements IGuiHandler {
         Objects.itemEnderCharge = new ItemEnderCharge(ModHeldsPeripherals.itemEnderChargeId.getValue());
         GameRegistry.registerItem(Objects.itemEnderCharge, "computercraft.heldsperipherals.endercharge");
 
-        // Liquid dyes
+        // Molten dyes
         Objects.itemMoltenDye = new ItemMoltenDye(ModHeldsPeripherals.itemMoltenDyeId.getValue());
         GameRegistry.registerItem(Objects.itemMoltenDye, "computercraft.heldsperipherals.moltendye");
 
         enderCharges = new HashMap<ItemStack, Integer>();
     }
 
-    @SuppressWarnings("unused")
     public void init(FMLInitializationEvent event) {
         thaumcraftInstalled = thaumcraft != null;
 
         Objects.creativeTab = new CreativeTab("CCHeldsPeripherals");
-        LanguageRegistry.instance().addStringLocalization("itemGroup.CCHeldsPeripherals", "Held's peripherals");
 
         // Trans World Modem
-        Objects.blockTransWorldModem.setUnlocalizedName("HP.transWorldModem");
-        LanguageRegistry.instance().addStringLocalization("tile.HP.transWorldModem.name", "Trans-World Modem");
-
-        Objects.blockTransWorldModem.setCreativeTab(Objects.creativeTab);
+        Objects.blockTransWorldModem.setUnlocalizedName("HP.transWorldModem").setCreativeTab(Objects.creativeTab);
 
         GameRegistry.addRecipe(new ItemStack(ModHeldsPeripherals.blockTransWorldModemId.getValue(), 1, 0), "STS", "IPG", "SRS", 'S', Block.stone, 'T', Block.torchRedstoneActive, 'I', Item.ingotIron, 'P', Item.enderPearl, 'G', Item.ingotGold, 'R', Item.redstone);
 
         // Electrical Fireworks Lighter + Noise Maker + Thaumic Scanner
-        Objects.blockMulti1.setUnlocalizedName("HP.fireworksLighter");
-        LanguageRegistry.instance().addStringLocalization("tile.HP.fireworksLighter.name", "Electrical Fireworks Lighter");
-        LanguageRegistry.instance().addStringLocalization("tile.HP.noiseMaker.name", "Noise Maker");
-        LanguageRegistry.instance().addStringLocalization("tile.HP.thaumicScanner.name", "Thaumic Scanner");
-
-        Objects.blockMulti1.setCreativeTab(Objects.creativeTab);
+        Objects.blockMulti1.setUnlocalizedName("HP.fireworksLighter").setCreativeTab(Objects.creativeTab);
 
         GameRegistry.addRecipe(new ItemStack(ModHeldsPeripherals.blockMulti1Id.getValue(), 1, 0), "hpG", "dDg", "ncf", 'h', new ItemStack(Item.skull, 1, OreDictionary.WILDCARD_VALUE), 'p', Item.paper, 'G', Item.gunpowder, 'd', Item.diamond, 'D', Block.dispenser, 'g', Item.lightStoneDust, 'n', Item.goldNugget, 'c', Item.fireballCharge, 'f', Item.feather);
         GameRegistry.addRecipe(new ItemStack(ModHeldsPeripherals.blockMulti1Id.getValue(), 1, 4), "bbb", "rnr", "bBb", 'b', Block.brick, 'r', Item.redstone, 'n', Block.music, 'B', Block.bookShelf);
@@ -117,30 +107,19 @@ public class CommonProxy implements IGuiHandler {
             ItemStack thaumium = ItemApi.getItem("itemResource", 2);
             ItemStack visShard = ItemApi.getItem("itemShard", 4);
 
-            // Arcane stone block + Goggles + Arcane stone block
-            // Thaumometer + Quicksilver + Thaumometer
-            // Thaum ingot + Vis shard + thaum ingot
             ThaumcraftApi.addArcaneCraftingRecipe("", 5, new ItemStack(ModHeldsPeripherals.blockMulti1Id.getValue(), 1, 8), "SgS", "mqm", "isi", 'S', arcaneStoneBlock, 'g', goggles, 'm', thaumometer, 'q', quicksilver, 'i', thaumium, 's', visShard);
         }
 
         // Ender Charge/Ender Pearl Dust
         Objects.itemEnderCharge.setUnlocalizedName("item.HP.enderCharge.name").setCreativeTab(Objects.creativeTab);
-        LanguageRegistry.instance().addStringLocalization("item.HP.enderCharge.name", "Ender Charge");
-        LanguageRegistry.instance().addStringLocalization("item.HP.enderCharge.compact.name", "Compact Ender Charge");
 
         OreDictionary.registerOre("dustEnderCharge", Objects.itemEnderCharge);
         OreDictionary.registerOre("itemDustEnderCharge", Objects.itemEnderCharge);
 
-        // Liquid dyes
+        // Molten dyes
         Objects.itemMoltenDye.setUnlocalizedName("HP.moltenDye").setCreativeTab(Objects.creativeTab);
-        LanguageRegistry.instance().addStringLocalization("item.HP.moltenDye.name", "Molten Dye");
-        LanguageRegistry.instance().addStringLocalization("item.HP.moltenDye.red.name", "Molten Red Dye");
-        LanguageRegistry.instance().addStringLocalization("item.HP.moltenDye.green.name", "Molten Green Dye");
-        LanguageRegistry.instance().addStringLocalization("item.HP.moltenDye.blue.name", "Molten Blue Dye");
 
-        LiquidStack redDye = LiquidDictionary.getOrCreateLiquid("Molten Red Dye", new LiquidStack(Objects.itemMoltenDye.itemID, 1000, 14));
-        LiquidStack greenDye = LiquidDictionary.getOrCreateLiquid("Molten Green Dye", new LiquidStack(Objects.itemMoltenDye.itemID, 1000, 13));
-        LiquidStack blueDye = LiquidDictionary.getOrCreateLiquid("Molten Blue Dye", new LiquidStack(Objects.itemMoltenDye.itemID, 1000, 11));
+        ItemMoltenDye.registerFluids();
 
         // Etc...
         NetworkRegistry.instance().registerGuiHandler(ModHeldsPeripherals.instance, this);
@@ -239,6 +218,21 @@ public class CommonProxy implements IGuiHandler {
         }
 
         return false;
+    }
+
+    @ForgeSubscribe
+    public void registerTextures(TextureStitchEvent.Pre event) {
+        if (event.map.textureType == 0) {
+            Objects.ICON_MOLTEN_DYE_STILL.icon = event.map.registerIcon("heldsperipherals:molten_dye_still");
+            Objects.ICON_MOLTEN_DYE_FLOW.icon = event.map.registerIcon("heldsperipherals:molten_dye_flow");
+        }
+        else if (event.map.textureType == 1) {
+            String[] icons = new String[] { "dust", "red", "green", "blue" };
+
+            for (int i = 0; i < icons.length; i++) {
+                ClientProxy.icons[i] = event.map.registerIcon("heldsperipherals:background_" + icons[i]);
+            }
+        }
     }
 
 }

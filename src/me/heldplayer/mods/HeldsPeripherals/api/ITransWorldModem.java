@@ -2,7 +2,7 @@
 package me.heldplayer.mods.HeldsPeripherals.api;
 
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.liquids.LiquidTank;
+import net.minecraftforge.fluids.FluidTank;
 
 /**
  * Interface for Trans World Modems
@@ -42,11 +42,11 @@ public interface ITransWorldModem extends IHeldsPeripheral {
     public abstract int getRemainingTransports();
 
     /**
-     * Gets the remaining liquid transports for this modem.
+     * Gets the remaining fluid transports for this modem.
      * 
-     * @return The remaining liquid transports in this modem.
+     * @return The remaining fluid transports in this modem.
      */
-    public abstract int getRemainingLiquidTransports();
+    public abstract int getRemainingFluidTransports();
 
     /**
      * Returns the direct stack in the specified slot.
@@ -68,10 +68,10 @@ public interface ITransWorldModem extends IHeldsPeripheral {
     public abstract void setStackInSlot(int slot, ItemStack stack);
 
     /**
-     * Returns the LiquidStack in the peripheral.
+     * Returns the FluidTank in the peripheral.
      * 
-     * @return The LiquidStack in the peripheral.
+     * @return The FluidTank in the peripheral.
      */
-    public abstract LiquidTank getLiquidTank();
+    public abstract FluidTank getFluidTank();
 
 }
