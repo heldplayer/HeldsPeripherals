@@ -2,7 +2,7 @@
 package me.heldplayer.mods.HeldsPeripherals.entity;
 
 import me.heldplayer.mods.HeldsPeripherals.client.particle.EntityFireworkStarterFX;
-import net.minecraft.client.Minecraft;
+import me.heldplayer.util.HeldCore.client.MineHelp;
 import net.minecraft.client.particle.EffectRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
@@ -136,7 +136,7 @@ public class EntityFireworkRocket extends Entity {
                 component = stack.getTagCompound().getCompoundTag("Fireworks");
             }
 
-            EffectRenderer effectRenderer = Minecraft.getMinecraft().effectRenderer;
+            EffectRenderer effectRenderer = MineHelp.getEffectRenderer();
             effectRenderer.addEffect(new EntityFireworkStarterFX(this.worldObj, this.posX, this.posY, this.posZ, this.motionX, this.motionY, this.motionZ, effectRenderer, component));
         }
 

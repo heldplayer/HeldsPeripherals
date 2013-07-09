@@ -1,10 +1,6 @@
 
 package me.heldplayer.mods.HeldsPeripherals.client;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.logging.Level;
 
 import me.heldplayer.mods.HeldsPeripherals.CommonProxy;
@@ -15,7 +11,6 @@ import me.heldplayer.mods.HeldsPeripherals.client.gui.GuiTransWorldModem;
 import me.heldplayer.mods.HeldsPeripherals.inventory.SlotOreDictionary;
 import me.heldplayer.mods.HeldsPeripherals.tileentity.TileEntityFireworksLighter;
 import me.heldplayer.mods.HeldsPeripherals.tileentity.TileEntityTransWorldModem;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.entity.RenderSnowball;
@@ -93,47 +88,9 @@ public class ClientProxy extends CommonProxy {
 
     @ForgeSubscribe
     public void onSoundLoaded(SoundLoadEvent event) {
-        File resources = new File(Minecraft.getMinecraft().mcDataDir, "assets");
         for (String sound : Objects.SOUNDS) {
-            try {
-                File file = new File(resources, Objects.SOUND_RESOURCE_PATH + sound + ".ogg");
-
-                if (!file.exists()) {
-                    file.getParentFile().mkdirs();
-                    file.createNewFile();
-
-                    InputStream in = ClientProxy.class.getResourceAsStream(Objects.SOUND_RESOURCE_LOCATION + sound + ".ogg");
-                    OutputStream out = new FileOutputStream(file);
-
-                    byte[] buffer = new byte[1024];
-                    int bytes = 0;
-                    int size = 0;
-
-                    while ((bytes = in.read(buffer)) > 0) {
-                        out.write(buffer, 0, bytes);
-                        size += bytes;
-                    }
-
-                    out.close();
-                    in.close();
-
-                    if (size == 0) {
-                        file.delete();
-                    }
-                }
-
-                if (!file.exists()) {
-                    throw new RuntimeException("Sound file missing");
-                }
-                else {
-                    //Objects.log.log(Level.INFO, "Added sound '" + Objects.PREFIX + sound + ".ogg' as " + file.getPath());
-                    Objects.log.log(Level.WARNING, "Couldn't add sound '" + Objects.PREFIX + sound + ".ogg'");
-                    //event.manager.addSound((Objects.PREFIX + sound).replace(".", "/") + ".ogg", file);
-                }
-            }
-            catch (Exception e) {
-                Objects.log.log(Level.WARNING, "Failed loading sound " + sound + ".ogg", e);
-            }
+            event.manager.addSound(sound + ".ogg");
+            Objects.log.log(Level.INFO, "Adding sound " + sound + ".ogg");
         }
     }
 

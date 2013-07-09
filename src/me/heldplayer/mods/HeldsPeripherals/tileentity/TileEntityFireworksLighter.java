@@ -172,7 +172,7 @@ public class TileEntityFireworksLighter extends TileEntityHeldsPeripheral implem
     }
 
     @Override
-    public boolean isStackValidForSlot(int slot, ItemStack stack) {
+    public boolean isItemValidForSlot(int slot, ItemStack stack) {
         String type = "";
 
         switch (slot) {

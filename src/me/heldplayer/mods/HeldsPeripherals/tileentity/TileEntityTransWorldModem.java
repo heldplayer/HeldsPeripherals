@@ -163,7 +163,7 @@ public class TileEntityTransWorldModem extends TileEntityHeldsPeripheral impleme
     }
 
     @Override
-    public boolean isStackValidForSlot(int slot, ItemStack stack) {
+    public boolean isItemValidForSlot(int slot, ItemStack stack) {
         if (slot < 3) {
             return CommonProxy.doesItemHaveCharge(stack);
         }
@@ -191,7 +191,7 @@ public class TileEntityTransWorldModem extends TileEntityHeldsPeripheral impleme
 
     @Override
     public boolean canExtractItem(int slot, ItemStack stack, int side) {
-        return this.isStackValidForSlot(slot, stack);
+        return this.isItemValidForSlot(slot, stack);
     }
 
     @Override

@@ -7,6 +7,7 @@ import me.heldplayer.mods.HeldsPeripherals.Objects;
 import me.heldplayer.mods.HeldsPeripherals.fluids.FluidColored;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Icon;
@@ -51,6 +52,12 @@ public class ItemMoltenDye extends Item {
 
     @Override
     @SideOnly(Side.CLIENT)
+    public int getSpriteNumber() {
+        return 0;
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
     public void registerIcons(IconRegister register) {
         this.icon = register.registerIcon("heldsperipherals:molten_dye_still");
     }
@@ -86,12 +93,17 @@ public class ItemMoltenDye extends Item {
     @Override
     @SideOnly(Side.CLIENT)
     public void getSubItems(int itemId, CreativeTabs tabs, List list) {
-        for (int i = 0; i < 16; i++) {
+        for (int i = 0; i < colors.length; i++) {
             list.add(new ItemStack(itemId, 1, i));
         }
-        //list.add(new ItemStack(itemId, 1, 11));
-        //list.add(new ItemStack(itemId, 1, 13));
-        //list.add(new ItemStack(itemId, 1, 14));
+    }
+
+    @SuppressWarnings({ "rawtypes", "unchecked" })
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean advanced) {
+        list.add("Very hot and sticky, what a mess..");
+        super.addInformation(stack, player, list, advanced);
     }
 
 }

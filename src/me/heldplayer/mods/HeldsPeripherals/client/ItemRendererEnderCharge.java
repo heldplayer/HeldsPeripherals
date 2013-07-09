@@ -1,11 +1,9 @@
 
 package me.heldplayer.mods.HeldsPeripherals.client;
 
-import java.lang.reflect.Constructor;
-
 import me.heldplayer.mods.HeldsPeripherals.Objects;
+import me.heldplayer.util.HeldCore.client.MineHelp;
 import me.heldplayer.util.HeldCore.client.RenderHelper;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.item.ItemStack;
@@ -23,18 +21,7 @@ public class ItemRendererEnderCharge implements IItemRenderer {
     private FontRenderer font;
 
     public ItemRendererEnderCharge() {
-        try {
-            Class<FontRenderer> clazz = FontRenderer.class;
-
-            Constructor<FontRenderer> constructor = clazz.getDeclaredConstructor();
-
-            constructor.setAccessible(true);
-
-            this.font = (FontRenderer) constructor.newInstance();
-        }
-        catch (Exception ex) {
-            ex.printStackTrace();
-        }
+        this.font = MineHelp.getFontRenderer();
     }
 
     @Override
@@ -67,7 +54,7 @@ public class ItemRendererEnderCharge implements IItemRenderer {
             if (item.getItemDamage() > 0 && this.font != null) {
                 GL11.glScalef(0.5F, 0.5F, 0.5F);
 
-                Minecraft.getMinecraft().fontRenderer.drawStringWithShadow("" + (item.getItemDamage() + 1), 2, 2, 0xFFFFFF);
+                font.drawStringWithShadow("" + (item.getItemDamage() + 1), 2, 2, 0xFFFFFF);
             }
 
         }

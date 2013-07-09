@@ -92,7 +92,7 @@ public class CommonProxy implements IGuiHandler {
         // Electrical Fireworks Lighter + Noise Maker + Thaumic Scanner
         Objects.blockMulti1.setUnlocalizedName("HP.fireworksLighter").setCreativeTab(Objects.creativeTab);
 
-        GameRegistry.addRecipe(new ItemStack(ModHeldsPeripherals.blockMulti1Id.getValue(), 1, 0), "hpG", "dDg", "ncf", 'h', new ItemStack(Item.skull, 1, OreDictionary.WILDCARD_VALUE), 'p', Item.paper, 'G', Item.gunpowder, 'd', Item.diamond, 'D', Block.dispenser, 'g', Item.lightStoneDust, 'n', Item.goldNugget, 'c', Item.fireballCharge, 'f', Item.feather);
+        GameRegistry.addRecipe(new ItemStack(ModHeldsPeripherals.blockMulti1Id.getValue(), 1, 0), "hpG", "dDg", "ncf", 'h', new ItemStack(Item.skull, 1, OreDictionary.WILDCARD_VALUE), 'p', Item.paper, 'G', Item.gunpowder, 'd', Item.diamond, 'D', Block.dispenser, 'g', Item.glowstone, 'n', Item.goldNugget, 'c', Item.fireballCharge, 'f', Item.feather);
         GameRegistry.addRecipe(new ItemStack(ModHeldsPeripherals.blockMulti1Id.getValue(), 1, 4), "bbb", "rnr", "bBb", 'b', Block.brick, 'r', Item.redstone, 'n', Block.music, 'B', Block.bookShelf);
 
         if (thaumcraftInstalled) {

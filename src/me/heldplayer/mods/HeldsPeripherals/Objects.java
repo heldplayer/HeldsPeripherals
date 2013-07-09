@@ -30,13 +30,10 @@ public class Objects {
     public static ItemEnderCharge itemEnderCharge;
     public static CreativeTab creativeTab;
 
-    public static final String SOUND_RESOURCE_LOCATION = "/me/heldplayer/audio/";
-    public static final String SOUND_RESOURCE_PATH = "mods/Smartestone/audio/";
-    public static final String[] SOUNDS = new String[] { "cloister-bell", "siren", "bell" };
-    public static final String PREFIX = "CC.HP.";
-    public static final String CLOISTER_BELL = PREFIX + "cloister-bell";
-    public static final String SIREN = PREFIX + "siren";
-    public static final String BELL = PREFIX + "bell";
+    public static final String CLOISTER_BELL = "heldsperipherals:bell/cloister-bell";
+    public static final String SIREN = "heldsperipherals:bell/siren";
+    public static final String BELL = "heldsperipherals:bell/bell";
+    public static final String[] SOUNDS = new String[] { CLOISTER_BELL, SIREN, BELL };
     public static Logger log;
 
     public static final IconReference ICON_MOLTEN_DYE_STILL = new IconReference();
