@@ -58,23 +58,7 @@ public class CommonProxy implements IGuiHandler {
     public void preInit(FMLPreInitializationEvent event) {
         MinecraftForge.EVENT_BUS.register(this);
 
-        CCInjector.inject(event);
-
-        // Trans World Modem
-        Objects.blockTransWorldModem = new BlockTransWorldModem(ModHeldsPeripherals.blockTransWorldModemId.getValue());
-        GameRegistry.registerBlock(Objects.blockTransWorldModem, "computercraft.heldsperipherals.transworldmodem");
-
-        // Electrical Fireworks Lighter + Noise Maker + Thaumic Scanner
-        Objects.blockMulti1 = new BlockMulti1(ModHeldsPeripherals.blockMulti1Id.getValue());
-        GameRegistry.registerBlock(Objects.blockMulti1, ItemBlockMulti1.class, "computercraft.heldsperipherals.fireworkslighter");
-
-        // Ender Charge/Ender Pearl Dust
-        Objects.itemEnderCharge = new ItemEnderCharge(ModHeldsPeripherals.itemEnderChargeId.getValue());
-        GameRegistry.registerItem(Objects.itemEnderCharge, "computercraft.heldsperipherals.endercharge");
-
-        // Molten dyes
-        Objects.itemMoltenDye = new ItemMoltenDye(ModHeldsPeripherals.itemMoltenDyeId.getValue());
-        GameRegistry.registerItem(Objects.itemMoltenDye, "computercraft.heldsperipherals.moltendye");
+        //CCInjector.inject(event);
 
         enderCharges = new HashMap<ItemStack, Integer>();
     }
@@ -85,11 +69,15 @@ public class CommonProxy implements IGuiHandler {
         Objects.creativeTab = new CreativeTab("CCHeldsPeripherals");
 
         // Trans World Modem
+        Objects.blockTransWorldModem = new BlockTransWorldModem(ModHeldsPeripherals.blockTransWorldModemId.getValue());
+        GameRegistry.registerBlock(Objects.blockTransWorldModem, "computercraft.heldsperipherals.transworldmodem");
         Objects.blockTransWorldModem.setUnlocalizedName("HP.transWorldModem").setCreativeTab(Objects.creativeTab);
 
         GameRegistry.addRecipe(new ItemStack(ModHeldsPeripherals.blockTransWorldModemId.getValue(), 1, 0), "STS", "IPG", "SRS", 'S', Block.stone, 'T', Block.torchRedstoneActive, 'I', Item.ingotIron, 'P', Item.enderPearl, 'G', Item.ingotGold, 'R', Item.redstone);
 
         // Electrical Fireworks Lighter + Noise Maker + Thaumic Scanner
+        Objects.blockMulti1 = new BlockMulti1(ModHeldsPeripherals.blockMulti1Id.getValue());
+        GameRegistry.registerBlock(Objects.blockMulti1, ItemBlockMulti1.class, "computercraft.heldsperipherals.fireworkslighter");
         Objects.blockMulti1.setUnlocalizedName("HP.fireworksLighter").setCreativeTab(Objects.creativeTab);
 
         GameRegistry.addRecipe(new ItemStack(ModHeldsPeripherals.blockMulti1Id.getValue(), 1, 0), "hpG", "dDg", "ncf", 'h', new ItemStack(Item.skull, 1, OreDictionary.WILDCARD_VALUE), 'p', Item.paper, 'G', Item.gunpowder, 'd', Item.diamond, 'D', Block.dispenser, 'g', Item.glowstone, 'n', Item.goldNugget, 'c', Item.fireballCharge, 'f', Item.feather);
@@ -111,13 +99,17 @@ public class CommonProxy implements IGuiHandler {
         }
 
         // Ender Charge/Ender Pearl Dust
+        Objects.itemEnderCharge = new ItemEnderCharge(ModHeldsPeripherals.itemEnderChargeId.getValue());
+        GameRegistry.registerItem(Objects.itemEnderCharge, "computercraft.heldsperipherals.endercharge");
         Objects.itemEnderCharge.setUnlocalizedName("item.HP.enderCharge.name").setCreativeTab(Objects.creativeTab);
 
         OreDictionary.registerOre("dustEnderCharge", Objects.itemEnderCharge);
         OreDictionary.registerOre("itemDustEnderCharge", Objects.itemEnderCharge);
 
         // Molten dyes
-        Objects.itemMoltenDye.setUnlocalizedName("HP.moltenDye").setCreativeTab(Objects.creativeTab);
+        //Objects.itemMoltenDye = new ItemMoltenDye(ModHeldsPeripherals.itemMoltenDyeId.getValue());
+        //GameRegistry.registerItem(Objects.itemMoltenDye, "computercraft.heldsperipherals.moltendye");
+        //Objects.itemMoltenDye.setUnlocalizedName("HP.moltenDye").setCreativeTab(Objects.creativeTab);
 
         ItemMoltenDye.registerFluids();
 

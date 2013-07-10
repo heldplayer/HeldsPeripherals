@@ -197,7 +197,7 @@ public class ModHeldsPeripherals {
         case 0:
             return Objects.itemEnderCharge;
         case 1:
-            return Objects.itemMoltenDye;
+            //return Objects.itemMoltenDye;
 
         default:
             return null;

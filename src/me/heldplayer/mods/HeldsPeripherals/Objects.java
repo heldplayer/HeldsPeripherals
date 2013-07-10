@@ -8,7 +8,6 @@ import me.heldplayer.mods.HeldsPeripherals.block.BlockTransWorldModem;
 import me.heldplayer.mods.HeldsPeripherals.client.IconReference;
 import me.heldplayer.mods.HeldsPeripherals.client.gui.CreativeTab;
 import me.heldplayer.mods.HeldsPeripherals.item.ItemEnderCharge;
-import me.heldplayer.mods.HeldsPeripherals.item.ItemMoltenDye;
 
 /**
  * HeldsPeripherals mod Objects
@@ -26,7 +25,7 @@ public class Objects {
 
     public static BlockMulti1 blockMulti1;
     public static BlockTransWorldModem blockTransWorldModem;
-    public static ItemMoltenDye itemMoltenDye;
+    //public static ItemMoltenDye itemMoltenDye;
     public static ItemEnderCharge itemEnderCharge;
     public static CreativeTab creativeTab;
 
