@@ -9,6 +9,7 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
 import dan200.computer.api.IComputerAccess;
 
+// FIXME: check for world leaking, as it most likely happens
 public class Network {
     private static ArrayList<Modem> modems = new ArrayList<Modem>();
 
