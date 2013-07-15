@@ -4,8 +4,6 @@ package me.heldplayer.mods.HeldsPeripherals.api;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 
-import net.minecraft.block.Block;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 /**
@@ -59,64 +57,6 @@ public class HeldsPeripheralAPI {
     }
 
     /**
-     * Method for obtaining a {@link net.minecraft.block.Block Block} instance
-     * owned by HeldsPeripherals.
-     * 
-     * @param id
-     *        The id of the block.<br>
-     *        Current ids:
-     *        <ul>
-     *        <li>1: BlockTransWorldModem</li>
-     *        <li>2: BlockMulti1</li>
-     *        </ul>
-     * @return The {@link net.minecraft.block.Block Block} instance or null
-     */
-    public static Block getBlock(Integer id) {
-        tryInit();
-
-        if (getBlock != null) {
-            try {
-                return (Block) getBlock.invoke(null, id);
-            }
-            catch (Exception e) {
-                System.err.println("Failed calling HeldsPeripherals method 'getBlock(Integer)' through API'");
-                e.printStackTrace();
-            }
-        }
-
-        return null;
-    }
-
-    /**
-     * Method for obtaining a {@link net.minecraft.item.Item Item} instance
-     * owned by HeldsPeripherals.
-     * 
-     * @param id
-     *        The id of the item.<br>
-     *        Current ids:
-     *        <ul>
-     *        <li>1: ItemEnderCharge</li>
-     *        <li>2: ItemMoltenDye</li>
-     *        </ul>
-     * @return The {@link net.minecraft.item.Item Item} instance or null
-     */
-    public static Item getItem(Integer id) {
-        tryInit();
-
-        if (getItem != null) {
-            try {
-                return (Item) getItem.invoke(null, id);
-            }
-            catch (Exception e) {
-                System.err.println("Failed calling HeldsPeripherals method 'getItem(Integer)' through API'");
-                e.printStackTrace();
-            }
-        }
-
-        return null;
-    }
-
-    /**
      * Method for creating a link between the API and the mod itself
      */
     @SuppressWarnings("unchecked")
@@ -125,8 +65,6 @@ public class HeldsPeripheralAPI {
             try {
                 heldsPeripherals = Class.forName("me.heldplayer.mods.HeldsPeripherals.common.ModHeldsPeripherals");
                 addCharge = heldsPeripherals.getMethod("addCharge", new Class[] { ItemStack.class, Integer.class });
-                getBlock = heldsPeripherals.getMethod("getBlock", new Class[] { Integer.class });
-                getItem = heldsPeripherals.getMethod("getItem", new Class[] { Integer.class });
             }
             catch (ClassNotFoundException e) {
                 System.out.println("Could not find HeldsPeripherals");
@@ -146,6 +84,4 @@ public class HeldsPeripheralAPI {
     @SuppressWarnings("rawtypes")
     private static Class heldsPeripherals = null;
     private static Method addCharge;
-    private static Method getBlock;
-    private static Method getItem;
 }
