@@ -2,7 +2,7 @@
 package me.heldplayer.mods.HeldsPeripherals.client;
 
 import me.heldplayer.mods.HeldsPeripherals.Objects;
-import me.heldplayer.util.HeldCore.client.MineHelp;
+import me.heldplayer.util.HeldCore.client.MC;
 import me.heldplayer.util.HeldCore.client.RenderHelper;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.Tessellator;
@@ -21,7 +21,7 @@ public class ItemRendererEnderCharge implements IItemRenderer {
     private FontRenderer font;
 
     public ItemRendererEnderCharge() {
-        this.font = MineHelp.getFontRenderer();
+        this.font = MC.getFontRenderer();
     }
 
     @Override
