@@ -2,9 +2,9 @@
 package me.heldplayer.mods.HeldsPeripherals;
 
 import me.heldplayer.mods.HeldsPeripherals.api.IElectricalFireworksLighter;
+import me.heldplayer.mods.HeldsPeripherals.api.IEnderModem;
 import me.heldplayer.mods.HeldsPeripherals.api.INoiseMaker;
 import me.heldplayer.mods.HeldsPeripherals.api.IThaumicScanner;
-import me.heldplayer.mods.HeldsPeripherals.api.IEnderModem;
 import me.heldplayer.mods.HeldsPeripherals.entity.EntityFireworkRocket;
 import me.heldplayer.mods.HeldsPeripherals.network.Network;
 import me.heldplayer.mods.HeldsPeripherals.packet.Packet1PlaySound;
@@ -23,11 +23,12 @@ import thaumcraft.api.ObjectTags;
 import thaumcraft.api.ThaumcraftApi;
 import thaumcraft.api.aura.AuraNode;
 import dan200.computer.api.IComputerAccess;
+import dan200.computer.api.ILuaContext;
 
 public class LogicHandler {
 
     // { "send", "getChargeLevel", "transport", "getInputOccupied", "getOutputOccupied", "transportLiquid", "getLiquidInfo", "transportFluid", "getFluidInfo"  }
-    public static Object[] callMethod(IComputerAccess computer, int method, Object[] arguments, IEnderModem peripheral) throws Exception {
+    public static Object[] callMethod(IComputerAccess computer, ILuaContext context, int method, Object[] arguments, IEnderModem peripheral) throws Exception {
         switch (method) {
         case 0: // send
             if (peripheral.getRemainingSends() > 0 || ModHeldsPeripherals.chargeCostSend.getValue() <= 0) {
@@ -186,7 +187,7 @@ public class LogicHandler {
     }
 
     // { "launchFirework" }
-    public static Object[] callMethod(IComputerAccess computer, int method, Object[] arguments, IElectricalFireworksLighter peripheral) throws Exception {
+    public static Object[] callMethod(IComputerAccess computer, ILuaContext context, int method, Object[] arguments, IElectricalFireworksLighter peripheral) throws Exception {
         if (peripheral.isCoolingDown()) {
             throw new Exception("This peripheral is cooling down, please wait " + ((int) peripheral.getCoolingTime() / 20) + " more seconds.");
         }
@@ -410,7 +411,7 @@ public class LogicHandler {
     }
 
     // { "makeNoise" }
-    public static Object[] callMethod(IComputerAccess computer, int method, Object[] arguments, INoiseMaker peripheral) throws Exception {
+    public static Object[] callMethod(IComputerAccess computer, ILuaContext context, int method, Object[] arguments, INoiseMaker peripheral) throws Exception {
         if (peripheral.isCoolingDown()) {
             throw new Exception("This peripheral is cooling down, please wait " + ((int) peripheral.getCoolingTime() / 20) + " more seconds.");
         }
@@ -464,7 +465,7 @@ public class LogicHandler {
     }
 
     // { "getNearestNode" }
-    public static Object[] callMethod(IComputerAccess computer, int method, Object[] arguments, IThaumicScanner peripheral) throws Exception {
+    public static Object[] callMethod(IComputerAccess computer, ILuaContext context, int method, Object[] arguments, IThaumicScanner peripheral) throws Exception {
         if (!CommonProxy.thaumcraftInstalled) {
             Objects.log.info("Thaumcraft is not installed, but a Thaumic Scanner is being used!");
             throw new Exception("Thaumcraft has not been detected in this installation");

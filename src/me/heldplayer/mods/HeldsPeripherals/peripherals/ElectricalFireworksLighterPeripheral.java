@@ -9,6 +9,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.oredict.OreDictionary;
 import dan200.computer.api.IComputerAccess;
 import dan200.computer.api.IHostedPeripheral;
+import dan200.computer.api.ILuaContext;
 import dan200.turtle.api.ITurtleAccess;
 
 public class ElectricalFireworksLighterPeripheral implements IHostedPeripheral, IElectricalFireworksLighter {
@@ -36,8 +37,8 @@ public class ElectricalFireworksLighterPeripheral implements IHostedPeripheral, 
     }
 
     @Override
-    public Object[] callMethod(IComputerAccess computer, int method, Object[] arguments) throws Exception {
-        return LogicHandler.callMethod(computer, method, arguments, this);
+    public Object[] callMethod(IComputerAccess computer, ILuaContext context, int method, Object[] arguments) throws Exception {
+        return LogicHandler.callMethod(computer, context, method, arguments, this);
     }
 
     @Override

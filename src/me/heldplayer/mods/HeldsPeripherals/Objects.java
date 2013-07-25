@@ -3,9 +3,9 @@ package me.heldplayer.mods.HeldsPeripherals;
 
 import java.util.logging.Logger;
 
+import me.heldplayer.mods.HeldsPeripherals.block.BlockEnderModem;
 import me.heldplayer.mods.HeldsPeripherals.block.BlockMoltenDye;
 import me.heldplayer.mods.HeldsPeripherals.block.BlockMulti1;
-import me.heldplayer.mods.HeldsPeripherals.block.BlockEnderModem;
 import me.heldplayer.mods.HeldsPeripherals.client.IconReference;
 import me.heldplayer.mods.HeldsPeripherals.client.gui.CreativeTab;
 import me.heldplayer.mods.HeldsPeripherals.item.ItemEnderCharge;

@@ -11,8 +11,9 @@
   "updateUrl" : "http://www.computercraft.info/forums2/index.php?/topic/4882-mc-132-cc-143-trans-world-wireless-modems/",
   "url" : "http://www.computercraft.info/forums2/index.php?/topic/4882-mc-132-cc-143-trans-world-wireless-modems/",
   "parent" : "ComputerCraft",
-  "screenshots": [
-  ],
-  "depencies": "after: Thaumcraft"
+  "depencies": "after: Thaumcraft",
+  "requiredMods": [
+    "HeldCore"
+  ]
 }
 ]

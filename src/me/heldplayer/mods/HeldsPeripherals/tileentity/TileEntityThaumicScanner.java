@@ -4,6 +4,7 @@ package me.heldplayer.mods.HeldsPeripherals.tileentity;
 import me.heldplayer.mods.HeldsPeripherals.LogicHandler;
 import me.heldplayer.mods.HeldsPeripherals.api.IThaumicScanner;
 import dan200.computer.api.IComputerAccess;
+import dan200.computer.api.ILuaContext;
 
 public class TileEntityThaumicScanner extends TileEntityHeldsPeripheral implements IThaumicScanner {
 
@@ -20,8 +21,8 @@ public class TileEntityThaumicScanner extends TileEntityHeldsPeripheral implemen
     }
 
     @Override
-    public Object[] callMethod(IComputerAccess computer, int method, Object[] arguments) throws Exception {
-        return LogicHandler.callMethod(computer, method, arguments, this);
+    public Object[] callMethod(IComputerAccess computer, ILuaContext context, int method, Object[] arguments) throws Exception {
+        return LogicHandler.callMethod(computer, context, method, arguments, this);
     }
 
     @Override

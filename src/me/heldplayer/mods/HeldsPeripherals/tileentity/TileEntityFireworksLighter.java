@@ -23,6 +23,7 @@ import net.minecraftforge.fluids.FluidTankInfo;
 import net.minecraftforge.fluids.IFluidHandler;
 import net.minecraftforge.oredict.OreDictionary;
 import dan200.computer.api.IComputerAccess;
+import dan200.computer.api.ILuaContext;
 
 public class TileEntityFireworksLighter extends TileEntityHeldsPeripheral implements IInventory, IElectricalFireworksLighter, IFluidHandler {
 
@@ -365,8 +366,8 @@ public class TileEntityFireworksLighter extends TileEntityHeldsPeripheral implem
     }
 
     @Override
-    public Object[] callMethod(IComputerAccess computer, int method, Object[] arguments) throws Exception {
-        return LogicHandler.callMethod(computer, method, arguments, this);
+    public Object[] callMethod(IComputerAccess computer, ILuaContext context, int method, Object[] arguments) throws Exception {
+        return LogicHandler.callMethod(computer, context, method, arguments, this);
     }
 
     @Override
