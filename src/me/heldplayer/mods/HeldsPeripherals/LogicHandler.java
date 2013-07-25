@@ -4,7 +4,7 @@ package me.heldplayer.mods.HeldsPeripherals;
 import me.heldplayer.mods.HeldsPeripherals.api.IElectricalFireworksLighter;
 import me.heldplayer.mods.HeldsPeripherals.api.INoiseMaker;
 import me.heldplayer.mods.HeldsPeripherals.api.IThaumicScanner;
-import me.heldplayer.mods.HeldsPeripherals.api.ITransWorldModem;
+import me.heldplayer.mods.HeldsPeripherals.api.IEnderModem;
 import me.heldplayer.mods.HeldsPeripherals.entity.EntityFireworkRocket;
 import me.heldplayer.mods.HeldsPeripherals.network.Network;
 import me.heldplayer.mods.HeldsPeripherals.packet.Packet1PlaySound;
@@ -27,7 +27,7 @@ import dan200.computer.api.IComputerAccess;
 public class LogicHandler {
 
     // { "send", "getChargeLevel", "transport", "getInputOccupied", "getOutputOccupied", "transportLiquid", "getLiquidInfo", "transportFluid", "getFluidInfo"  }
-    public static Object[] callMethod(IComputerAccess computer, int method, Object[] arguments, ITransWorldModem peripheral) throws Exception {
+    public static Object[] callMethod(IComputerAccess computer, int method, Object[] arguments, IEnderModem peripheral) throws Exception {
         switch (method) {
         case 0: // send
             if (peripheral.getRemainingSends() > 0 || ModHeldsPeripherals.chargeCostSend.getValue() <= 0) {

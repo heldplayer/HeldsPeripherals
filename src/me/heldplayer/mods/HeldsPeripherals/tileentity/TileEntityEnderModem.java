@@ -5,7 +5,7 @@ import me.heldplayer.mods.HeldsPeripherals.CommonProxy;
 import me.heldplayer.mods.HeldsPeripherals.LogicHandler;
 import me.heldplayer.mods.HeldsPeripherals.ModHeldsPeripherals;
 import me.heldplayer.mods.HeldsPeripherals.Objects;
-import me.heldplayer.mods.HeldsPeripherals.api.ITransWorldModem;
+import me.heldplayer.mods.HeldsPeripherals.api.IEnderModem;
 import me.heldplayer.mods.HeldsPeripherals.network.Network;
 import me.heldplayer.mods.HeldsPeripherals.network.Network.Modem;
 import me.heldplayer.util.HeldCore.MathHelper;
@@ -22,7 +22,7 @@ import net.minecraftforge.fluids.FluidTankInfo;
 import net.minecraftforge.fluids.IFluidHandler;
 import dan200.computer.api.IComputerAccess;
 
-public class TileEntityTransWorldModem extends TileEntityHeldsPeripheral implements ISidedInventory, ITransWorldModem, IFluidHandler {
+public class TileEntityEnderModem extends TileEntityHeldsPeripheral implements ISidedInventory, IEnderModem, IFluidHandler {
 
     private ItemStack[] inventory = new ItemStack[5];
     private FluidTank[] tanks;
@@ -37,7 +37,7 @@ public class TileEntityTransWorldModem extends TileEntityHeldsPeripheral impleme
     private static int[] slotsBottom = new int[] { 4 };
     private static int[] slotsSides = new int[] { 0, 1, 2 };
 
-    public TileEntityTransWorldModem() {
+    public TileEntityEnderModem() {
         this.modem = Network.registerModem(this);
         this.tanks = new FluidTank[] { new FluidTank(4000) };
         this.tank_infos = new FluidTankInfo[] { new FluidTankInfo(this.tanks[0]) };

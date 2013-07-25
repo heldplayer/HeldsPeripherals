@@ -10,7 +10,7 @@ import net.minecraftforge.fluids.FluidTank;
  * @author Mitchel
  * 
  */
-public interface ITransWorldModem extends IHeldsPeripheral {
+public interface IEnderModem extends IHeldsPeripheral {
 
     /**
      * Gets the remaining charge left in the modem.

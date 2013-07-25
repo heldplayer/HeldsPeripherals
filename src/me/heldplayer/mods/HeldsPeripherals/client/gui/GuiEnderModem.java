@@ -1,8 +1,8 @@
 
 package me.heldplayer.mods.HeldsPeripherals.client.gui;
 
-import me.heldplayer.mods.HeldsPeripherals.inventory.ContainerTransWorldModem;
-import me.heldplayer.mods.HeldsPeripherals.tileentity.TileEntityTransWorldModem;
+import me.heldplayer.mods.HeldsPeripherals.inventory.ContainerEnderModem;
+import me.heldplayer.mods.HeldsPeripherals.tileentity.TileEntityEnderModem;
 import me.heldplayer.util.HeldCore.client.GuiHelper;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.RenderHelper;
@@ -19,14 +19,14 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class GuiTransWorldModem extends GuiContainer {
-    private TileEntityTransWorldModem modem;
+public class GuiEnderModem extends GuiContainer {
+    private TileEntityEnderModem modem;
     private InventoryPlayer playerInv;
 
     public static final ResourceLocation background = new ResourceLocation("heldsperipherals:textures/gui/container/gui_modem.png");
 
-    public GuiTransWorldModem(EntityPlayer player, TileEntityTransWorldModem modem) {
-        super(new ContainerTransWorldModem(player.inventory, modem));
+    public GuiEnderModem(EntityPlayer player, TileEntityEnderModem modem) {
+        super(new ContainerEnderModem(player.inventory, modem));
 
         this.modem = modem;
         this.playerInv = player.inventory;

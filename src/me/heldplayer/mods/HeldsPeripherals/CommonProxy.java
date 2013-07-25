@@ -5,31 +5,32 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import me.heldplayer.mods.HeldsPeripherals.api.HeldsPeripheralAPI;
+import me.heldplayer.mods.HeldsPeripherals.block.BlockMoltenDye;
 import me.heldplayer.mods.HeldsPeripherals.block.BlockMulti1;
-import me.heldplayer.mods.HeldsPeripherals.block.BlockTransWorldModem;
+import me.heldplayer.mods.HeldsPeripherals.block.BlockEnderModem;
 import me.heldplayer.mods.HeldsPeripherals.client.BlockRendererHeldsPeripheral;
-import me.heldplayer.mods.HeldsPeripherals.client.ClientProxy;
 import me.heldplayer.mods.HeldsPeripherals.client.gui.CreativeTab;
 import me.heldplayer.mods.HeldsPeripherals.entity.EntityFireworkRocket;
+import me.heldplayer.mods.HeldsPeripherals.fluids.FluidColored;
 import me.heldplayer.mods.HeldsPeripherals.inventory.ContainerFireworksLauncher;
-import me.heldplayer.mods.HeldsPeripherals.inventory.ContainerTransWorldModem;
+import me.heldplayer.mods.HeldsPeripherals.inventory.ContainerEnderModem;
+import me.heldplayer.mods.HeldsPeripherals.item.ItemBlockMoltenDye;
 import me.heldplayer.mods.HeldsPeripherals.item.ItemBlockMulti1;
 import me.heldplayer.mods.HeldsPeripherals.item.ItemEnderCharge;
-import me.heldplayer.mods.HeldsPeripherals.item.ItemMoltenDye;
 import me.heldplayer.mods.HeldsPeripherals.peripherals.ElectricalFireworksLighterUpgrade;
 import me.heldplayer.mods.HeldsPeripherals.tileentity.TileEntityFireworksLighter;
 import me.heldplayer.mods.HeldsPeripherals.tileentity.TileEntityNoiseMaker;
 import me.heldplayer.mods.HeldsPeripherals.tileentity.TileEntityThaumicScanner;
-import me.heldplayer.mods.HeldsPeripherals.tileentity.TileEntityTransWorldModem;
+import me.heldplayer.mods.HeldsPeripherals.tileentity.TileEntityEnderModem;
+import me.heldplayer.util.HeldCore.HeldCoreProxy;
 import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
-import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.ForgeSubscribe;
 import net.minecraftforge.oredict.OreDictionary;
 import thaumcraft.api.ItemApi;
 import thaumcraft.api.ThaumcraftApi;
@@ -44,7 +45,7 @@ import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import dan200.turtle.api.TurtleAPI;
 
-public class CommonProxy implements IGuiHandler {
+public class CommonProxy extends HeldCoreProxy implements IGuiHandler {
 
     public static HashMap<ItemStack, Integer> enderCharges;
 
@@ -55,25 +56,25 @@ public class CommonProxy implements IGuiHandler {
 
     public static int renderId;
 
+    @Override
     public void preInit(FMLPreInitializationEvent event) {
         MinecraftForge.EVENT_BUS.register(this);
-
-        //CCInjector.inject(event);
 
         enderCharges = new HashMap<ItemStack, Integer>();
     }
 
+    @Override
     public void init(FMLInitializationEvent event) {
         thaumcraftInstalled = thaumcraft != null;
 
         Objects.creativeTab = new CreativeTab("CCHeldsPeripherals");
 
         // Trans World Modem
-        Objects.blockTransWorldModem = new BlockTransWorldModem(ModHeldsPeripherals.blockTransWorldModemId.getValue());
-        GameRegistry.registerBlock(Objects.blockTransWorldModem, "computercraft.heldsperipherals.transworldmodem");
-        Objects.blockTransWorldModem.setUnlocalizedName("HP.transWorldModem").setCreativeTab(Objects.creativeTab);
+        Objects.blockEnderModem = new BlockEnderModem(ModHeldsPeripherals.blockEnderModemId.getValue());
+        GameRegistry.registerBlock(Objects.blockEnderModem, "computercraft.heldsperipherals.transworldmodem");
+        Objects.blockEnderModem.setUnlocalizedName("HP.transWorldModem").setCreativeTab(Objects.creativeTab);
 
-        GameRegistry.addRecipe(new ItemStack(ModHeldsPeripherals.blockTransWorldModemId.getValue(), 1, 0), "STS", "IPG", "SRS", 'S', Block.stone, 'T', Block.torchRedstoneActive, 'I', Item.ingotIron, 'P', Item.enderPearl, 'G', Item.ingotGold, 'R', Item.redstone);
+        GameRegistry.addRecipe(new ItemStack(ModHeldsPeripherals.blockEnderModemId.getValue(), 1, 0), "STS", "IPG", "SRS", 'S', Block.stone, 'T', Block.torchRedstoneActive, 'I', Item.ingotIron, 'P', Item.enderPearl, 'G', Item.ingotGold, 'R', Item.redstone);
 
         // Electrical Fireworks Lighter + Noise Maker + Thaumic Scanner
         Objects.blockMulti1 = new BlockMulti1(ModHeldsPeripherals.blockMulti1Id.getValue());
@@ -104,18 +105,23 @@ public class CommonProxy implements IGuiHandler {
         Objects.itemEnderCharge.setUnlocalizedName("item.HP.enderCharge.name").setCreativeTab(Objects.creativeTab);
 
         OreDictionary.registerOre("dustEnderCharge", Objects.itemEnderCharge);
-        OreDictionary.registerOre("itemDustEnderCharge", Objects.itemEnderCharge);
 
         // Molten dyes
-        //Objects.itemMoltenDye = new ItemMoltenDye(ModHeldsPeripherals.itemMoltenDyeId.getValue());
-        //GameRegistry.registerItem(Objects.itemMoltenDye, "computercraft.heldsperipherals.moltendye");
-        //Objects.itemMoltenDye.setUnlocalizedName("HP.moltenDye").setCreativeTab(Objects.creativeTab);
+        FluidColored[] fluids = BlockMoltenDye.registerFluids();
 
-        ItemMoltenDye.registerFluids();
+        Objects.blocksMoltenDye = new BlockMoltenDye[fluids.length];
+        for (int i = 0; i < fluids.length; i++) {
+            Objects.blocksMoltenDye[i] = new BlockMoltenDye((Integer) ModHeldsPeripherals.blockMoltenDye[i].getValue(), fluids[i], Material.water);
+            GameRegistry.registerBlock(Objects.blocksMoltenDye[i], ItemBlockMoltenDye.class, "computercraft.heldsperipherals.moltenDye." + i);
+            Objects.blocksMoltenDye[i].setTickRate(5).setDensity(1).setCreativeTab(Objects.creativeTab);
+            Objects.blocksMoltenDye[i].setUnlocalizedName(fluids[i].getUnlocalizedName());
+
+            fluids[i].setBlockID(Objects.blocksMoltenDye[i]);
+        }
 
         // Etc...
         NetworkRegistry.instance().registerGuiHandler(ModHeldsPeripherals.instance, this);
-        TileEntity.addMapping(TileEntityTransWorldModem.class, "CCtransWorldModem");
+        TileEntity.addMapping(TileEntityEnderModem.class, "CCtransWorldModem");
         TileEntity.addMapping(TileEntityFireworksLighter.class, "CCfireworksLighter");
         TileEntity.addMapping(TileEntityNoiseMaker.class, "CCnoiseMaker");
         TileEntity.addMapping(TileEntityThaumicScanner.class, "CCthaumicScanner");
@@ -128,9 +134,10 @@ public class CommonProxy implements IGuiHandler {
         GameRegistry.addRecipe(new RecipeEnderCharge());
         OreDictionary.registerOre("dustGunpowder", Item.gunpowder);
 
-        Objects.creativeTab.displayStack = new ItemStack(Objects.blockTransWorldModem);
+        Objects.creativeTab.displayStack = new ItemStack(Objects.blockEnderModem);
     }
 
+    @Override
     public void postInit(FMLPostInitializationEvent event) {
         renderId = RenderingRegistry.getNextAvailableRenderId();
         RenderingRegistry.registerBlockHandler(renderId, new BlockRendererHeldsPeripheral(renderId));
@@ -156,8 +163,8 @@ public class CommonProxy implements IGuiHandler {
             TileEntity tileEntity = world.getBlockTileEntity(x, y, z);
 
             if (ID == 0) {
-                if (tileEntity != null && (tileEntity instanceof TileEntityTransWorldModem)) {
-                    return new ContainerTransWorldModem(player.inventory, ((TileEntityTransWorldModem) tileEntity));
+                if (tileEntity != null && (tileEntity instanceof TileEntityEnderModem)) {
+                    return new ContainerEnderModem(player.inventory, ((TileEntityEnderModem) tileEntity));
                 }
                 else {
                     return null;
@@ -210,21 +217,6 @@ public class CommonProxy implements IGuiHandler {
         }
 
         return false;
-    }
-
-    @ForgeSubscribe
-    public void registerTextures(TextureStitchEvent.Pre event) {
-        if (event.map.textureType == 0) {
-            Objects.ICON_MOLTEN_DYE_STILL.icon = event.map.registerIcon("heldsperipherals:molten_dye_still");
-            Objects.ICON_MOLTEN_DYE_FLOW.icon = event.map.registerIcon("heldsperipherals:molten_dye_flow");
-        }
-        else if (event.map.textureType == 1) {
-            String[] icons = new String[] { "dust", "red", "green", "blue" };
-
-            for (int i = 0; i < icons.length; i++) {
-                ClientProxy.icons[i] = event.map.registerIcon("heldsperipherals:background_" + icons[i]);
-            }
-        }
     }
 
 }

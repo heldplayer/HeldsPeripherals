@@ -63,7 +63,7 @@ public class HeldsPeripheralAPI {
     private static void tryInit() {
         if (!APIInitialized) {
             try {
-                heldsPeripherals = Class.forName("me.heldplayer.mods.HeldsPeripherals.common.ModHeldsPeripherals");
+                heldsPeripherals = Class.forName("me.heldplayer.mods.HeldsPeripherals.ModHeldsPeripherals");
                 addCharge = heldsPeripherals.getMethod("addCharge", new Class[] { ItemStack.class, Integer.class });
             }
             catch (ClassNotFoundException e) {

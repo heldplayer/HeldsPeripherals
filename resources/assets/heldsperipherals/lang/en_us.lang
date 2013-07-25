@@ -1,34 +1,31 @@
 itemGroup.CCHeldsPeripherals=Held's Peripherals
 
-tile.HP.transWorldModem.name=Trans-World Modem
+tile.HP.transWorldModem.name=Ender Modem
 tile.HP.fireworksLighter.name=Electrical Fireworks Lighter
 tile.HP.noiseMaker.name=Noise Maker
 tile.HP.thaumicScanner.name=Thaumic Scanner
+
+tile.fluid.dye.molten.white.name=Molten White Dye
+tile.fluid.dye.molten.orange.name=Molten Orange Dye
+tile.fluid.dye.molten.magenta.name=Molten Magenta Dye
+tile.fluid.dye.molten.lightBlue.name=Molten Light Blue Dye
+tile.fluid.dye.molten.yellow.name=Molten Yellow Dye
+tile.fluid.dye.molten.lime.name=Molten Lime Dye
+tile.fluid.dye.molten.pink.name=Molten Pink Dye
+tile.fluid.dye.molten.gray.name=Molten Gray Dye
+tile.fluid.dye.molten.lightGray.name=Molten Light Gray Dye
+tile.fluid.dye.molten.cyan.name=Molten Cyan Dye
+tile.fluid.dye.molten.purple.name=Molten Purple Dye
+tile.fluid.dye.molten.blue.name=Molten Blue Dye
+tile.fluid.dye.molten.brown.name=Molten Brown Dye
+tile.fluid.dye.molten.green.name=Molten Green Dye
+tile.fluid.dye.molten.red.name=Molten Red Dye
+tile.fluid.dye.molten.black.name=Molten Black Dye
 
 item.HP.enderCharge.name=Ender Charge
 item.HP.enderCharge.compact.name=Compact Ender Charge
 item.HP.enderCharge.compact.text=Contains %s charges
 item.HP.moltenDye.name=Molten Dye
-
-item.HP.moltenDye.white.name=Molten White Dye
-item.HP.moltenDye.orange.name=Molten Orange Dye
-item.HP.moltenDye.magenta.name=Molten Magenta Dye
-item.HP.moltenDye.lightBlue.name=Molten Light Blue Dye
-item.HP.moltenDye.yellow.name=Molten Yellow Dye
-item.HP.moltenDye.lime.name=Molten Lime Dye
-item.HP.moltenDye.pink.name=Molten Pink Dye
-item.HP.moltenDye.gray.name=Molten Gray Dye
-item.HP.moltenDye.lightGray.name=Molten Light Gray Dye
-item.HP.moltenDye.cyan.name=Molten Cyan Dye
-item.HP.moltenDye.purple.name=Molten Purple Dye
-item.HP.moltenDye.blue.name=Molten Blue Dye
-item.HP.moltenDye.brown.name=Molten Brown Dye
-item.HP.moltenDye.green.name=Molten Green Dye
-item.HP.moltenDye.red.name=Molten Red Dye
-item.HP.moltenDye.black.name=Molten Black Dye
-
-gui.container.fluid.empty=Empty
-gui.container.fluid.filled=%s / %s mb
 
 fluid.dye.molten.white=Molten White Dye
 fluid.dye.molten.orange=Molten Orange Dye

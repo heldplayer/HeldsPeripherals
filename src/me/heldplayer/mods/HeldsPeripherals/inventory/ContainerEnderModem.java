@@ -3,7 +3,7 @@ package me.heldplayer.mods.HeldsPeripherals.inventory;
 
 import java.util.Iterator;
 
-import me.heldplayer.mods.HeldsPeripherals.tileentity.TileEntityTransWorldModem;
+import me.heldplayer.mods.HeldsPeripherals.tileentity.TileEntityEnderModem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
@@ -13,8 +13,8 @@ import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 
-public class ContainerTransWorldModem extends Container {
-    private TileEntityTransWorldModem modem;
+public class ContainerEnderModem extends Container {
+    private TileEntityEnderModem modem;
     private EntityPlayer player;
     private int prevCharge;
     private int prevChargeCostSend;
@@ -23,8 +23,8 @@ public class ContainerTransWorldModem extends Container {
     private int prevAmount;
     private int prevFluidId;
 
-    public ContainerTransWorldModem(IInventory playerInventory, IInventory tileInventory) {
-        this.modem = (TileEntityTransWorldModem) tileInventory;
+    public ContainerEnderModem(IInventory playerInventory, IInventory tileInventory) {
+        this.modem = (TileEntityEnderModem) tileInventory;
         this.player = ((InventoryPlayer) playerInventory).player;
 
         this.layoutContainer();

@@ -5,7 +5,6 @@ import java.util.Random;
 
 import me.heldplayer.mods.HeldsPeripherals.ModHeldsPeripherals;
 import me.heldplayer.mods.HeldsPeripherals.api.IHeldsPeripheral;
-import me.heldplayer.mods.HeldsPeripherals.client.ClientProxy;
 import me.heldplayer.mods.HeldsPeripherals.tileentity.TileEntityFireworksLighter;
 import me.heldplayer.mods.HeldsPeripherals.tileentity.TileEntityNoiseMaker;
 import me.heldplayer.mods.HeldsPeripherals.tileentity.TileEntityThaumicScanner;
@@ -258,8 +257,6 @@ public class BlockMulti1 extends BlockHeldsPeripheral {
             this.left[i] = register.registerIcon("heldsperipherals:" + prefixes[i] + "_left");
             this.right[i] = register.registerIcon("heldsperipherals:" + prefixes[i] + "_right");
         }
-
-        ClientProxy.fireworksUpgrade = register.registerIcon("heldsperipherals:fireworkslighter_peripheral");
     }
 
 }

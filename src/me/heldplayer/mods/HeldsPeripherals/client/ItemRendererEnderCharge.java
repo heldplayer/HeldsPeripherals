@@ -54,7 +54,7 @@ public class ItemRendererEnderCharge implements IItemRenderer {
             if (item.getItemDamage() > 0 && this.font != null) {
                 GL11.glScalef(0.5F, 0.5F, 0.5F);
 
-                font.drawStringWithShadow("" + (item.getItemDamage() + 1), 2, 2, 0xFFFFFF);
+                this.font.drawStringWithShadow("" + (item.getItemDamage() + 1), 2, 2, 0xFFFFFF);
             }
 
         }

@@ -1,20 +1,17 @@
 
 package me.heldplayer.mods.HeldsPeripherals;
 
-import java.io.File;
 import java.util.Iterator;
 
 import me.heldplayer.mods.HeldsPeripherals.network.Network;
 import me.heldplayer.mods.HeldsPeripherals.packet.PacketHandler;
-import me.heldplayer.util.HeldCore.Updater;
-import me.heldplayer.util.HeldCore.UsageReporter;
+import me.heldplayer.util.HeldCore.HeldCoreMod;
+import me.heldplayer.util.HeldCore.HeldCoreProxy;
+import me.heldplayer.util.HeldCore.ModInfo;
 import me.heldplayer.util.HeldCore.config.Config;
 import me.heldplayer.util.HeldCore.config.ConfigValue;
-import net.minecraft.block.Block;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.Configuration;
-import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
@@ -28,7 +25,7 @@ import cpw.mods.fml.relauncher.Side;
 
 @Mod(name = Objects.MOD_NAME, modid = Objects.MOD_ID, version = Objects.MOD_VERSION, dependencies = Objects.MOD_DEPENCIES)
 @NetworkMod(clientSideRequired = true, serverSideRequired = false, channels = { Objects.MOD_CHANNEL }, packetHandler = PacketHandler.class)
-public class ModHeldsPeripherals {
+public class ModHeldsPeripherals extends HeldCoreMod {
 
     @Instance(value = Objects.MOD_ID)
     public static ModHeldsPeripherals instance;
@@ -36,12 +33,9 @@ public class ModHeldsPeripherals {
     public static CommonProxy proxy;
 
     // HeldCore Objects
-    private UsageReporter reporter;
-    private Config config;
-    public static ConfigValue<Integer> blockTransWorldModemId;
+    public static ConfigValue<Integer> blockEnderModemId;
     public static ConfigValue<Integer> blockMulti1Id;
     public static ConfigValue<Integer> itemEnderChargeId;
-    public static ConfigValue<Integer> itemMoltenDyeId;
     public static ConfigValue<Integer> fireworksEntityId;
     public static ConfigValue<Integer> chargeYieldEnderPearl;
     public static ConfigValue<Integer> chargeYieldEyeOfEnder;
@@ -52,26 +46,17 @@ public class ModHeldsPeripherals {
     public static ConfigValue<Integer> chargeCostostTransportFluid;
     public static ConfigValue<Boolean> enhancedFireworksEntity;
     public static ConfigValue<Boolean> enhancedEnderChargeRenderer;
-    // Config values for HeldCore
-    public static ConfigValue<Boolean> silentUpdates;
-    public static ConfigValue<Boolean> optOut;
-    public static ConfigValue<String> modPack;
+    // Molten dyes
+    public static ConfigValue<?>[] blockMoltenDye;
 
-    @EventHandler
+    @Override
     public void preInit(FMLPreInitializationEvent event) {
-        File file = new File(event.getModConfigurationDirectory(), "HeldCore");
-
-        if (!file.exists()) {
-            file.mkdirs();
-        }
-
         Objects.log = event.getModLog();
 
         // Config
-        blockTransWorldModemId = new ConfigValue<Integer>("TransWorldModem", Configuration.CATEGORY_BLOCK, null, 2050, "The block ID for the Trans-World Modem");
+        blockEnderModemId = new ConfigValue<Integer>("EnderModem", Configuration.CATEGORY_BLOCK, null, 2050, "The block ID for the Ender Modem");
         blockMulti1Id = new ConfigValue<Integer>("MultiBlock1", Configuration.CATEGORY_BLOCK, null, 2051, "The block ID for the Electrical Fireworks Lighter, Noise Maker and thaumic scanner");
         itemEnderChargeId = new ConfigValue<Integer>("EnderCharge", Configuration.CATEGORY_ITEM, null, 5230, "The item ID for the ender charge");
-        itemMoltenDyeId = new ConfigValue<Integer>("MoltenDye", Configuration.CATEGORY_ITEM, null, 5231, "The item ID for the molten dyes");
         fireworksEntityId = new ConfigValue<Integer>("FireworksEntityID", Configuration.CATEGORY_GENERAL, null, 160, "The entity ID for the custom fireworks entity");
         chargeYieldEnderPearl = new ConfigValue<Integer>("YieldEnderPearl", "charges", null, 40, "The amount of ender charges an ender pearl is worth");
         chargeYieldEyeOfEnder = new ConfigValue<Integer>("YieldEyeOfEnder", "charges", null, 60, "The amount of ender charges an eye of ender is worth");
@@ -82,14 +67,16 @@ public class ModHeldsPeripherals {
         chargeCostostTransportFluid = new ConfigValue<Integer>("CostTransportFluid", "charges", null, 4, "The amount of charges that are required to send a fluid");
         enhancedFireworksEntity = new ConfigValue<Boolean>("EnhancedFireworks", Configuration.CATEGORY_GENERAL, Side.CLIENT, Boolean.TRUE, "Determines whether fireworks launched by the Electrical Fireworks Lighter create grouped particles");
         enhancedEnderChargeRenderer = new ConfigValue<Boolean>("EnhancedEnderChargeRenderer", Configuration.CATEGORY_GENERAL, Side.CLIENT, Boolean.TRUE, "Determines whether ender charges render with a charge amount counter");
-        silentUpdates = new ConfigValue<Boolean>("silentUpdates", Configuration.CATEGORY_GENERAL, null, Boolean.TRUE, "Set this to true to hide update messages in the main menu");
-        optOut = new ConfigValue<Boolean>("optOut", Configuration.CATEGORY_GENERAL, null, Boolean.FALSE, "Set this to true to opt-out from statistics gathering. If you are configuring this mod for a modpack, please leave it set to false");
-        modPack = new ConfigValue<String>("modPack", Configuration.CATEGORY_GENERAL, null, "", "If this mod is running in a modpack, please set this config value to the name of the modpack");
+
+        blockMoltenDye = new ConfigValue[16];
+        for (int i = 0; i < blockMoltenDye.length; i++) {
+            blockMoltenDye[i] = new ConfigValue<Integer>("MoltenDye" + i, Configuration.CATEGORY_BLOCK, null, 2060 + i, "The block ID for molten dye " + i);
+        }
+
         this.config = new Config(event.getSuggestedConfigurationFile());
-        this.config.addConfigKey(blockTransWorldModemId);
+        this.config.addConfigKey(blockEnderModemId);
         this.config.addConfigKey(blockMulti1Id);
         this.config.addConfigKey(itemEnderChargeId);
-        this.config.addConfigKey(itemMoltenDyeId);
         this.config.addConfigKey(fireworksEntityId);
         this.config.addConfigKey(chargeYieldEnderPearl);
         this.config.addConfigKey(chargeYieldEyeOfEnder);
@@ -100,35 +87,16 @@ public class ModHeldsPeripherals {
         this.config.addConfigKey(chargeCostostTransportFluid);
         this.config.addConfigKey(enhancedFireworksEntity);
         this.config.addConfigKey(enhancedEnderChargeRenderer);
-        this.config.addConfigKey(silentUpdates);
-        this.config.addConfigKey(optOut);
-        this.config.addConfigKey(modPack);
-        this.config.load();
-        this.config.saveOnChange();
-
-        this.reporter = new UsageReporter(Objects.MOD_ID, Objects.MOD_VERSION, modPack.getValue(), FMLCommonHandler.instance().getSide(), file);
-
-        Updater.initializeUpdater(Objects.MOD_ID, Objects.MOD_VERSION, silentUpdates.getValue());
-
-        proxy.preInit(event);
-    }
-
-    @EventHandler
-    public void init(FMLInitializationEvent event) {
-        proxy.init(event);
-    }
-
-    @EventHandler
-    public void postInit(FMLPostInitializationEvent event) {
-        if (optOut.getValue()) {
-            Thread thread = new Thread(this.reporter, Objects.MOD_ID + " usage reporter");
-            thread.setDaemon(true);
-            thread.setPriority(Thread.MIN_PRIORITY);
-            thread.start();
+        for (ConfigValue<?> setting : blockMoltenDye) {
+            this.config.addConfigKey(setting);
         }
-
-        proxy.postInit(event);
     }
+
+    @Override
+    public void init(FMLInitializationEvent event) {}
+
+    @Override
+    public void postInit(FMLPostInitializationEvent event) {}
 
     @EventHandler
     public void onServerStopping(FMLServerStoppingEvent event) {
@@ -180,27 +148,34 @@ public class ModHeldsPeripherals {
         return null;
     }
 
-    public static Block getBlock(Integer id) {
-        switch (id) {
-        case 0:
-            return Objects.blockTransWorldModem;
-        case 1:
-            return Objects.blockMulti1;
-
-        default:
-            return null;
-        }
+    @Override
+    public ModInfo getModInfo() {
+        return Objects.MOD_INFO;
     }
 
-    public static Item getItem(Integer id) {
-        switch (id) {
-        case 0:
-            return Objects.itemEnderCharge;
-        case 1:
-            //return Objects.itemMoltenDye;
-
-        default:
-            return null;
-        }
+    @Override
+    public HeldCoreProxy getProxy() {
+        return proxy;
     }
+
+    // Silly FML
+
+    @Override
+    @EventHandler
+    public void basePreInit(FMLPreInitializationEvent event) {
+        super.basePreInit(event);
+    }
+
+    @Override
+    @EventHandler
+    public void baseInit(FMLInitializationEvent event) {
+        super.baseInit(event);
+    }
+
+    @Override
+    @EventHandler
+    public void basePostInit(FMLPostInitializationEvent event) {
+        super.basePostInit(event);
+    }
+
 }

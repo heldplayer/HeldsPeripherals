@@ -3,7 +3,7 @@ package me.heldplayer.mods.HeldsPeripherals.network;
 
 import java.util.ArrayList;
 
-import me.heldplayer.mods.HeldsPeripherals.api.ITransWorldModem;
+import me.heldplayer.mods.HeldsPeripherals.api.IEnderModem;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
@@ -19,7 +19,7 @@ public class Network {
         modems.trimToSize();
     }
 
-    public static Modem registerModem(ITransWorldModem modemTile) {
+    public static Modem registerModem(IEnderModem modemTile) {
         Modem modem = new Modem(modemTile);
 
         modems.add(modem);
@@ -89,9 +89,9 @@ public class Network {
 
     public static class Modem {
         private final ArrayList<ComputerConnection> connections = new ArrayList<ComputerConnection>(6);
-        private final ITransWorldModem modem;
+        private final IEnderModem modem;
 
-        Modem(ITransWorldModem modem) {
+        Modem(IEnderModem modem) {
             this.modem = modem;
         }
 

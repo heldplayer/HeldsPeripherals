@@ -2,7 +2,7 @@
 {
   "modid" : "CCheldsPeripherals",
   "name" : "CC Held's Peripherals",
-  "version" : "1.09.03.02",
+  "version" : "1.10.01.01",
   "credits" : "Dan200 and Cloudy for ComputerCraft and the ComputerCraft API",
   "authors": [
     "heldplayer"
