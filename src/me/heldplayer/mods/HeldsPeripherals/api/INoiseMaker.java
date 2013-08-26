@@ -15,24 +15,24 @@ public interface INoiseMaker extends IHeldsPeripheral {
      * 
      * @return The remaining cooldown ticks.
      */
-    public abstract int getCoolingTime();
+    int getCoolingTime();
 
     /**
      * Sets this noise maker to cool down.
      */
-    public abstract void setCoolingDown();
+    void setCoolingDown();
 
     /**
      * Gets whether this noise maker is cooling down.
      * 
      * @return True if cooling down, false otherwise.
      */
-    public abstract boolean isCoolingDown();
+    boolean isCoolingDown();
 
     /**
      * Increases the cooling time, called when making a noise
      */
-    public abstract void increaseCoolingTime();
+    void increaseCoolingTime();
 
     /**
      * Sets the remaining ticks this noise maker should cool down.
@@ -40,6 +40,6 @@ public interface INoiseMaker extends IHeldsPeripheral {
      * @param time
      *        The new amount of ticks
      */
-    public abstract void setCoolingTime(int time);
+    void setCoolingTime(int time);
 
 }

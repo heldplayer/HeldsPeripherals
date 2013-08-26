@@ -27,8 +27,236 @@ import dan200.computer.api.ILuaContext;
 
 public class LogicHandler {
 
-    // { "send", "getChargeLevel", "transport", "getInputOccupied", "getOutputOccupied", "transportLiquid", "getLiquidInfo", "transportFluid", "getFluidInfo"  }
+    // { "isOpen", "open", "close", "closeAll", "transmit", "isWireless", "getChargeLevel", "getInputOccupied", "getOutputOccupied", "transport", "transportFluid", "getFluidInfo" }
     public static Object[] callMethod(IComputerAccess computer, ILuaContext context, int method, Object[] arguments, IEnderModem peripheral) throws Exception {
+        switch (method) {
+        case 0: // isOpen
+            if (arguments.length < 1) {
+                throw new Exception("Too little arguments, expected 1 argument");
+            }
+
+            if (arguments.length > 1) {
+                throw new Exception("Too many arguments, expected 1 argument");
+            }
+
+            if (!(arguments[0] instanceof Double)) {
+                throw new Exception("Invalid data type for argument 1, expected a number");
+            }
+
+            int channel = ((Double) arguments[0]).intValue();
+
+            if (channel < 0 || channel > 65535) {
+                throw new Exception("Expected number in range 0-65535");
+            }
+
+            return new Object[] { Boolean.valueOf(peripheral.getModem().isChannelOpen(channel)) };
+        case 1: // open
+            if (arguments.length < 1) {
+                throw new Exception("Too little arguments, expected 1 argument");
+            }
+
+            if (arguments.length > 1) {
+                throw new Exception("Too many arguments, expected 1 argument");
+            }
+
+            if (!(arguments[0] instanceof Double)) {
+                throw new Exception("Invalid data type for argument 1, expected a number");
+            }
+
+            channel = ((Double) arguments[0]).intValue();
+
+            if (channel < 0 || channel > 65535) {
+                throw new Exception("Expected number in range 0-65535");
+            }
+
+            if (!peripheral.getModem().openChannel(channel)) {
+                throw new Exception("Too many open channels");
+            }
+
+            return null;
+        case 2: // close
+            if (arguments.length < 1) {
+                throw new Exception("Too little arguments, expected 1 argument");
+            }
+
+            if (arguments.length > 1) {
+                throw new Exception("Too many arguments, expected 1 argument");
+            }
+
+            if (!(arguments[0] instanceof Double)) {
+                throw new Exception("Invalid data type for argument 1, expected a number");
+            }
+
+            channel = ((Double) arguments[0]).intValue();
+
+            if (channel < 0 || channel > 65535) {
+                throw new Exception("Expected number in range 0-65535");
+            }
+
+            peripheral.getModem().closeChannel(channel);
+
+            return null;
+        case 3: // closeAll
+            peripheral.getModem().closeAllChannels();
+
+            return null;
+        case 4: // transmit
+            if (arguments.length < 3) {
+                throw new Exception("Too little arguments, expected 3 arguments");
+            }
+
+            if (arguments.length > 3) {
+                throw new Exception("Too many arguments, expected 3 arguments");
+            }
+
+            if (!(arguments[0] instanceof Double)) {
+                throw new Exception("Invalid data type for argument 1, expected a number");
+            }
+
+            if (!(arguments[1] instanceof Double)) {
+                throw new Exception("Invalid data type for argument 2, expected a number");
+            }
+
+            channel = ((Double) arguments[0]).intValue();
+            int please = ((Double) arguments[1]).intValue();
+
+            if (channel < 0 || channel > 65535) {
+                throw new Exception("Expected number in range 0-65535");
+            }
+            if (please < 0 || please > 65535) {
+                throw new Exception("Expected number in range 0-65535");
+            }
+
+            Network.transmit(channel, please, arguments[2]);
+
+            return null;
+        case 5: // isWireless
+            return new Object[] { Boolean.TRUE };
+        case 6: // getChargeLevel
+            return new Object[] { Double.valueOf(peripheral.getChargeLevel()) };
+        case 7: // getInputOccupied
+            ItemStack stack = peripheral.getStackInSlot(3);
+
+            if (stack == null || stack.stackSize <= 0 || stack.itemID == 0) {
+                return new Object[] { Boolean.FALSE };
+            }
+            return new Object[] { Boolean.TRUE };
+        case 8: // getOutputOccupied
+            stack = peripheral.getStackInSlot(4);
+
+            if (stack == null || stack.stackSize <= 0 || stack.itemID == 0) {
+                return new Object[] { Boolean.FALSE };
+            }
+            return new Object[] { Boolean.TRUE };
+        case 9: // transport
+            if (arguments.length < 1) {
+                throw new Exception("Too little arguments, expected 1 argument");
+            }
+
+            if (arguments.length > 1) {
+                throw new Exception("Too many arguments, expected 1 argument");
+            }
+
+            if (!(arguments[0] instanceof Double)) {
+                throw new Exception("Invalid data type for argument 1, expected a number");
+            }
+
+            stack = peripheral.getStackInSlot(3);
+
+            if (stack == null || stack.stackSize <= 0 || stack.itemID == 0) {
+                return new Object[] { Boolean.FALSE };
+            }
+
+            if (peripheral.getRemainingTransports() > 0 || ModHeldsPeripherals.chargeCostTransport.getValue() <= 0) {
+                ItemStack returned = Network.transportItem(computer.getID(), peripheral.getWorld().provider.dimensionId, stack, ((Double) arguments[0]).intValue());
+
+                if (stack != returned) {
+                    stack = returned;
+
+                    peripheral.setStackInSlot(3, stack);
+
+                    if (returned == null || returned.stackSize <= 0) {
+                        peripheral.setStackInSlot(3, null);
+                    }
+
+                    if (ModHeldsPeripherals.chargeCostTransport.getValue() > 0) {
+                        peripheral.decreaseCharge(ModHeldsPeripherals.chargeCostTransport.getValue());
+                    }
+
+                    peripheral.getWorld().playSoundEffect(peripheral.getX() + 0.5D, peripheral.getY() + 0.5D, peripheral.getZ() + 0.5D, "mob.endermen.portal", 1.0F, 0.8F);
+
+                    return new Object[] { Boolean.TRUE };
+                }
+
+                return new Object[] { Boolean.FALSE };
+            }
+
+            return new Object[] { Boolean.FALSE };
+        case 10: // transportFluid
+            if (arguments.length < 1) {
+                throw new Exception("Too little arguments, expected 1 argument");
+            }
+
+            if (arguments.length > 1) {
+                throw new Exception("Too many arguments, expected 1 argument");
+            }
+
+            if (!(arguments[0] instanceof Double)) {
+                throw new Exception("Invalid data type for argument 1, expected a number");
+            }
+
+            FluidTank tank = peripheral.getFluidTank();
+
+            FluidStack fluidStack = tank.getFluid();
+
+            if (fluidStack == null || fluidStack.amount <= 0) {
+                return new Object[] { Boolean.FALSE };
+            }
+
+            if (peripheral.getRemainingTransports() > 0 || ModHeldsPeripherals.chargeCostostTransportFluid.getValue() <= 0) {
+                FluidStack returned = Network.transportFluid(computer.getID(), peripheral.getWorld().provider.dimensionId, fluidStack, ((Double) arguments[0]).intValue());
+
+                if (fluidStack != returned) {
+                    fluidStack = returned;
+
+                    tank.setFluid(fluidStack);
+
+                    if (returned == null || returned.amount <= 0) {
+                        tank.setFluid(null);
+                    }
+
+                    if (ModHeldsPeripherals.chargeCostostTransportFluid.getValue() > 0) {
+                        peripheral.decreaseCharge(ModHeldsPeripherals.chargeCostostTransportFluid.getValue());
+                    }
+
+                    peripheral.getWorld().playSoundEffect(peripheral.getX() + 0.5D, peripheral.getY() + 0.5D, peripheral.getZ() + 0.5D, "mob.endermen.portal", 0.8F, 0.65F);
+
+                    return new Object[] { Boolean.TRUE };
+                }
+
+                return new Object[] { Boolean.FALSE };
+            }
+
+            return new Object[] { Boolean.FALSE };
+        case 11: // getFluidInfo
+            tank = peripheral.getFluidTank();
+
+            fluidStack = tank.getFluid();
+
+            if (fluidStack != null && fluidStack.amount > 0) {
+                return new Object[] { FluidRegistry.getFluidName(fluidStack), fluidStack.amount };
+            }
+
+            return new Object[] { null, 0 };
+            // TODO: other methods
+        default:
+            throw new Exception("Error calling method: unknown method ID");
+        }
+    }
+
+    //// { "send", "getChargeLevel", "transport", "getInputOccupied", "getOutputOccupied", "transportLiquid", "getLiquidInfo", "transportFluid", "getFluidInfo"  }
+    @Deprecated
+    public static Object[] callMethodLegacy(IComputerAccess computer, ILuaContext context, int method, Object[] arguments, IEnderModem peripheral) throws Exception {
         switch (method) {
         case 0: // send
             if (peripheral.getRemainingSends() > 0 || ModHeldsPeripherals.chargeCostSend.getValue() <= 0) {
@@ -49,7 +277,7 @@ public class LogicHandler {
                     result += arguments[i];
                 }
 
-                boolean hasSent = Network.send(computer.getID(), peripheral.getWorld().provider.dimensionId, ((Double) arguments[0]).intValue(), result);
+                boolean hasSent = Network.transmitSecure(computer.getID(), peripheral.getWorld().provider.dimensionId, ((Double) arguments[0]).intValue(), new Object[] { result });
 
                 if (hasSent) {
                     if (ModHeldsPeripherals.chargeCostSend.getValue() > 0) {
@@ -85,7 +313,7 @@ public class LogicHandler {
             }
 
             if (peripheral.getRemainingTransports() > 0 || ModHeldsPeripherals.chargeCostTransport.getValue() <= 0) {
-                ItemStack returned = Network.transport(computer.getID(), peripheral.getWorld().provider.dimensionId, stack, ((Double) arguments[0]).intValue());
+                ItemStack returned = Network.transportItem(computer.getID(), peripheral.getWorld().provider.dimensionId, stack, ((Double) arguments[0]).intValue());
 
                 if (stack != returned) {
                     stack = returned;
@@ -146,7 +374,7 @@ public class LogicHandler {
             }
 
             if (peripheral.getRemainingTransports() > 0 || ModHeldsPeripherals.chargeCostostTransportFluid.getValue() <= 0) {
-                FluidStack returned = Network.transport(computer.getID(), peripheral.getWorld().provider.dimensionId, fluidStack, ((Double) arguments[0]).intValue());
+                FluidStack returned = Network.transportFluid(computer.getID(), peripheral.getWorld().provider.dimensionId, fluidStack, ((Double) arguments[0]).intValue());
 
                 if (fluidStack != returned) {
                     fluidStack = returned;

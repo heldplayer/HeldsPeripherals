@@ -3,6 +3,7 @@ package me.heldplayer.mods.HeldsPeripherals.nei;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Random;
 
 import me.heldplayer.mods.HeldsPeripherals.ModHeldsPeripherals;
@@ -39,7 +40,7 @@ public class EnderChargeRecipeHandler extends ShapelessRecipeHandler {
 
             this.setIngredients(this.itemList);
 
-            ArrayList<PositionedStack> ingreds = this.getIngredients();
+            List<PositionedStack> ingreds = this.getIngredients();
             for (int i = 0; i < 9; i++) {
                 EnderChargeRecipeHandler.this.inventoryCrafting.setInventorySlotContents(i, i < ingreds.size() ? ingreds.get(i).item : null);
             }
@@ -92,7 +93,7 @@ public class EnderChargeRecipeHandler extends ShapelessRecipeHandler {
 
             this.setIngredients(this.itemList);
 
-            ArrayList<PositionedStack> ingreds = this.getIngredients();
+            List<PositionedStack> ingreds = this.getIngredients();
             for (int i = 0; i < 9; i++) {
                 EnderChargeRecipeHandler.this.inventoryCrafting.setInventorySlotContents(i, i < ingreds.size() ? ingreds.get(i).item : null);
             }

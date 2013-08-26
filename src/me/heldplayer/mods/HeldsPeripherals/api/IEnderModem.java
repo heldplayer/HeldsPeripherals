@@ -17,7 +17,7 @@ public interface IEnderModem extends IHeldsPeripheral {
      * 
      * @return The remaining charge left in the modem.
      */
-    public abstract int getChargeLevel();
+    int getChargeLevel();
 
     /**
      * Decreases the charge in this modem with specified amount.
@@ -25,28 +25,28 @@ public interface IEnderModem extends IHeldsPeripheral {
      * @param amount
      *        The amount of charge to decrease with.
      */
-    public abstract void decreaseCharge(int amount);
+    void decreaseCharge(int amount);
 
     /**
      * Gets the remaining sends for this modem.
      * 
      * @return The remaining sends in this modem.
      */
-    public abstract int getRemainingSends();
+    int getRemainingSends();
 
     /**
      * Gets the remaining transports for this modem.
      * 
      * @return The remaining transports in this modem.
      */
-    public abstract int getRemainingTransports();
+    int getRemainingTransports();
 
     /**
      * Gets the remaining fluid transports for this modem.
      * 
      * @return The remaining fluid transports in this modem.
      */
-    public abstract int getRemainingFluidTransports();
+    int getRemainingFluidTransports();
 
     /**
      * Returns the direct stack in the specified slot.
@@ -55,7 +55,7 @@ public interface IEnderModem extends IHeldsPeripheral {
      *        The slot, ranging from 0 to 3.
      * @return The ItemStack in the specified slot.
      */
-    public abstract ItemStack getStackInSlot(int slot);
+    ItemStack getStackInSlot(int slot);
 
     /**
      * Sets the stack in the specified slot.
@@ -65,13 +65,15 @@ public interface IEnderModem extends IHeldsPeripheral {
      * @param stack
      *        The stack to set the slot to.
      */
-    public abstract void setStackInSlot(int slot, ItemStack stack);
+    void setStackInSlot(int slot, ItemStack stack);
 
     /**
      * Returns the FluidTank in the peripheral.
      * 
      * @return The FluidTank in the peripheral.
      */
-    public abstract FluidTank getFluidTank();
+    FluidTank getFluidTank();
+
+    IModem getModem();
 
 }

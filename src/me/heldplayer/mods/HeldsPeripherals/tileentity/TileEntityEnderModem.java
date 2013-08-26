@@ -6,8 +6,8 @@ import me.heldplayer.mods.HeldsPeripherals.LogicHandler;
 import me.heldplayer.mods.HeldsPeripherals.ModHeldsPeripherals;
 import me.heldplayer.mods.HeldsPeripherals.Objects;
 import me.heldplayer.mods.HeldsPeripherals.api.IEnderModem;
+import me.heldplayer.mods.HeldsPeripherals.api.IModem;
 import me.heldplayer.mods.HeldsPeripherals.network.Network;
-import me.heldplayer.mods.HeldsPeripherals.network.Network.Modem;
 import me.heldplayer.util.HeldCore.MathHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ISidedInventory;
@@ -28,7 +28,7 @@ public class TileEntityEnderModem extends TileEntityHeldsPeripheral implements I
     private ItemStack[] inventory = new ItemStack[5];
     private FluidTank[] tanks;
     private FluidTankInfo[] tank_infos;
-    private Modem modem;
+    private IModem modem;
     public int charge = 0;
     public int chargeCostSend;
     public int chargeCostTransport;
@@ -316,12 +316,12 @@ public class TileEntityEnderModem extends TileEntityHeldsPeripheral implements I
 
     @Override
     public String getType() {
-        return "TransWorldModem";
+        return "modem";
     }
 
     @Override
     public String[] getMethodNames() {
-        return new String[] { "send", "getChargeLevel", "transport", "getInputOccupied", "getOutputOccupied", "transportLiquid", "getLiquidInfo", "transportFluid", "getFluidInfo" };
+        return new String[] { "isOpen", "open", "close", "closeAll", "transmit", "isWireless", "getChargeLevel", "getInputOccupied", "getOutputOccupied", "transport", "transportLiquid", "transportFluid", "getFluidInfo" };
     }
 
     @Override
@@ -342,6 +342,11 @@ public class TileEntityEnderModem extends TileEntityHeldsPeripheral implements I
     @Override
     public void detach(IComputerAccess computer) {
         this.modem.detach(computer);
+    }
+
+    @Override
+    public IModem getModem() {
+        return this.modem;
     }
 
     // IHeldsperipheral

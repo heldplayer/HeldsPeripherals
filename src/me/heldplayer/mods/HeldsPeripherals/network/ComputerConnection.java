@@ -4,7 +4,7 @@ package me.heldplayer.mods.HeldsPeripherals.network;
 import dan200.computer.api.IComputerAccess;
 
 public class ComputerConnection {
-    private final IComputerAccess computer;
+    protected final IComputerAccess computer;
 
     public ComputerConnection(IComputerAccess computer) {
         this.computer = computer;

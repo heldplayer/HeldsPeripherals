@@ -19,35 +19,35 @@ public interface IHeldsPeripheral {
      * 
      * @return The world this peripheral is in.
      */
-    public abstract World getWorld();
+    World getWorld();
 
     /**
      * Gets the X position of this peripheral.
      * 
      * @return The X position of this peripheral.
      */
-    public abstract int getX();
+    int getX();
 
     /**
      * Gets the Y position of this peripheral.
      * 
      * @return The Y position of this peripheral.
      */
-    public abstract int getY();
+    int getY();
 
     /**
      * Gets the Z position of this peripheral.
      * 
      * @return The Z position of this peripheral.
      */
-    public abstract int getZ();
+    int getZ();
 
     /**
      * Method used for updating the peripheral.
      * Called during {@link TileEntity#updateEntity()} or
      * {@link IHostedPeripheral#update()}.
      */
-    public abstract void update();
+    void update();
 
     /**
      * Sets the name of a HeldsPeripheral, drawn instead of the standard GUI
@@ -56,6 +56,6 @@ public interface IHeldsPeripheral {
      * @param name
      *        The new name of the peripheral
      */
-    public abstract void setName(String name);
+    void setName(String name);
 
 }
