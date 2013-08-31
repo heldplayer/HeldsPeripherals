@@ -52,7 +52,6 @@ public class ModHeldsPeripherals extends HeldCoreMod {
     @Override
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
-        super.preInit(event);
         Objects.log = event.getModLog();
 
         // Config
@@ -92,6 +91,8 @@ public class ModHeldsPeripherals extends HeldCoreMod {
         for (ConfigValue<?> setting : blockMoltenDye) {
             this.config.addConfigKey(setting);
         }
+
+        super.preInit(event);
     }
 
     @Override
