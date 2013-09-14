@@ -11,14 +11,14 @@ public class IconReference implements Icon {
 
     @Override
     @SideOnly(Side.CLIENT)
-    public int getOriginX() {
-        return this.icon.getOriginX();
+    public int getIconHeight() {
+        return this.icon.getIconHeight();
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public int getOriginY() {
-        return this.icon.getOriginY();
+    public int getIconWidth() {
+        return this.icon.getIconWidth();
     }
 
     @Override

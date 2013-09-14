@@ -71,7 +71,7 @@ public class GuiFireworksLighter extends GuiContainer {
 
     @Override
     protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
-        this.mc.renderEngine.func_110577_a(background);
+        this.mc.renderEngine.bindTexture(background);
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize);
 
@@ -95,7 +95,7 @@ public class GuiFireworksLighter extends GuiContainer {
 
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 
-        this.mc.renderEngine.func_110577_a(background);
+        this.mc.renderEngine.bindTexture(background);
 
         this.drawTexturedModalRect(this.guiLeft + 61, this.guiTop + 14, this.xSize, 0, 18, 34);
         this.drawTexturedModalRect(this.guiLeft + 97, this.guiTop + 14, this.xSize, 0, 18, 34);

@@ -68,7 +68,7 @@ public class GuiEnderModem extends GuiContainer {
 
     @Override
     protected void drawGuiContainerBackgroundLayer(float var1, int var2, int var3) {
-        this.mc.renderEngine.func_110577_a(background);
+        this.mc.renderEngine.bindTexture(background);
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize);
 
@@ -84,7 +84,7 @@ public class GuiEnderModem extends GuiContainer {
 
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 
-        this.mc.renderEngine.func_110577_a(background);
+        this.mc.renderEngine.bindTexture(background);
 
         this.drawTexturedModalRect(this.guiLeft + 151, this.guiTop + 36, this.xSize, 24, 18, 34);
     }
