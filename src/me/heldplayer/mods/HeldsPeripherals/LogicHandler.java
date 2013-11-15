@@ -13,15 +13,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagDouble;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.MathHelper;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
-import thaumcraft.api.EnumTag;
-import thaumcraft.api.ObjectTags;
-import thaumcraft.api.ThaumcraftApi;
-import thaumcraft.api.aura.AuraNode;
 import dan200.computer.api.IComputerAccess;
 import dan200.computer.api.ILuaContext;
 
@@ -701,33 +696,33 @@ public class LogicHandler {
 
         switch (method) {
         case 0: // getNearestNode
-            int nodeId = ThaumcraftApi.getClosestAuraWithinRange(peripheral.getWorld(), (double) peripheral.getX() + 0.5D, (double) peripheral.getY() + 0.5D, (double) peripheral.getZ() + 0.5D, 128.0D);
-
-            if (nodeId < 0) {
-                throw new Exception("No nearby node detected");
-            }
-
-            AuraNode node = ThaumcraftApi.getNodeCopy(nodeId);
-
-            double distX = abs(peripheral.getX() + 0.5D - node.xPos);
-            double distY = abs(peripheral.getY() + 0.5D - node.yPos);
-            double distZ = abs(peripheral.getZ() + 0.5D - node.zPos);
-            double distance = MathHelper.sqrt_double(distX * distX + distY * distY + distZ * distZ);
-
-            ObjectTags flux = node.flux;
-
-            EnumTag[] tags = flux.getAspects();
-
-            Object[] fluxArray = new Object[tags.length];
-
-            for (int i = 0; i < tags.length; i++) {
-                fluxArray[i] = new Object[] { tags[0].id, tags[0].name, flux.getAmount(tags[0]) };
-                Objects.log.info(tags[0].id + ": " + tags[0].name + " " + flux.getAmount(tags[0]));
-            }
-
-            Objects.log.info(node.key + ": " + node.baseLevel + " / " + node.level + " " + node.type.toString() + " @" + distance);
-
-            return new Object[] { node.key, node.baseLevel, node.level, node.type.toString(), distance, fluxArray };
+            //            int nodeId = ThaumcraftApi.getClosestAuraWithinRange(peripheral.getWorld(), (double) peripheral.getX() + 0.5D, (double) peripheral.getY() + 0.5D, (double) peripheral.getZ() + 0.5D, 128.0D);
+            //
+            //            if (nodeId < 0) {
+            //                throw new Exception("No nearby node detected");
+            //            }
+            //
+            //            AuraNode node = ThaumcraftApi.getNodeCopy(nodeId);
+            //
+            //            double distX = abs(peripheral.getX() + 0.5D - node.xPos);
+            //            double distY = abs(peripheral.getY() + 0.5D - node.yPos);
+            //            double distZ = abs(peripheral.getZ() + 0.5D - node.zPos);
+            //            double distance = MathHelper.sqrt_double(distX * distX + distY * distY + distZ * distZ);
+            //
+            //            ObjectTags flux = node.flux;
+            //
+            //            EnumTag[] tags = flux.getAspects();
+            //
+            //            Object[] fluxArray = new Object[tags.length];
+            //
+            //            for (int i = 0; i < tags.length; i++) {
+            //                fluxArray[i] = new Object[] { tags[0].id, tags[0].name, flux.getAmount(tags[0]) };
+            //                Objects.log.info(tags[0].id + ": " + tags[0].name + " " + flux.getAmount(tags[0]));
+            //            }
+            //
+            //            Objects.log.info(node.key + ": " + node.baseLevel + " / " + node.level + " " + node.type.toString() + " @" + distance);
+            //
+            //            return new Object[] { node.key, node.baseLevel, node.level, node.type.toString(), distance, fluxArray };
         default:
             throw new Exception("Error calling method: unknown method ID");
         }

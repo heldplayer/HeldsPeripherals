@@ -32,8 +32,6 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.oredict.OreDictionary;
-import thaumcraft.api.ItemApi;
-import thaumcraft.api.ThaumcraftApi;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
@@ -87,16 +85,16 @@ public class CommonProxy extends HeldCoreProxy implements IGuiHandler {
         if (thaumcraftInstalled) {
             Objects.log.info("Thaumcraft installed, adding recipes");
 
-            ItemStack arcaneStoneBlock = ItemApi.getItem("blockInfusionWorkbench", 0);
-            ItemStack goggles = ItemApi.getItem("itemGoggles", 0);
+            //ItemStack arcaneStoneBlock = ItemApi.getItem("blockInfusionWorkbench", 0);
+            //ItemStack goggles = ItemApi.getItem("itemGoggles", 0);
 
-            ItemStack thaumometer = ItemApi.getItem("itemThaumometer", 0);
-            ItemStack quicksilver = ItemApi.getItem("itemResource", 3);
+            //ItemStack thaumometer = ItemApi.getItem("itemThaumometer", 0);
+            //ItemStack quicksilver = ItemApi.getItem("itemResource", 3);
 
-            ItemStack thaumium = ItemApi.getItem("itemResource", 2);
-            ItemStack visShard = ItemApi.getItem("itemShard", 4);
+            //ItemStack thaumium = ItemApi.getItem("itemResource", 2);
+            //ItemStack visShard = ItemApi.getItem("itemShard", 4);
 
-            ThaumcraftApi.addArcaneCraftingRecipe("", 5, new ItemStack(ModHeldsPeripherals.blockMulti1Id.getValue(), 1, 8), "SgS", "mqm", "isi", 'S', arcaneStoneBlock, 'g', goggles, 'm', thaumometer, 'q', quicksilver, 'i', thaumium, 's', visShard);
+            //ThaumcraftApi.addArcaneCraftingRecipe("", 5, new ItemStack(ModHeldsPeripherals.blockMulti1Id.getValue(), 1, 8), "SgS", "mqm", "isi", 'S', arcaneStoneBlock, 'g', goggles, 'm', thaumometer, 'q', quicksilver, 'i', thaumium, 's', visShard);
         }
 
         // Ender Charge/Ender Pearl Dust
