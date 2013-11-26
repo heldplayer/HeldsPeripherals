@@ -7,7 +7,6 @@ import me.heldplayer.mods.HeldsPeripherals.ModHeldsPeripherals;
 import me.heldplayer.mods.HeldsPeripherals.api.IHeldsPeripheral;
 import me.heldplayer.mods.HeldsPeripherals.tileentity.TileEntityFireworksLighter;
 import me.heldplayer.mods.HeldsPeripherals.tileentity.TileEntityNoiseMaker;
-import me.heldplayer.mods.HeldsPeripherals.tileentity.TileEntityThaumicScanner;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
@@ -54,7 +53,7 @@ public class BlockMulti1 extends BlockHeldsPeripheral {
 
     @Override
     public Icon getIcon(int side, int metadata) {
-        int type = (metadata >> 2 & 0x3) % 3;
+        int type = (metadata >> 2 & 0x3) % 2;
 
         if ((metadata & 0x3) == 0) {
             switch (side) {
@@ -126,7 +125,7 @@ public class BlockMulti1 extends BlockHeldsPeripheral {
     public boolean hasTileEntity(int metadata) {
         int type = (metadata >> 2 & 0x3);
 
-        if (type == 0 || type == 1 || type == 2) {
+        if (type == 0 || type == 1) {
             return true;
         }
         return false;
@@ -141,9 +140,6 @@ public class BlockMulti1 extends BlockHeldsPeripheral {
         }
         else if (type == 1) {
             return new TileEntityNoiseMaker();
-        }
-        else if (type == 2) {
-            return new TileEntityThaumicScanner();
         }
 
         return null;
@@ -241,7 +237,7 @@ public class BlockMulti1 extends BlockHeldsPeripheral {
     @Override
     @SideOnly(Side.CLIENT)
     public void registerIcons(IconRegister register) {
-        String[] prefixes = new String[] { "fireworkslighter", "noisemaker", "thaumicscanner" };
+        String[] prefixes = new String[] { "fireworkslighter", "noisemaker" };
         this.top = new Icon[prefixes.length];
         this.bottom = new Icon[prefixes.length];
         this.front = new Icon[prefixes.length];

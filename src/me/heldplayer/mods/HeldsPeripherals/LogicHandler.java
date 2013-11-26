@@ -4,7 +4,6 @@ package me.heldplayer.mods.HeldsPeripherals;
 import me.heldplayer.mods.HeldsPeripherals.api.IElectricalFireworksLighter;
 import me.heldplayer.mods.HeldsPeripherals.api.IEnderModem;
 import me.heldplayer.mods.HeldsPeripherals.api.INoiseMaker;
-import me.heldplayer.mods.HeldsPeripherals.api.IThaumicScanner;
 import me.heldplayer.mods.HeldsPeripherals.entity.EntityFireworkRocket;
 import me.heldplayer.mods.HeldsPeripherals.network.Network;
 import me.heldplayer.mods.HeldsPeripherals.packet.Packet1PlaySound;
@@ -687,48 +686,4 @@ public class LogicHandler {
         }
     }
 
-    // { "getNearestNode" }
-    public static Object[] callMethod(IComputerAccess computer, ILuaContext context, int method, Object[] arguments, IThaumicScanner peripheral) throws Exception {
-        if (!CommonProxy.thaumcraftInstalled) {
-            Objects.log.info("Thaumcraft is not installed, but a Thaumic Scanner is being used!");
-            throw new Exception("Thaumcraft has not been detected in this installation");
-        }
-
-        switch (method) {
-        case 0: // getNearestNode
-            //            int nodeId = ThaumcraftApi.getClosestAuraWithinRange(peripheral.getWorld(), (double) peripheral.getX() + 0.5D, (double) peripheral.getY() + 0.5D, (double) peripheral.getZ() + 0.5D, 128.0D);
-            //
-            //            if (nodeId < 0) {
-            //                throw new Exception("No nearby node detected");
-            //            }
-            //
-            //            AuraNode node = ThaumcraftApi.getNodeCopy(nodeId);
-            //
-            //            double distX = abs(peripheral.getX() + 0.5D - node.xPos);
-            //            double distY = abs(peripheral.getY() + 0.5D - node.yPos);
-            //            double distZ = abs(peripheral.getZ() + 0.5D - node.zPos);
-            //            double distance = MathHelper.sqrt_double(distX * distX + distY * distY + distZ * distZ);
-            //
-            //            ObjectTags flux = node.flux;
-            //
-            //            EnumTag[] tags = flux.getAspects();
-            //
-            //            Object[] fluxArray = new Object[tags.length];
-            //
-            //            for (int i = 0; i < tags.length; i++) {
-            //                fluxArray[i] = new Object[] { tags[0].id, tags[0].name, flux.getAmount(tags[0]) };
-            //                Objects.log.info(tags[0].id + ": " + tags[0].name + " " + flux.getAmount(tags[0]));
-            //            }
-            //
-            //            Objects.log.info(node.key + ": " + node.baseLevel + " / " + node.level + " " + node.type.toString() + " @" + distance);
-            //
-            //            return new Object[] { node.key, node.baseLevel, node.level, node.type.toString(), distance, fluxArray };
-        default:
-            throw new Exception("Error calling method: unknown method ID");
-        }
-    }
-
-    private static double abs(double value) {
-        return value > 0.0D ? value : -value;
-    }
 }

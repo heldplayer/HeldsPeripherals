@@ -44,13 +44,9 @@ public class ItemBlockMulti1 extends ItemBlock {
         case 1:
             name = "tile.HP.noiseMaker.name";
         break;
-        case 2:
-            name = "tile.HP.thaumicScanner.name";
-        break;
         }
 
         return ("" + StatCollector.translateToLocal(name)).trim();
-        //return StringTranslate.getInstance().translateKey(name);
     }
 
     @Override
@@ -74,7 +70,6 @@ public class ItemBlockMulti1 extends ItemBlock {
     public void getSubItems(int itemid, CreativeTabs tabs, List itemList) {
         itemList.add(new ItemStack(itemid, 1, 0));
         itemList.add(new ItemStack(itemid, 1, 4));
-        itemList.add(new ItemStack(itemid, 1, 8));
     }
 
 }

@@ -3,7 +3,6 @@ itemGroup.CCHeldsPeripherals=Held's Peripherals
 tile.HP.transWorldModem.name=Ender Modem
 tile.HP.fireworksLighter.name=Electrical Fireworks Lighter
 tile.HP.noiseMaker.name=Noise Maker
-tile.HP.thaumicScanner.name=Thaumic Scanner
 
 tile.fluid.dye.molten.white.name=Molten White Dye
 tile.fluid.dye.molten.orange.name=Molten Orange Dye

@@ -21,7 +21,6 @@ import me.heldplayer.mods.HeldsPeripherals.peripherals.ElectricalFireworksLighte
 import me.heldplayer.mods.HeldsPeripherals.tileentity.TileEntityEnderModem;
 import me.heldplayer.mods.HeldsPeripherals.tileentity.TileEntityFireworksLighter;
 import me.heldplayer.mods.HeldsPeripherals.tileentity.TileEntityNoiseMaker;
-import me.heldplayer.mods.HeldsPeripherals.tileentity.TileEntityThaumicScanner;
 import me.heldplayer.util.HeldCore.HeldCoreProxy;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -33,7 +32,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.oredict.OreDictionary;
 import cpw.mods.fml.client.registry.RenderingRegistry;
-import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
@@ -47,11 +45,6 @@ public class CommonProxy extends HeldCoreProxy implements IGuiHandler {
 
     public static HashMap<ItemStack, Integer> enderCharges;
 
-    @Instance("Thaumcraft")
-    public static Object thaumcraft;
-
-    public static boolean thaumcraftInstalled = false;
-
     public static int renderId;
 
     @Override
@@ -63,8 +56,6 @@ public class CommonProxy extends HeldCoreProxy implements IGuiHandler {
 
     @Override
     public void init(FMLInitializationEvent event) {
-        thaumcraftInstalled = thaumcraft != null;
-
         Objects.creativeTab = new CreativeTab("CCHeldsPeripherals");
 
         // Trans World Modem
@@ -81,21 +72,6 @@ public class CommonProxy extends HeldCoreProxy implements IGuiHandler {
 
         GameRegistry.addRecipe(new ItemStack(ModHeldsPeripherals.blockMulti1Id.getValue(), 1, 0), "hpG", "dDg", "ncf", 'h', new ItemStack(Item.skull, 1, OreDictionary.WILDCARD_VALUE), 'p', Item.paper, 'G', Item.gunpowder, 'd', Item.diamond, 'D', Block.dispenser, 'g', Item.glowstone, 'n', Item.goldNugget, 'c', Item.fireballCharge, 'f', Item.feather);
         GameRegistry.addRecipe(new ItemStack(ModHeldsPeripherals.blockMulti1Id.getValue(), 1, 4), "bbb", "rnr", "bBb", 'b', Block.brick, 'r', Item.redstone, 'n', Block.music, 'B', Block.bookShelf);
-
-        if (thaumcraftInstalled) {
-            Objects.log.info("Thaumcraft installed, adding recipes");
-
-            //ItemStack arcaneStoneBlock = ItemApi.getItem("blockInfusionWorkbench", 0);
-            //ItemStack goggles = ItemApi.getItem("itemGoggles", 0);
-
-            //ItemStack thaumometer = ItemApi.getItem("itemThaumometer", 0);
-            //ItemStack quicksilver = ItemApi.getItem("itemResource", 3);
-
-            //ItemStack thaumium = ItemApi.getItem("itemResource", 2);
-            //ItemStack visShard = ItemApi.getItem("itemShard", 4);
-
-            //ThaumcraftApi.addArcaneCraftingRecipe("", 5, new ItemStack(ModHeldsPeripherals.blockMulti1Id.getValue(), 1, 8), "SgS", "mqm", "isi", 'S', arcaneStoneBlock, 'g', goggles, 'm', thaumometer, 'q', quicksilver, 'i', thaumium, 's', visShard);
-        }
 
         // Ender Charge/Ender Pearl Dust
         Objects.itemEnderCharge = new ItemEnderCharge(ModHeldsPeripherals.itemEnderChargeId.getValue());
@@ -122,7 +98,6 @@ public class CommonProxy extends HeldCoreProxy implements IGuiHandler {
         TileEntity.addMapping(TileEntityEnderModem.class, "CCtransWorldModem");
         TileEntity.addMapping(TileEntityFireworksLighter.class, "CCfireworksLighter");
         TileEntity.addMapping(TileEntityNoiseMaker.class, "CCnoiseMaker");
-        TileEntity.addMapping(TileEntityThaumicScanner.class, "CCthaumicScanner");
         EntityRegistry.registerModEntity(EntityFireworkRocket.class, "CCFireworksRocketEntity", ModHeldsPeripherals.fireworksEntityId.getValue(), ModHeldsPeripherals.instance, 64, 10, true);
 
         try {
