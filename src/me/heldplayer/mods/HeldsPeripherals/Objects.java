@@ -23,7 +23,7 @@ public class Objects {
     public static final String MOD_DEPENCIES = "after:Thaumcraft";
     public static final String MOD_CHANNEL = "CCHPChannel";
     public static final String CLIENT_PROXY = "me.heldplayer.mods.HeldsPeripherals.client.ClientProxy";
-    public static final String SERVER_PROXY = "me.heldplayer.mods.HeldsPeripherals.common.CommonProxy";
+    public static final String SERVER_PROXY = "me.heldplayer.mods.HeldsPeripherals.CommonProxy";
 
     public static final ModInfo MOD_INFO = new ModInfo(MOD_ID, MOD_NAME, MOD_VERSION);
 

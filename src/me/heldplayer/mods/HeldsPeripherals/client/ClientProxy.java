@@ -23,6 +23,8 @@ import net.minecraftforge.client.MinecraftForgeClient;
 import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.client.event.sound.SoundLoadEvent;
 import net.minecraftforge.event.ForgeSubscribe;
+import cpw.mods.fml.client.registry.RenderingRegistry;
+import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -33,6 +35,14 @@ public class ClientProxy extends CommonProxy {
     public static Icon[] icons = new Icon[4];
     public static Icon fireworksUpgrade = null;
     public static final String textureLocation = "/me/heldplayer/textures/HeldsPeripherals/";
+
+    @Override
+    public void init(FMLInitializationEvent event) {
+        super.init(event);
+
+        CommonProxy.renderId = RenderingRegistry.getNextAvailableRenderId();
+        RenderingRegistry.registerBlockHandler(CommonProxy.renderId, new BlockRendererHeldsPeripheral(CommonProxy.renderId));
+    }
 
     @SuppressWarnings("unchecked")
     @Override

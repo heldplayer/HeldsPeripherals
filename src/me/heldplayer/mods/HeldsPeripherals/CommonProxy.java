@@ -8,7 +8,6 @@ import me.heldplayer.mods.HeldsPeripherals.api.HeldsPeripheralAPI;
 import me.heldplayer.mods.HeldsPeripherals.block.BlockEnderModem;
 import me.heldplayer.mods.HeldsPeripherals.block.BlockMoltenDye;
 import me.heldplayer.mods.HeldsPeripherals.block.BlockMulti1;
-import me.heldplayer.mods.HeldsPeripherals.client.BlockRendererHeldsPeripheral;
 import me.heldplayer.mods.HeldsPeripherals.client.gui.CreativeTab;
 import me.heldplayer.mods.HeldsPeripherals.entity.EntityFireworkRocket;
 import me.heldplayer.mods.HeldsPeripherals.fluids.FluidColored;
@@ -31,7 +30,6 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.oredict.OreDictionary;
-import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
@@ -112,9 +110,6 @@ public class CommonProxy extends HeldCoreProxy implements IGuiHandler {
 
     @Override
     public void postInit(FMLPostInitializationEvent event) {
-        renderId = RenderingRegistry.getNextAvailableRenderId();
-        RenderingRegistry.registerBlockHandler(renderId, new BlockRendererHeldsPeripheral(renderId));
-
         ArrayList<ItemStack> dustEnderPearl = OreDictionary.getOres("dustEnderPearl");
         ArrayList<ItemStack> dustEnderEye = OreDictionary.getOres("dustEnderEye");
 
