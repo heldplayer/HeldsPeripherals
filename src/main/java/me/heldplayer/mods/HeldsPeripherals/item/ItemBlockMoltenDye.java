@@ -9,14 +9,14 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class ItemBlockMoltenDye extends ItemBlock {
 
-    public ItemBlockMoltenDye(int id) {
-        super(id);
+    public ItemBlockMoltenDye(Block block) {
+        super(block);
     }
 
     @Override
     @SideOnly(Side.CLIENT)
     public int getColorFromItemStack(ItemStack stack, int pass) {
-        return Block.blocksList[this.itemID].getBlockColor();
+        return this.field_150939_a.getBlockColor();
     }
 
 }

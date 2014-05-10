@@ -3,7 +3,6 @@ package me.heldplayer.mods.HeldsPeripherals.client.gui;
 
 import me.heldplayer.mods.HeldsPeripherals.inventory.ContainerFireworksLauncher;
 import me.heldplayer.mods.HeldsPeripherals.tileentity.TileEntityFireworksLighter;
-import me.heldplayer.util.HeldCore.client.GuiHelper;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.entity.player.EntityPlayer;
@@ -11,6 +10,7 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StatCollector;
 import net.minecraftforge.fluids.FluidStack;
+import net.specialattack.forge.core.client.GuiHelper;
 
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
@@ -39,15 +39,15 @@ public class GuiFireworksLighter extends GuiContainer {
         RenderHelper.disableStandardItemLighting();
 
         if (x > 60 + this.guiLeft && x < 79 + this.guiLeft && y > 13 + this.guiTop && y < 49 + this.guiTop) {
-            GuiHelper.drawTooltip(GuiHelper.getFluidString(this.lighter.getTank(0)), this.fontRenderer, x, y, this.guiTop, this.height);
+            GuiHelper.drawTooltip(GuiHelper.getFluidString(this.lighter.getTank(0)), this.fontRendererObj, x, y, this.guiTop, this.height);
         }
 
         if (x > 96 + this.guiLeft && x < 115 + this.guiLeft && y > 13 + this.guiTop && y < 49 + this.guiTop) {
-            GuiHelper.drawTooltip(GuiHelper.getFluidString(this.lighter.getTank(1)), this.fontRenderer, x, y, this.guiTop, this.height);
+            GuiHelper.drawTooltip(GuiHelper.getFluidString(this.lighter.getTank(1)), this.fontRendererObj, x, y, this.guiTop, this.height);
         }
 
         if (x > 132 + this.guiLeft && x < 151 + this.guiLeft && y > 13 + this.guiTop && y < 49 + this.guiTop) {
-            GuiHelper.drawTooltip(GuiHelper.getFluidString(this.lighter.getTank(2)), this.fontRenderer, x, y, this.guiTop, this.height);
+            GuiHelper.drawTooltip(GuiHelper.getFluidString(this.lighter.getTank(2)), this.fontRendererObj, x, y, this.guiTop, this.height);
         }
     }
 
@@ -60,8 +60,8 @@ public class GuiFireworksLighter extends GuiContainer {
         GL11.glDisable(GL11.GL_LIGHTING);
         GL11.glDisable(GL11.GL_DEPTH_TEST);
 
-        this.fontRenderer.drawString(this.lighter.isInvNameLocalized() ? this.lighter.getInvName() : StatCollector.translateToLocal(this.lighter.getInvName()), 8, 6, 4210752);
-        this.fontRenderer.drawString(StatCollector.translateToLocal(this.playerInv.getInvName()), 8, this.ySize - 96 + 2, 4210752);
+        this.fontRendererObj.drawString(this.lighter.hasCustomInventoryName() ? this.lighter.getInventoryName() : StatCollector.translateToLocal(this.lighter.getInventoryName()), 8, 6, 4210752);
+        this.fontRendererObj.drawString(StatCollector.translateToLocal(this.playerInv.getInventoryName()), 8, this.ySize - 96 + 2, 4210752);
 
         GL11.glEnable(GL11.GL_DEPTH_TEST);
         GL11.glEnable(GL11.GL_LIGHTING);

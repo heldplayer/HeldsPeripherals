@@ -1,13 +1,13 @@
 
 package me.heldplayer.mods.HeldsPeripherals.client;
 
-import net.minecraft.util.Icon;
+import net.minecraft.util.IIcon;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class IconReference implements Icon {
+public class IconReference implements IIcon {
 
-    public Icon icon;
+    public IIcon icon;
 
     @Override
     @SideOnly(Side.CLIENT)

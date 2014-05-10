@@ -4,14 +4,16 @@ package me.heldplayer.mods.HeldsPeripherals;
 import java.util.Iterator;
 
 import me.heldplayer.mods.HeldsPeripherals.network.Network;
-import me.heldplayer.mods.HeldsPeripherals.packet.PacketHandler;
-import me.heldplayer.util.HeldCore.HeldCoreMod;
-import me.heldplayer.util.HeldCore.HeldCoreProxy;
-import me.heldplayer.util.HeldCore.ModInfo;
-import me.heldplayer.util.HeldCore.config.Config;
-import me.heldplayer.util.HeldCore.config.ConfigValue;
+import me.heldplayer.mods.HeldsPeripherals.packet.Packet1PlaySound;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.common.Configuration;
+import net.minecraftforge.common.config.Configuration;
+import net.specialattack.forge.core.ModInfo;
+import net.specialattack.forge.core.SpACore;
+import net.specialattack.forge.core.SpACoreMod;
+import net.specialattack.forge.core.SpACoreProxy;
+import net.specialattack.forge.core.config.Config;
+import net.specialattack.forge.core.config.ConfigValue;
+import net.specialattack.forge.core.packet.PacketHandler;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
@@ -20,12 +22,10 @@ import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStoppingEvent;
-import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.relauncher.Side;
 
-@Mod(name = Objects.MOD_NAME, modid = Objects.MOD_ID, version = Objects.MOD_VERSION, dependencies = Objects.MOD_DEPENCIES)
-@NetworkMod(clientSideRequired = true, serverSideRequired = false, channels = { Objects.MOD_CHANNEL }, packetHandler = PacketHandler.class)
-public class ModHeldsPeripherals extends HeldCoreMod {
+@Mod(name = Objects.MOD_NAME, modid = Objects.MOD_ID, dependencies = Objects.MOD_DEPENCIES)
+public class ModHeldsPeripherals extends SpACoreMod {
 
     @Instance(value = Objects.MOD_ID)
     public static ModHeldsPeripherals instance;
@@ -33,9 +33,6 @@ public class ModHeldsPeripherals extends HeldCoreMod {
     public static CommonProxy proxy;
 
     // HeldCore Objects
-    public static ConfigValue<Integer> blockEnderModemId;
-    public static ConfigValue<Integer> blockMulti1Id;
-    public static ConfigValue<Integer> itemEnderChargeId;
     public static ConfigValue<Integer> fireworksEntityId;
     public static ConfigValue<Integer> chargeYieldEnderPearl;
     public static ConfigValue<Integer> chargeYieldEyeOfEnder;
@@ -46,18 +43,18 @@ public class ModHeldsPeripherals extends HeldCoreMod {
     public static ConfigValue<Integer> chargeCostostTransportFluid;
     public static ConfigValue<Boolean> enhancedFireworksEntity;
     public static ConfigValue<Boolean> enhancedEnderChargeRenderer;
-    // Molten dyes
-    public static ConfigValue<?>[] blockMoltenDye;
+
+    public static PacketHandler packetHandler;
 
     @Override
+    @SuppressWarnings("unchecked")
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
         Objects.log = event.getModLog();
 
+        SpACore.packetHandler = new PacketHandler("HeldsPeripherals", Packet1PlaySound.class);
+
         // Config
-        blockEnderModemId = new ConfigValue<Integer>("EnderModem", Configuration.CATEGORY_BLOCK, null, 2050, "The block ID for the Ender Modem");
-        blockMulti1Id = new ConfigValue<Integer>("MultiBlock1", Configuration.CATEGORY_BLOCK, null, 2051, "The block ID for the Electrical Fireworks Lighter, Noise Maker and thaumic scanner");
-        itemEnderChargeId = new ConfigValue<Integer>("EnderCharge", Configuration.CATEGORY_ITEM, null, 5230, "The item ID for the ender charge");
         fireworksEntityId = new ConfigValue<Integer>("FireworksEntityID", Configuration.CATEGORY_GENERAL, null, 160, "The entity ID for the custom fireworks entity");
         chargeYieldEnderPearl = new ConfigValue<Integer>("YieldEnderPearl", "charges", null, 40, "The amount of ender charges an ender pearl is worth");
         chargeYieldEyeOfEnder = new ConfigValue<Integer>("YieldEyeOfEnder", "charges", null, 60, "The amount of ender charges an eye of ender is worth");
@@ -69,15 +66,7 @@ public class ModHeldsPeripherals extends HeldCoreMod {
         enhancedFireworksEntity = new ConfigValue<Boolean>("EnhancedFireworks", Configuration.CATEGORY_GENERAL, Side.CLIENT, Boolean.TRUE, "Determines whether fireworks launched by the Electrical Fireworks Lighter create grouped particles");
         enhancedEnderChargeRenderer = new ConfigValue<Boolean>("EnhancedEnderChargeRenderer", Configuration.CATEGORY_GENERAL, Side.CLIENT, Boolean.TRUE, "Determines whether ender charges render with a charge amount counter");
 
-        blockMoltenDye = new ConfigValue[16];
-        for (int i = 0; i < blockMoltenDye.length; i++) {
-            blockMoltenDye[i] = new ConfigValue<Integer>("MoltenDye" + i, Configuration.CATEGORY_BLOCK, null, 2060 + i, "The block ID for molten dye " + i);
-        }
-
         this.config = new Config(event.getSuggestedConfigurationFile());
-        this.config.addConfigKey(blockEnderModemId);
-        this.config.addConfigKey(blockMulti1Id);
-        this.config.addConfigKey(itemEnderChargeId);
         this.config.addConfigKey(fireworksEntityId);
         this.config.addConfigKey(chargeYieldEnderPearl);
         this.config.addConfigKey(chargeYieldEyeOfEnder);
@@ -88,9 +77,6 @@ public class ModHeldsPeripherals extends HeldCoreMod {
         this.config.addConfigKey(chargeCostostTransportFluid);
         this.config.addConfigKey(enhancedFireworksEntity);
         this.config.addConfigKey(enhancedEnderChargeRenderer);
-        for (ConfigValue<?> setting : blockMoltenDye) {
-            this.config.addConfigKey(setting);
-        }
 
         super.preInit(event);
     }
@@ -122,7 +108,7 @@ public class ModHeldsPeripherals extends HeldCoreMod {
         while (iterator.hasNext()) {
             ItemStack stack = iterator.next();
 
-            if (stack.itemID == item.itemID && stack.getItemDamage() == item.getItemDamage()) {
+            if (stack.getItem() == item.getItem() && stack.getItemDamage() == item.getItemDamage()) {
                 return;
             }
         }
@@ -136,7 +122,7 @@ public class ModHeldsPeripherals extends HeldCoreMod {
         while (iterator.hasNext()) {
             ItemStack stack = iterator.next();
 
-            if (stack.itemID == item.itemID && stack.getItemDamage() == item.getItemDamage()) {
+            if (stack.getItem() == item.getItem() && stack.getItemDamage() == item.getItemDamage()) {
                 return CommonProxy.enderCharges.get(stack);
             }
         }
@@ -163,7 +149,7 @@ public class ModHeldsPeripherals extends HeldCoreMod {
     }
 
     @Override
-    public HeldCoreProxy getProxy() {
+    public SpACoreProxy getProxy() {
         return proxy;
     }
 

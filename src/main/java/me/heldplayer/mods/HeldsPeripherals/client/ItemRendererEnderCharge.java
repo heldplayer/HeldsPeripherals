@@ -2,13 +2,13 @@
 package me.heldplayer.mods.HeldsPeripherals.client;
 
 import me.heldplayer.mods.HeldsPeripherals.Objects;
-import me.heldplayer.util.HeldCore.client.MC;
-import me.heldplayer.util.HeldCore.client.RenderHelper;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.Icon;
+import net.minecraft.util.IIcon;
 import net.minecraftforge.client.IItemRenderer;
+import net.specialattack.forge.core.client.MC;
+import net.specialattack.forge.core.client.RenderHelper;
 
 import org.lwjgl.opengl.GL11;
 
@@ -26,7 +26,7 @@ public class ItemRendererEnderCharge implements IItemRenderer {
 
     @Override
     public boolean handleRenderType(ItemStack item, ItemRenderType type) {
-        if (item.itemID == Objects.itemEnderCharge.itemID && type == ItemRenderType.INVENTORY) {
+        if (item.getItem() == Objects.itemEnderCharge && type == ItemRenderType.INVENTORY) {
             return true;
         }
 
@@ -40,8 +40,8 @@ public class ItemRendererEnderCharge implements IItemRenderer {
 
     @Override
     public void renderItem(ItemRenderType type, ItemStack item, Object... data) {
-        if (type == ItemRenderType.INVENTORY && item.itemID == Objects.itemEnderCharge.itemID) {
-            Icon icon = RenderHelper.getIconSafe(item.getIconIndex(), false);
+        if (type == ItemRenderType.INVENTORY && item.getItem() == Objects.itemEnderCharge) {
+            IIcon icon = RenderHelper.getIconSafe(item.getIconIndex(), false);
 
             Tessellator tes = Tessellator.instance;
             tes.startDrawingQuads();

@@ -165,7 +165,7 @@ public class EnderChargeRecipeHandler extends ShapelessRecipeHandler {
                 ItemStack[] items = recipe.ingredients.get(i).items;
 
                 for (ItemStack item : items) {
-                    if (ingredient.itemID == Objects.itemEnderCharge.itemID && item.itemID == ingredient.itemID) {
+                    if (ingredient.getItem() == Objects.itemEnderCharge && item.getItem() == ingredient.getItem()) {
                         recipe.cycle();
                         this.arecipes.add(recipe);
                     }

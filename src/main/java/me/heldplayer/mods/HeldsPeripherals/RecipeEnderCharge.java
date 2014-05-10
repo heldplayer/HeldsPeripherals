@@ -19,7 +19,7 @@ public class RecipeEnderCharge implements IRecipe {
         for (int i = 0; i < inv.getSizeInventory(); i++) {
             ItemStack stack = inv.getStackInSlot(i);
 
-            if (stack != null && stack.itemID == Objects.itemEnderCharge.itemID) {
+            if (stack != null && stack.getItem() == Objects.itemEnderCharge) {
                 charge += stack.getItemDamage() + 1;
                 filledSlots++;
             }

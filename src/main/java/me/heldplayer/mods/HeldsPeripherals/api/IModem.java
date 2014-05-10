@@ -3,7 +3,7 @@ package me.heldplayer.mods.HeldsPeripherals.api;
 
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
-import dan200.computer.api.IComputerAccess;
+import dan200.computercraft.api.peripheral.IComputerAccess;
 
 public interface IModem {
 

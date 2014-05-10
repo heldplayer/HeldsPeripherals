@@ -3,7 +3,6 @@ package me.heldplayer.mods.HeldsPeripherals.api;
 
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
-import dan200.computer.api.IHostedPeripheral;
 
 /**
  * Basic interface for any Peripheral added by HeldsPeripherals. Implemented by

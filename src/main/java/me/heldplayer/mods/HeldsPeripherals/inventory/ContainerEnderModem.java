@@ -29,7 +29,7 @@ public class ContainerEnderModem extends Container {
 
         this.layoutContainer();
 
-        this.modem.onInventoryChanged();
+        this.modem.markDirty();
     }
 
     @Override

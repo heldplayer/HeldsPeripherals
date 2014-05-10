@@ -8,20 +8,21 @@ import me.heldplayer.mods.HeldsPeripherals.Objects;
 import me.heldplayer.mods.HeldsPeripherals.api.IEnderModem;
 import me.heldplayer.mods.HeldsPeripherals.api.IModem;
 import me.heldplayer.mods.HeldsPeripherals.network.Network;
-import me.heldplayer.util.HeldCore.MathHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
-import net.minecraftforge.common.ForgeDirection;
+import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.FluidTankInfo;
 import net.minecraftforge.fluids.IFluidHandler;
-import dan200.computer.api.IComputerAccess;
-import dan200.computer.api.ILuaContext;
+import net.specialattack.forge.core.MathHelper;
+import dan200.computercraft.api.lua.ILuaContext;
+import dan200.computercraft.api.peripheral.IComputerAccess;
+import dan200.computercraft.api.peripheral.IPeripheral;
 
 public class TileEntityEnderModem extends TileEntityHeldsPeripheral implements ISidedInventory, IEnderModem, IFluidHandler {
 
@@ -71,14 +72,14 @@ public class TileEntityEnderModem extends TileEntityHeldsPeripheral implements I
     // IInventory
 
     @Override
-    public void onInventoryChanged() {
+    public void markDirty() {
         if (this.worldObj.isRemote) {
             return;
         }
 
         this.updateBlock();
 
-        super.onInventoryChanged();
+        super.markDirty();
     }
 
     @Override
@@ -138,8 +139,8 @@ public class TileEntityEnderModem extends TileEntityHeldsPeripheral implements I
     }
 
     @Override
-    public String getInvName() {
-        return this.isInvNameLocalized() ? this.name : "tile.HP.transWorldModem.name";
+    public String getInventoryName() {
+        return this.hasCustomInventoryName() ? this.name : "tile.HP.transWorldModem.name";
     }
 
     @Override
@@ -149,17 +150,17 @@ public class TileEntityEnderModem extends TileEntityHeldsPeripheral implements I
 
     @Override
     public boolean isUseableByPlayer(EntityPlayer player) {
-        return this.worldObj.getBlockTileEntity(this.xCoord, this.yCoord, this.zCoord) == this && player.getDistanceSq(this.xCoord + 0.5, this.yCoord + 0.5, this.zCoord + 0.5) < 64;
+        return this.worldObj.getTileEntity(this.xCoord, this.yCoord, this.zCoord) == this && player.getDistanceSq(this.xCoord + 0.5, this.yCoord + 0.5, this.zCoord + 0.5) < 64;
     }
 
     @Override
-    public void openChest() {}
+    public void openInventory() {}
 
     @Override
-    public void closeChest() {}
+    public void closeInventory() {}
 
     @Override
-    public boolean isInvNameLocalized() {
+    public boolean hasCustomInventoryName() {
         return this.name != null && this.name.length() > 0;
     }
 
@@ -246,11 +247,11 @@ public class TileEntityEnderModem extends TileEntityHeldsPeripheral implements I
     @Override
     public void readFromNBT(NBTTagCompound compound) {
         super.readFromNBT(compound);
-        NBTTagList items = compound.getTagList("Items");
+        NBTTagList items = compound.getTagList("Items", 10);
         this.inventory = new ItemStack[this.getSizeInventory()];
 
         for (int i = 0; i < items.tagCount(); ++i) {
-            NBTTagCompound itemCompound = (NBTTagCompound) items.tagAt(i);
+            NBTTagCompound itemCompound = items.getCompoundTagAt(i);
             byte slot = itemCompound.getByte("Slot");
 
             if (slot >= 0 && slot < this.inventory.length) {
@@ -258,10 +259,10 @@ public class TileEntityEnderModem extends TileEntityHeldsPeripheral implements I
             }
         }
 
-        NBTTagList tanks = compound.getTagList("Tanks");
+        NBTTagList tanks = compound.getTagList("Tanks", 10);
 
         for (int i = 0; i < tanks.tagCount(); i++) {
-            NBTTagCompound tankCompound = (NBTTagCompound) tanks.tagAt(i);
+            NBTTagCompound tankCompound = tanks.getCompoundTagAt(i);
             byte index = tankCompound.getByte("Index");
 
             if (index >= 0 && index < this.tanks.length) {
@@ -307,7 +308,7 @@ public class TileEntityEnderModem extends TileEntityHeldsPeripheral implements I
 
         compound.setInteger("charge", this.charge);
 
-        if (this.isInvNameLocalized()) {
+        if (this.hasCustomInventoryName()) {
             compound.setString("CustomName", this.name);
         }
     }
@@ -329,10 +330,10 @@ public class TileEntityEnderModem extends TileEntityHeldsPeripheral implements I
         return LogicHandler.callMethod(computer, context, method, arguments, this);
     }
 
-    @Override
-    public boolean canAttachToSide(int side) {
-        return true;
-    }
+    //@Override
+    //public boolean canAttachToSide(int side) {
+    //return true;
+    //}
 
     @Override
     public void attach(IComputerAccess computer) {
@@ -345,8 +346,9 @@ public class TileEntityEnderModem extends TileEntityHeldsPeripheral implements I
     }
 
     @Override
-    public IModem getModem() {
-        return this.modem;
+    public boolean equals(IPeripheral other) {
+        // TODO Auto-generated method stub
+        return this == other;
     }
 
     // IHeldsperipheral
@@ -357,7 +359,7 @@ public class TileEntityEnderModem extends TileEntityHeldsPeripheral implements I
             if (this.inventory[i] != null && this.inventory[i].stackSize > 0) {
                 ItemStack stack = this.inventory[i];
 
-                if (stack.itemID == Objects.itemEnderCharge.itemID) {
+                if (stack.getItem() == Objects.itemEnderCharge) {
                     int charge = stack.getItemDamage() + 1;
 
                     if (charge > 0) {
@@ -419,7 +421,7 @@ public class TileEntityEnderModem extends TileEntityHeldsPeripheral implements I
         this.name = name;
     }
 
-    // ITransWorldModem
+    // IEnderModem
 
     @Override
     public int getChargeLevel() {
@@ -456,4 +458,8 @@ public class TileEntityEnderModem extends TileEntityHeldsPeripheral implements I
         return this.tanks[0];
     }
 
+    @Override
+    public IModem getModem() {
+        return this.modem;
+    }
 }

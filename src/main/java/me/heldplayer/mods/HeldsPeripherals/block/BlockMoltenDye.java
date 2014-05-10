@@ -4,7 +4,7 @@ package me.heldplayer.mods.HeldsPeripherals.block;
 import me.heldplayer.mods.HeldsPeripherals.Objects;
 import me.heldplayer.mods.HeldsPeripherals.fluids.FluidColored;
 import net.minecraft.block.material.Material;
-import net.minecraft.util.Icon;
+import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraftforge.fluids.BlockFluidClassic;
 import net.minecraftforge.fluids.Fluid;
@@ -14,13 +14,13 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class BlockMoltenDye extends BlockFluidClassic {
 
-    public BlockMoltenDye(int id, Fluid fluid, Material material) {
-        super(id, fluid, material);
+    public BlockMoltenDye(Fluid fluid, Material material) {
+        super(fluid, material);
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public Icon getIcon(int side, int meta) {
+    public IIcon getIcon(int side, int meta) {
         return (side == 0 || side == 1) ? this.getFluid().getStillIcon() : this.getFluid().getFlowingIcon();
     }
 

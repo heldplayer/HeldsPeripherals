@@ -4,18 +4,19 @@ package me.heldplayer.mods.HeldsPeripherals.item;
 import java.util.List;
 
 import me.heldplayer.mods.HeldsPeripherals.Objects;
+import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.Icon;
-import net.minecraft.util.StatCollector;
+import net.minecraft.util.IIcon;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 public class ItemBlockMulti1 extends ItemBlock {
 
-    public ItemBlockMulti1(int par1) {
-        super(par1);
+    public ItemBlockMulti1(Block block) {
+        super(block);
         this.setMaxDamage(0);
         this.setHasSubtypes(true);
     }
@@ -27,12 +28,12 @@ public class ItemBlockMulti1 extends ItemBlock {
 
     @Override
     @SideOnly(Side.CLIENT)
-    public Icon getIconFromDamage(int meta) {
-        return Objects.blockMulti1.getIcon(0, meta);
+    public IIcon getIconFromDamage(int meta) {
+        return this.field_150939_a.getIcon(0, meta);
     }
 
     @Override
-    public String getItemDisplayName(ItemStack stack) {
+    public String getUnlocalizedName(ItemStack stack) {
         int type = (stack.getItemDamage() >> 2 & 0x3);
 
         String name = "";
@@ -46,7 +47,7 @@ public class ItemBlockMulti1 extends ItemBlock {
         break;
         }
 
-        return ("" + StatCollector.translateToLocal(name)).trim();
+        return name;
     }
 
     @Override
@@ -67,9 +68,9 @@ public class ItemBlockMulti1 extends ItemBlock {
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubItems(int itemid, CreativeTabs tabs, List itemList) {
-        itemList.add(new ItemStack(itemid, 1, 0));
-        itemList.add(new ItemStack(itemid, 1, 4));
+    public void getSubItems(Item item, CreativeTabs tabs, List itemList) {
+        itemList.add(new ItemStack(item, 1, 0));
+        itemList.add(new ItemStack(item, 1, 4));
     }
 
 }

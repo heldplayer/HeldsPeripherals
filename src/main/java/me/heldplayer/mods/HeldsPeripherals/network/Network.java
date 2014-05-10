@@ -6,6 +6,8 @@ import java.util.LinkedList;
 
 import me.heldplayer.mods.HeldsPeripherals.api.IEnderModem;
 import me.heldplayer.mods.HeldsPeripherals.api.IModem;
+import net.minecraft.init.Blocks;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 
@@ -46,7 +48,7 @@ public class Network {
     }
 
     public static ItemStack transportItem(int senderId, int dimension, ItemStack origStack, int target) {
-        if (origStack != null && origStack.stackSize > 0 && origStack.itemID > 0) {
+        if (origStack != null && origStack.stackSize > 0 && origStack.getItem() != null && origStack.getItem() != Item.getItemFromBlock(Blocks.air)) {
             ItemStack newStack = origStack.copy();
             ItemStack sentStack = origStack.copy();
 

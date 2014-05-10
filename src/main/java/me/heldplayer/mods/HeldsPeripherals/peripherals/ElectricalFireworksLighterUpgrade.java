@@ -4,13 +4,14 @@ package me.heldplayer.mods.HeldsPeripherals.peripherals;
 import me.heldplayer.mods.HeldsPeripherals.Objects;
 import me.heldplayer.mods.HeldsPeripherals.client.ClientProxy;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.Icon;
-import dan200.computer.api.IHostedPeripheral;
-import dan200.turtle.api.ITurtleAccess;
-import dan200.turtle.api.ITurtleUpgrade;
-import dan200.turtle.api.TurtleSide;
-import dan200.turtle.api.TurtleUpgradeType;
-import dan200.turtle.api.TurtleVerb;
+import net.minecraft.util.IIcon;
+import dan200.computercraft.api.peripheral.IPeripheral;
+import dan200.computercraft.api.turtle.ITurtleAccess;
+import dan200.computercraft.api.turtle.ITurtleUpgrade;
+import dan200.computercraft.api.turtle.TurtleCommandResult;
+import dan200.computercraft.api.turtle.TurtleSide;
+import dan200.computercraft.api.turtle.TurtleUpgradeType;
+import dan200.computercraft.api.turtle.TurtleVerb;
 
 public class ElectricalFireworksLighterUpgrade implements ITurtleUpgrade {
 
@@ -20,7 +21,7 @@ public class ElectricalFireworksLighterUpgrade implements ITurtleUpgrade {
     }
 
     @Override
-    public String getAdjective() {
+    public String getUnlocalisedAdjective() {
         return "Fireworks";
     }
 
@@ -35,23 +36,24 @@ public class ElectricalFireworksLighterUpgrade implements ITurtleUpgrade {
     }
 
     @Override
-    public boolean isSecret() {
-        return false;
-    }
-
-    @Override
-    public IHostedPeripheral createPeripheral(ITurtleAccess turtle, TurtleSide side) {
+    public IPeripheral createPeripheral(ITurtleAccess turtle, TurtleSide side) {
         return new ElectricalFireworksLighterPeripheral(turtle);
     }
 
     @Override
-    public boolean useTool(ITurtleAccess turtle, TurtleSide side, TurtleVerb verb, int direction) {
-        return false;
+    public TurtleCommandResult useTool(ITurtleAccess turtle, TurtleSide side, TurtleVerb verb, int direction) {
+        return TurtleCommandResult.failure();
     }
 
     @Override
-    public Icon getIcon(ITurtleAccess turtle, TurtleSide side) {
+    public IIcon getIcon(ITurtleAccess turtle, TurtleSide side) {
         return ClientProxy.fireworksUpgrade;
+    }
+
+    @Override
+    public void update(ITurtleAccess turtle, TurtleSide side) {
+        // TODO Auto-generated method stub
+        
     }
 
 }

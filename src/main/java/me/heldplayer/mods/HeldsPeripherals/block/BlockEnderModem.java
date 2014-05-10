@@ -6,12 +6,12 @@ import java.util.Random;
 import me.heldplayer.mods.HeldsPeripherals.ModHeldsPeripherals;
 import me.heldplayer.mods.HeldsPeripherals.Objects;
 import me.heldplayer.mods.HeldsPeripherals.tileentity.TileEntityEnderModem;
-import net.minecraft.client.renderer.texture.IconRegister;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Icon;
+import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -19,19 +19,19 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class BlockEnderModem extends BlockHeldsPeripheral {
     private Random rnd = new Random();
 
-    private Icon top;
-    private Icon bottom;
-    private Icon front[];
-    private Icon back[];
-    private Icon left[];
-    private Icon right[];
+    private IIcon top;
+    private IIcon bottom;
+    private IIcon front[];
+    private IIcon back[];
+    private IIcon left[];
+    private IIcon right[];
 
-    public BlockEnderModem(int blockId) {
-        super(blockId);
+    public BlockEnderModem() {
+        super();
     }
 
     @Override
-    public Icon getIcon(int side, int metadata) {
+    public IIcon getIcon(int side, int metadata) {
         if (side == 0) {
             return this.bottom;
         }
@@ -106,7 +106,7 @@ public class BlockEnderModem extends BlockHeldsPeripheral {
             return true;
         }
         else {
-            TileEntityEnderModem tileEntity = (TileEntityEnderModem) world.getBlockTileEntity(x, y, z);
+            TileEntityEnderModem tileEntity = (TileEntityEnderModem) world.getTileEntity(x, y, z);
 
             if (tileEntity != null) {
                 player.openGui(ModHeldsPeripherals.instance, 0, world, x, y, z);
@@ -122,12 +122,12 @@ public class BlockEnderModem extends BlockHeldsPeripheral {
     }
 
     @Override
-    public void breakBlock(World world, int x, int y, int z, int blockId, int meta) {
+    public void onBlockDestroyedByPlayer(World world, int x, int y, int z, int meta) {
         if (world.isRemote) {
             return;
         }
 
-        TileEntityEnderModem modem = (TileEntityEnderModem) world.getBlockTileEntity(x, y, z);
+        TileEntityEnderModem modem = (TileEntityEnderModem) world.getTileEntity(x, y, z);
 
         if (modem != null) {
             for (int i = 0; i < modem.getSizeInventory(); i++) {
@@ -146,7 +146,7 @@ public class BlockEnderModem extends BlockHeldsPeripheral {
                         }
 
                         stack.stackSize -= size;
-                        EntityItem item = new EntityItem(world, (x + xMotion), (y + yMotion), (z + zMotion), new ItemStack(stack.itemID, size, stack.getItemDamage()));
+                        EntityItem item = new EntityItem(world, (x + xMotion), (y + yMotion), (z + zMotion), new ItemStack(stack.getItem(), size, stack.getItemDamage()));
 
                         if (stack.hasTagCompound()) {
                             item.setEntityItemStack(stack);
@@ -175,34 +175,34 @@ public class BlockEnderModem extends BlockHeldsPeripheral {
                 modem.charge--;
             }
 
-            world.removeBlockTileEntity(x, y, z);
+            world.removeTileEntity(x, y, z);
         }
 
-        super.breakBlock(world, x, y, z, blockId, meta);
+        super.onBlockDestroyedByPlayer(world, x, y, z, meta);
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void registerIcons(IconRegister register) {
+    public void registerBlockIcons(IIconRegister register) {
         this.top = register.registerIcon("heldsperipherals:endermodem_top");
 
         this.bottom = register.registerIcon("heldsperipherals:endermodem_bottom");
 
-        this.front = new Icon[4];
+        this.front = new IIcon[4];
         this.front[0] = register.registerIcon("heldsperipherals:endermodem_front_off_empty");
         this.front[1] = register.registerIcon("heldsperipherals:endermodem_front_off_filled");
         this.front[2] = register.registerIcon("heldsperipherals:endermodem_front_on_empty");
         this.front[3] = register.registerIcon("heldsperipherals:endermodem_front_on_filled");
 
-        this.back = new Icon[2];
+        this.back = new IIcon[2];
         this.back[0] = register.registerIcon("heldsperipherals:endermodem_back_off");
         this.back[1] = register.registerIcon("heldsperipherals:endermodem_back_on");
 
-        this.left = new Icon[2];
+        this.left = new IIcon[2];
         this.left[0] = register.registerIcon("heldsperipherals:endermodem_left_off");
         this.left[1] = register.registerIcon("heldsperipherals:endermodem_left_off");
 
-        this.right = new Icon[2];
+        this.right = new IIcon[2];
         this.right[0] = register.registerIcon("heldsperipherals:endermodem_right_off");
         this.right[1] = register.registerIcon("heldsperipherals:endermodem_right_off");
     }

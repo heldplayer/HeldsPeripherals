@@ -4,7 +4,7 @@ package me.heldplayer.mods.HeldsPeripherals.tileentity;
 import me.heldplayer.mods.HeldsPeripherals.api.IHeldsPeripheral;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
-import dan200.computer.api.IPeripheral;
+import dan200.computercraft.api.peripheral.IPeripheral;
 
 public abstract class TileEntityHeldsPeripheral extends TileEntity implements IPeripheral, IHeldsPeripheral {
 

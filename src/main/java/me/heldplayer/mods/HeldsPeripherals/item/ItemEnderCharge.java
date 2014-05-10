@@ -4,12 +4,12 @@ package me.heldplayer.mods.HeldsPeripherals.item;
 import java.util.List;
 
 import me.heldplayer.mods.HeldsPeripherals.Objects;
-import net.minecraft.client.renderer.texture.IconRegister;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.Icon;
+import net.minecraft.util.IIcon;
 import net.minecraft.util.StatCollector;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -17,10 +17,10 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class ItemEnderCharge extends Item {
 
     @SideOnly(Side.CLIENT)
-    private Icon icon;
+    private IIcon icon;
 
-    public ItemEnderCharge(int par1) {
-        super(par1);
+    public ItemEnderCharge() {
+        super();
 
         this.setHasSubtypes(true);
     }
@@ -62,13 +62,13 @@ public class ItemEnderCharge extends Item {
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void registerIcons(IconRegister register) {
+    public void registerIcons(IIconRegister register) {
         this.icon = register.registerIcon("sugar");
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public Icon getIconFromDamage(int damage) {
+    public IIcon getIconFromDamage(int damage) {
         return this.icon;
     }
 
@@ -90,22 +90,22 @@ public class ItemEnderCharge extends Item {
     @SuppressWarnings({ "rawtypes", "unchecked" })
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubItems(int itemId, CreativeTabs tab, List list) {
-        list.add(new ItemStack(itemId, 1, 0));
+    public void getSubItems(Item item, CreativeTabs tab, List list) {
+        list.add(new ItemStack(item, 1, 0));
         if (Objects.creativeTab.equals(tab)) {
-            list.add(new ItemStack(itemId, 1, 1));
-            list.add(new ItemStack(itemId, 1, 3));
-            list.add(new ItemStack(itemId, 1, 4));
-            list.add(new ItemStack(itemId, 1, 7));
-            list.add(new ItemStack(itemId, 1, 9));
-            list.add(new ItemStack(itemId, 1, 15));
-            list.add(new ItemStack(itemId, 1, 19));
-            list.add(new ItemStack(itemId, 1, 29));
-            list.add(new ItemStack(itemId, 1, 31));
-            list.add(new ItemStack(itemId, 1, 39));
-            list.add(new ItemStack(itemId, 1, 49));
-            list.add(new ItemStack(itemId, 1, 59));
-            list.add(new ItemStack(itemId, 1, 63));
+            list.add(new ItemStack(item, 1, 1));
+            list.add(new ItemStack(item, 1, 3));
+            list.add(new ItemStack(item, 1, 4));
+            list.add(new ItemStack(item, 1, 7));
+            list.add(new ItemStack(item, 1, 9));
+            list.add(new ItemStack(item, 1, 15));
+            list.add(new ItemStack(item, 1, 19));
+            list.add(new ItemStack(item, 1, 29));
+            list.add(new ItemStack(item, 1, 31));
+            list.add(new ItemStack(item, 1, 39));
+            list.add(new ItemStack(item, 1, 49));
+            list.add(new ItemStack(item, 1, 59));
+            list.add(new ItemStack(item, 1, 63));
         }
     }
 

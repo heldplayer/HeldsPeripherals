@@ -1,8 +1,6 @@
 
 package me.heldplayer.mods.HeldsPeripherals.client;
 
-import java.util.logging.Level;
-
 import me.heldplayer.mods.HeldsPeripherals.CommonProxy;
 import me.heldplayer.mods.HeldsPeripherals.ModHeldsPeripherals;
 import me.heldplayer.mods.HeldsPeripherals.Objects;
@@ -15,25 +13,24 @@ import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.entity.RenderSnowball;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
+import net.minecraft.init.Items;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Icon;
+import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 import net.minecraftforge.client.MinecraftForgeClient;
 import net.minecraftforge.client.event.TextureStitchEvent;
-import net.minecraftforge.client.event.sound.SoundLoadEvent;
-import net.minecraftforge.event.ForgeSubscribe;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
 public class ClientProxy extends CommonProxy {
 
-    public static Icon[] icons = new Icon[4];
-    public static Icon fireworksUpgrade = null;
+    public static IIcon[] icons = new IIcon[4];
+    public static IIcon fireworksUpgrade = null;
     public static final String textureLocation = "/me/heldplayer/textures/HeldsPeripherals/";
 
     @Override
@@ -49,12 +46,12 @@ public class ClientProxy extends CommonProxy {
     public void postInit(FMLPostInitializationEvent event) {
         super.postInit(event);
 
-        Render render = new RenderSnowball(Item.firework);
+        Render render = new RenderSnowball(Items.fireworks);
         render.setRenderManager(RenderManager.instance);
         RenderManager.instance.entityRenderMap.put(me.heldplayer.mods.HeldsPeripherals.entity.EntityFireworkRocket.class, render);
 
         if (ModHeldsPeripherals.enhancedEnderChargeRenderer.getValue()) {
-            MinecraftForgeClient.registerItemRenderer(Objects.itemEnderCharge.itemID, new ItemRendererEnderCharge());
+            MinecraftForgeClient.registerItemRenderer(Objects.itemEnderCharge, new ItemRendererEnderCharge());
         }
     }
 
@@ -67,7 +64,7 @@ public class ClientProxy extends CommonProxy {
     @Override
     public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
         try {
-            TileEntity tileEntity = world.getBlockTileEntity(x, y, z);
+            TileEntity tileEntity = world.getTileEntity(x, y, z);
 
             if (ID == 0) {
                 if (tileEntity != null && (tileEntity instanceof TileEntityEnderModem)) {
@@ -97,23 +94,15 @@ public class ClientProxy extends CommonProxy {
         }
     }
 
-    @ForgeSubscribe
-    public void onSoundLoaded(SoundLoadEvent event) {
-        for (String sound : Objects.SOUNDS) {
-            event.manager.addSound(sound + ".ogg");
-            Objects.log.log(Level.INFO, "Adding sound " + sound + ".ogg");
-        }
-    }
-
-    @ForgeSubscribe
+    @SubscribeEvent
     public void registerTextures(TextureStitchEvent.Pre event) {
-        if (event.map.textureType == 0) {
+        if (event.map.getTextureType() == 0) {
             Objects.ICON_MOLTEN_DYE_STILL.icon = event.map.registerIcon("heldsperipherals:molten_dye_still");
             Objects.ICON_MOLTEN_DYE_FLOW.icon = event.map.registerIcon("heldsperipherals:molten_dye_flow");
 
             ClientProxy.fireworksUpgrade = event.map.registerIcon("heldsperipherals:fireworkslighter_peripheral");
         }
-        else if (event.map.textureType == 1) {
+        else if (event.map.getTextureType() == 1) {
             String[] icons = new String[] { "dust", "red", "green", "blue" };
 
             for (int i = 0; i < icons.length; i++) {

@@ -9,7 +9,6 @@ import net.minecraft.client.particle.EffectRenderer;
 import net.minecraft.client.particle.EntityFX;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagDouble;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
@@ -42,7 +41,7 @@ public class EntityFireworkStarterFX extends EntityFX {
         this.silent = false;
 
         if (compound != null) {
-            this.explosions = compound.getTagList("Explosions");
+            this.explosions = compound.getTagList("Explosions", 10);
 
             if (this.explosions != null && this.explosions.tagCount() == 0) {
                 this.explosions = null;
@@ -51,7 +50,7 @@ public class EntityFireworkStarterFX extends EntityFX {
                 this.particleMaxAge = this.explosions.tagCount() * 2 - 1;
 
                 for (int var16 = 0; var16 < this.explosions.tagCount(); ++var16) {
-                    NBTTagCompound explosion = (NBTTagCompound) this.explosions.tagAt(var16);
+                    NBTTagCompound explosion = this.explosions.getCompoundTagAt(var16);
 
                     if (explosion.getBoolean("Flicker")) {
                         this.flicker = true;
@@ -81,13 +80,13 @@ public class EntityFireworkStarterFX extends EntityFX {
             boolean isFar = this.isFarAway();
             boolean large = false;
 
-            NBTTagCompound explosion = (NBTTagCompound) this.explosions.tagAt(0);
+            NBTTagCompound explosion = this.explosions.getCompoundTagAt(0);
             byte type = explosion.getByte("Type");
             boolean hasTrail = explosion.getBoolean("Trail");
             boolean hasFlicker = explosion.getBoolean("Flicker");
             int[] colors = explosion.getIntArray("Colors");
             int[] fadeColors = explosion.getIntArray("FadeColors");
-            NBTTagList arguments = explosion.getTagList("Arguments");
+            NBTTagList arguments = explosion.getTagList("Arguments", 6);
             this.silent = explosion.getBoolean("Silent");
 
             int bloomMaxAge = 4;
@@ -136,11 +135,8 @@ public class EntityFireworkStarterFX extends EntityFX {
                 for (int i = 0; i < arguments.tagCount() / 2; i++) {
                     args[i] = new double[2];
 
-                    NBTTagDouble posX = (NBTTagDouble) arguments.tagAt(i * 2);
-                    NBTTagDouble posY = (NBTTagDouble) arguments.tagAt(i * 2 + 1);
-
-                    args[i][0] = posX.data;
-                    args[i][1] = posY.data;
+                    args[i][0] = arguments.func_150309_d(i * 2);
+                    args[i][1] = arguments.func_150309_d(i * 2 + 1);
                 }
                 if (args.length > 0) {
                     this.createMirroredPatern(0.5D, args, colors, fadeColors, hasTrail, hasFlicker, true);
@@ -152,11 +148,8 @@ public class EntityFireworkStarterFX extends EntityFX {
                 for (int i = 0; i < arguments.tagCount() / 2; i++) {
                     args[i] = new double[2];
 
-                    NBTTagDouble posX = (NBTTagDouble) arguments.tagAt(i * 2);
-                    NBTTagDouble posY = (NBTTagDouble) arguments.tagAt(i * 2 + 1);
-
-                    args[i][0] = posX.data;
-                    args[i][1] = posY.data;
+                    args[i][0] = arguments.func_150309_d(i * 2);
+                    args[i][1] = arguments.func_150309_d(i * 2 + 1);
                 }
                 if (args.length > 0) {
                     this.createMirroredPatern(0.5D, args, colors, fadeColors, hasTrail, hasFlicker, false);

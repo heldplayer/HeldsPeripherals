@@ -2,13 +2,14 @@
 package me.heldplayer.mods.HeldsPeripherals.entity;
 
 import me.heldplayer.mods.HeldsPeripherals.client.particle.EntityFireworkStarterFX;
-import me.heldplayer.util.HeldCore.client.MC;
 import net.minecraft.client.particle.EffectRenderer;
 import net.minecraft.entity.Entity;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
+import net.specialattack.forge.core.client.MC;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -51,7 +52,7 @@ public class EntityFireworkRocket extends Entity {
 
     @Override
     protected void entityInit() {
-        this.dataWatcher.addObject(8, new ItemStack(0, 0, 0));
+        this.dataWatcher.addObject(8, new ItemStack(Blocks.air, 0, 0));
         this.dataWatcher.addObject(9, Byte.valueOf((byte) 0));
     }
 
@@ -153,7 +154,7 @@ public class EntityFireworkRocket extends Entity {
         if (stack != null) {
             NBTTagCompound component = new NBTTagCompound();
             stack.writeToNBT(component);
-            compound.setCompoundTag("FireworksItem", component);
+            compound.setTag("FireworksItem", component);
         }
     }
 

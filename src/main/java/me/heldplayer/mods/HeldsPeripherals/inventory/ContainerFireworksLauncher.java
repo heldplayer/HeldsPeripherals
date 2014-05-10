@@ -28,7 +28,7 @@ public class ContainerFireworksLauncher extends Container {
 
         this.layoutContainer();
 
-        this.lighter.onInventoryChanged();
+        this.lighter.markDirty();
     }
 
     @Override

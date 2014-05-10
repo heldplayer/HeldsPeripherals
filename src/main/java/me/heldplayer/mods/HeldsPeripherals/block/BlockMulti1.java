@@ -7,13 +7,13 @@ import me.heldplayer.mods.HeldsPeripherals.ModHeldsPeripherals;
 import me.heldplayer.mods.HeldsPeripherals.api.IHeldsPeripheral;
 import me.heldplayer.mods.HeldsPeripherals.tileentity.TileEntityFireworksLighter;
 import me.heldplayer.mods.HeldsPeripherals.tileentity.TileEntityNoiseMaker;
-import net.minecraft.client.renderer.texture.IconRegister;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Icon;
+import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import cpw.mods.fml.relauncher.Side;
@@ -23,15 +23,15 @@ public class BlockMulti1 extends BlockHeldsPeripheral {
 
     private Random rnd = new Random();
 
-    private Icon top[];
-    private Icon bottom[];
-    private Icon front[];
-    private Icon back[];
-    private Icon left[];
-    private Icon right[];
+    private IIcon top[];
+    private IIcon bottom[];
+    private IIcon front[];
+    private IIcon back[];
+    private IIcon left[];
+    private IIcon right[];
 
-    public BlockMulti1(int blockId) {
-        super(blockId);
+    public BlockMulti1() {
+        super();
     }
 
     @Override
@@ -43,7 +43,7 @@ public class BlockMulti1 extends BlockHeldsPeripheral {
         world.setBlockMetadataWithNotify(x, y, z, rotation + (meta & 0xC), 3);
 
         if (stack.hasDisplayName()) {
-            TileEntity tileEntity = world.getBlockTileEntity(x, y, z);
+            TileEntity tileEntity = world.getTileEntity(x, y, z);
 
             if (tileEntity != null && (tileEntity instanceof IHeldsPeripheral)) {
                 ((IHeldsPeripheral) tileEntity).setName(stack.getDisplayName());
@@ -52,7 +52,7 @@ public class BlockMulti1 extends BlockHeldsPeripheral {
     }
 
     @Override
-    public Icon getIcon(int side, int metadata) {
+    public IIcon getIcon(int side, int metadata) {
         int type = (metadata >> 2 & 0x3) % 2;
 
         if ((metadata & 0x3) == 0) {
@@ -157,7 +157,7 @@ public class BlockMulti1 extends BlockHeldsPeripheral {
             return true;
         }
         else {
-            TileEntity tileEntity = world.getBlockTileEntity(x, y, z);
+            TileEntity tileEntity = world.getTileEntity(x, y, z);
 
             if (tileEntity instanceof TileEntityFireworksLighter) {
                 if (player.isSneaking()) {
@@ -181,7 +181,7 @@ public class BlockMulti1 extends BlockHeldsPeripheral {
     }
 
     @Override
-    public void breakBlock(World world, int x, int y, int z, int blockId, int meta) {
+    public void onBlockDestroyedByPlayer(World world, int x, int y, int z, int meta) {
         if (world.isRemote) {
             return;
         }
@@ -189,7 +189,7 @@ public class BlockMulti1 extends BlockHeldsPeripheral {
         TileEntityFireworksLighter lighter = null;
 
         try {
-            lighter = (TileEntityFireworksLighter) world.getBlockTileEntity(x, y, z);
+            lighter = (TileEntityFireworksLighter) world.getTileEntity(x, y, z);
         }
         catch (ClassCastException ex) {
             return;
@@ -212,7 +212,7 @@ public class BlockMulti1 extends BlockHeldsPeripheral {
                         }
 
                         stack.stackSize -= size;
-                        EntityItem item = new EntityItem(world, (x + xMotion), (y + yMotion), (z + zMotion), new ItemStack(stack.itemID, size, stack.getItemDamage()));
+                        EntityItem item = new EntityItem(world, (x + xMotion), (y + yMotion), (z + zMotion), new ItemStack(stack.getItem(), size, stack.getItemDamage()));
 
                         if (stack.hasTagCompound()) {
                             item.setEntityItemStack(stack);
@@ -227,23 +227,23 @@ public class BlockMulti1 extends BlockHeldsPeripheral {
             }
         }
 
-        if (world.getBlockTileEntity(x, y, z) != null) {
-            world.removeBlockTileEntity(x, y, z);
+        if (world.getTileEntity(x, y, z) != null) {
+            world.removeTileEntity(x, y, z);
         }
 
-        super.breakBlock(world, x, y, z, blockId, meta);
+        super.onBlockDestroyedByPlayer(world, x, y, z, meta);
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void registerIcons(IconRegister register) {
+    public void registerBlockIcons(IIconRegister register) {
         String[] prefixes = new String[] { "fireworkslighter", "noisemaker" };
-        this.top = new Icon[prefixes.length];
-        this.bottom = new Icon[prefixes.length];
-        this.front = new Icon[prefixes.length];
-        this.back = new Icon[prefixes.length];
-        this.left = new Icon[prefixes.length];
-        this.right = new Icon[prefixes.length];
+        this.top = new IIcon[prefixes.length];
+        this.bottom = new IIcon[prefixes.length];
+        this.front = new IIcon[prefixes.length];
+        this.back = new IIcon[prefixes.length];
+        this.left = new IIcon[prefixes.length];
+        this.right = new IIcon[prefixes.length];
 
         for (int i = 0; i < prefixes.length; i++) {
             this.top[i] = register.registerIcon("heldsperipherals:" + prefixes[i] + "_top");

@@ -3,8 +3,9 @@ package me.heldplayer.mods.HeldsPeripherals.tileentity;
 
 import me.heldplayer.mods.HeldsPeripherals.LogicHandler;
 import me.heldplayer.mods.HeldsPeripherals.api.INoiseMaker;
-import dan200.computer.api.IComputerAccess;
-import dan200.computer.api.ILuaContext;
+import dan200.computercraft.api.lua.ILuaContext;
+import dan200.computercraft.api.peripheral.IComputerAccess;
+import dan200.computercraft.api.peripheral.IPeripheral;
 
 public class TileEntityNoiseMaker extends TileEntityHeldsPeripheral implements INoiseMaker {
 
@@ -28,16 +29,21 @@ public class TileEntityNoiseMaker extends TileEntityHeldsPeripheral implements I
         return LogicHandler.callMethod(computer, context, method, arguments, this);
     }
 
-    @Override
-    public boolean canAttachToSide(int side) {
-        return true;
-    }
+    //@Override
+    //public boolean canAttachToSide(int side) {
+    //return true;
+    //}
 
     @Override
     public void attach(IComputerAccess computer) {}
 
     @Override
     public void detach(IComputerAccess computer) {}
+
+    @Override
+    public boolean equals(IPeripheral obj) {
+        return this == obj; // TODO: Look into this
+    }
 
     // IHeldsPeripheral
 

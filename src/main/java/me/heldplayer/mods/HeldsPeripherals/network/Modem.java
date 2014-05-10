@@ -9,7 +9,7 @@ import me.heldplayer.mods.HeldsPeripherals.api.IModem;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
-import dan200.computer.api.IComputerAccess;
+import dan200.computercraft.api.peripheral.IComputerAccess;
 
 public class Modem implements IModem {
 
@@ -122,7 +122,7 @@ public class Modem implements IModem {
                     return true;
                 }
                 else {
-                    if (slot != null && slot.itemID == sentStack.itemID && (!sentStack.getHasSubtypes() || sentStack.getItemDamage() == slot.getItemDamage()) && ItemStack.areItemStackTagsEqual(sentStack, slot)) {
+                    if (slot != null && slot.getItem() == sentStack.getItem() && (!sentStack.getHasSubtypes() || sentStack.getItemDamage() == slot.getItemDamage()) && ItemStack.areItemStackTagsEqual(sentStack, slot)) {
 
                         if (slot.isStackable() && slot.stackSize < slot.getMaxStackSize()) {
                             connection.queueEvent(target, "modem_item", new Object[] { Double.valueOf(senderId), Double.valueOf(dimension) });

@@ -3,7 +3,6 @@ package me.heldplayer.mods.HeldsPeripherals.client.gui;
 
 import me.heldplayer.mods.HeldsPeripherals.inventory.ContainerEnderModem;
 import me.heldplayer.mods.HeldsPeripherals.tileentity.TileEntityEnderModem;
-import me.heldplayer.util.HeldCore.client.GuiHelper;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.entity.player.EntityPlayer;
@@ -11,6 +10,7 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StatCollector;
 import net.minecraftforge.fluids.FluidStack;
+import net.specialattack.forge.core.client.GuiHelper;
 
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
@@ -39,7 +39,7 @@ public class GuiEnderModem extends GuiContainer {
         RenderHelper.disableStandardItemLighting();
 
         if (x > 150 + this.guiLeft && x < 169 + this.guiLeft && y > 35 + this.guiTop && y < 71 + this.guiTop) {
-            GuiHelper.drawTooltip(GuiHelper.getFluidString(this.modem.getFluidTank()), this.fontRenderer, x, y, this.guiTop, this.height);
+            GuiHelper.drawTooltip(GuiHelper.getFluidString(this.modem.getFluidTank()), this.fontRendererObj, x, y, this.guiTop, this.height);
         }
     }
 
@@ -52,12 +52,12 @@ public class GuiEnderModem extends GuiContainer {
         GL11.glDisable(GL11.GL_LIGHTING);
         GL11.glDisable(GL11.GL_DEPTH_TEST);
 
-        this.fontRenderer.drawString(this.modem.isInvNameLocalized() ? this.modem.getInvName() : StatCollector.translateToLocal(this.modem.getInvName()), 8, 6, 4210752);
-        this.fontRenderer.drawString(StatCollector.translateToLocal(this.playerInv.getInvName()), 8, this.ySize - 96 + 2, 0xFF404040);
+        this.fontRendererObj.drawString(this.modem.hasCustomInventoryName() ? this.modem.getInventoryName() : StatCollector.translateToLocal(this.modem.getInventoryName()), 8, 6, 4210752);
+        this.fontRendererObj.drawString(StatCollector.translateToLocal(this.playerInv.getInventoryName()), 8, this.ySize - 96 + 2, 0xFF404040);
 
-        this.fontRenderer.drawString("Remaining Sends: " + (this.modem.chargeCostSend == -1 ? "\u221E" : this.modem.chargeCostSend), 28, 17, 0xFF606060);
-        this.fontRenderer.drawString("Remaining Transports: " + (this.modem.chargeCostTransport == -1 ? "\u221E" : this.modem.chargeCostTransport), 28, 27, 0xFF606060);
-        this.fontRenderer.drawString("Remaining Fluid Tps: " + (this.modem.chargeCostTransportFluid == -1 ? "\u221E" : this.modem.chargeCostTransportFluid), 28, 37, 0xFF606060);
+        this.fontRendererObj.drawString("Remaining Sends: " + (this.modem.chargeCostSend == -1 ? "\u221E" : this.modem.chargeCostSend), 28, 17, 0xFF606060);
+        this.fontRendererObj.drawString("Remaining Transports: " + (this.modem.chargeCostTransport == -1 ? "\u221E" : this.modem.chargeCostTransport), 28, 27, 0xFF606060);
+        this.fontRendererObj.drawString("Remaining Fluid Tps: " + (this.modem.chargeCostTransportFluid == -1 ? "\u221E" : this.modem.chargeCostTransportFluid), 28, 37, 0xFF606060);
 
         GL11.glEnable(GL11.GL_DEPTH_TEST);
         GL11.glEnable(GL11.GL_LIGHTING);

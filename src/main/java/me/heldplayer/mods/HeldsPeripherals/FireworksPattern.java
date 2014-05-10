@@ -1,7 +1,7 @@
 
 package me.heldplayer.mods.HeldsPeripherals;
 
-import net.minecraft.item.Item;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -15,7 +15,7 @@ public class FireworksPattern {
 
     public void writeToNBT(NBTTagCompound compound) {
         compound.setShort("Flight", this.flight);
-        NBTTagList patterns = new NBTTagList("Explosions");
+        NBTTagList patterns = new NBTTagList();
 
         patterns.appendTag(this.star.getSavedCompound());
 
@@ -23,8 +23,8 @@ public class FireworksPattern {
     }
 
     public ItemStack getItemStack() {
-        NBTTagCompound fireworks = new NBTTagCompound("Fireworks");
-        NBTTagList list = new NBTTagList("Explosions");
+        NBTTagCompound fireworks = new NBTTagCompound();
+        NBTTagList list = new NBTTagList();
 
         if (this.star != null) {
             NBTTagCompound explosion = new NBTTagCompound();
@@ -42,7 +42,7 @@ public class FireworksPattern {
         fireworks.setTag("Explosions", list);
         fireworks.setShort("Flight", this.flight);
 
-        ItemStack stack = new ItemStack(Item.firework);
+        ItemStack stack = new ItemStack(Items.fireworks);
 
         NBTTagCompound compound = new NBTTagCompound();
         compound.setTag("Fireworks", fireworks);
@@ -58,9 +58,9 @@ public class FireworksPattern {
 
         pattern.flight = compound.getShort("Flight");
 
-        NBTTagList list = compound.getTagList("Explosions");
+        NBTTagList list = compound.getTagList("Explosions", 10);
 
-        pattern.star = FireworkStarPattern.getFromCompound((NBTTagCompound) list.tagAt(0));
+        pattern.star = FireworkStarPattern.getFromCompound(list.getCompoundTagAt(0));
 
         return pattern;
     }

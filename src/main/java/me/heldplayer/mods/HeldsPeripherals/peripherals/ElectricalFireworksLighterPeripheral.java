@@ -3,16 +3,16 @@ package me.heldplayer.mods.HeldsPeripherals.peripherals;
 
 import me.heldplayer.mods.HeldsPeripherals.LogicHandler;
 import me.heldplayer.mods.HeldsPeripherals.api.IElectricalFireworksLighter;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import net.minecraftforge.oredict.OreDictionary;
-import dan200.computer.api.IComputerAccess;
-import dan200.computer.api.IHostedPeripheral;
-import dan200.computer.api.ILuaContext;
-import dan200.turtle.api.ITurtleAccess;
+import dan200.computercraft.api.lua.ILuaContext;
+import dan200.computercraft.api.peripheral.IComputerAccess;
+import dan200.computercraft.api.peripheral.IPeripheral;
+import dan200.computercraft.api.turtle.ITurtleAccess;
 
-public class ElectricalFireworksLighterPeripheral implements IHostedPeripheral, IElectricalFireworksLighter {
+public class ElectricalFireworksLighterPeripheral implements IPeripheral, IElectricalFireworksLighter {
 
     public int launchCount = 0;
     public boolean coolDown = false;
@@ -41,10 +41,10 @@ public class ElectricalFireworksLighterPeripheral implements IHostedPeripheral, 
         return LogicHandler.callMethod(computer, context, method, arguments, this);
     }
 
-    @Override
-    public boolean canAttachToSide(int side) {
-        return true;
-    }
+    //@Override
+    //public boolean canAttachToSide(int side) {
+    //return true;
+    //}
 
     @Override
     public void attach(IComputerAccess computer) {}
@@ -68,12 +68,6 @@ public class ElectricalFireworksLighterPeripheral implements IHostedPeripheral, 
 
     }
 
-    @Override
-    public void readFromNBT(NBTTagCompound nbttagcompound) {}
-
-    @Override
-    public void writeToNBT(NBTTagCompound nbttagcompound) {}
-
     // IHeldsPeripheral
 
     @Override
@@ -83,17 +77,17 @@ public class ElectricalFireworksLighterPeripheral implements IHostedPeripheral, 
 
     @Override
     public int getX() {
-        return (int) this.turtle.getPosition().xCoord;
+        return (int) this.turtle.getPosition().posX;
     }
 
     @Override
     public int getY() {
-        return (int) this.turtle.getPosition().yCoord;
+        return (int) this.turtle.getPosition().posY;
     }
 
     @Override
     public int getZ() {
-        return (int) this.turtle.getPosition().zCoord;
+        return (int) this.turtle.getPosition().posZ;
     }
 
     @Override
@@ -136,20 +130,24 @@ public class ElectricalFireworksLighterPeripheral implements IHostedPeripheral, 
 
     @Override
     public ItemStack getStack(int slot) {
-        return this.turtle.getSlotContents(slot);
+        IInventory inventory = this.turtle.getInventory();
+        return inventory.getStackInSlot(slot);
     }
 
     @Override
     public void setStack(int slot, ItemStack stack) {
-        this.turtle.setSlotContents(slot, stack);
+        IInventory inventory = this.turtle.getInventory();
+        inventory.setInventorySlotContents(slot, stack);
     }
 
     @Override
     public int getOredictStack(String name) {
         int oreName = OreDictionary.getOreID(name);
 
+        IInventory inventory = this.turtle.getInventory();
+
         for (int i = 0; i < 16; i++) {
-            ItemStack stack = this.turtle.getSlotContents(i);
+            ItemStack stack = inventory.getStackInSlot(i);
 
             int stackName = OreDictionary.getOreID(stack);
 
@@ -159,6 +157,12 @@ public class ElectricalFireworksLighterPeripheral implements IHostedPeripheral, 
         }
 
         return 0;
+    }
+
+    @Override
+    public boolean equals(IPeripheral other) {
+        // TODO Auto-generated method stub
+        return this == other;
     }
 
 }

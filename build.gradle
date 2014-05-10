@@ -4,12 +4,16 @@ buildscript {
     repositories {
         mavenCentral()
         maven {
-            name = "ForgeFS"
+            name = "forge"
             url = "http://files.minecraftforge.net/maven"
+        }
+        maven {
+            name = "sonatype"
+            url = "https://oss.sonatype.org/content/repositories/snapshots/"
         }
     }
     dependencies {
-        classpath 'net.minecraftforge.gradle:ForgeGradle:1.0-SNAPSHOT'
+        classpath 'net.minecraftforge.gradle:ForgeGradle:1.2-SNAPSHOT'
     }
 }
 
@@ -56,11 +60,8 @@ minecraft {
 }
 
 dependencies {
-    compile name: 'CodeChickenLib', version: "${config.minecraft_version}-${config.CCLIB_version}", ext: 'jar'
-    compile name: 'CodeChickenCore', version: "${config.CCC_version}", ext: 'jar'
-    compile name: 'NotEnoughItems', version: "${config.NEI_version}", ext: 'jar'
     compile fileTree(dir: 'libs', include: '*.jar')
-    compile project(':HeldCore')
+    compile project(':SpACoreForge')
 }
 
 processResources

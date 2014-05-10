@@ -7,14 +7,13 @@ import me.heldplayer.mods.HeldsPeripherals.LogicHandler;
 import me.heldplayer.mods.HeldsPeripherals.api.IElectricalFireworksLighter;
 import me.heldplayer.mods.HeldsPeripherals.entity.EntityFireworkRocket;
 import me.heldplayer.mods.HeldsPeripherals.inventory.RestrictedFluidTank;
-import me.heldplayer.util.HeldCore.MathHelper;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.inventory.IInventory;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
-import net.minecraftforge.common.ForgeDirection;
+import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
@@ -22,8 +21,10 @@ import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.FluidTankInfo;
 import net.minecraftforge.fluids.IFluidHandler;
 import net.minecraftforge.oredict.OreDictionary;
-import dan200.computer.api.IComputerAccess;
-import dan200.computer.api.ILuaContext;
+import net.specialattack.forge.core.MathHelper;
+import dan200.computercraft.api.lua.ILuaContext;
+import dan200.computercraft.api.peripheral.IComputerAccess;
+import dan200.computercraft.api.peripheral.IPeripheral;
 
 public class TileEntityFireworksLighter extends TileEntityHeldsPeripheral implements IInventory, IElectricalFireworksLighter, IFluidHandler {
 
@@ -147,8 +148,8 @@ public class TileEntityFireworksLighter extends TileEntityHeldsPeripheral implem
     }
 
     @Override
-    public String getInvName() {
-        return this.isInvNameLocalized() ? this.name : "tile.HP.fireworksLighter.name";
+    public String getInventoryName() {
+        return this.hasCustomInventoryName() ? this.name : "tile.HP.fireworksLighter.name";
     }
 
     @Override
@@ -158,17 +159,17 @@ public class TileEntityFireworksLighter extends TileEntityHeldsPeripheral implem
 
     @Override
     public boolean isUseableByPlayer(EntityPlayer player) {
-        return this.worldObj.getBlockTileEntity(this.xCoord, this.yCoord, this.zCoord) == this && player.getDistanceSq(this.xCoord + 0.5, this.yCoord + 0.5, this.zCoord + 0.5) < 64;
+        return this.worldObj.getTileEntity(this.xCoord, this.yCoord, this.zCoord) == this && player.getDistanceSq(this.xCoord + 0.5, this.yCoord + 0.5, this.zCoord + 0.5) < 64;
     }
 
     @Override
-    public void openChest() {}
+    public void openInventory() {}
 
     @Override
-    public void closeChest() {}
+    public void closeInventory() {}
 
     @Override
-    public boolean isInvNameLocalized() {
+    public boolean hasCustomInventoryName() {
         return this.name != null && this.name.length() > 0;
     }
 
@@ -291,11 +292,11 @@ public class TileEntityFireworksLighter extends TileEntityHeldsPeripheral implem
     @Override
     public void readFromNBT(NBTTagCompound compound) {
         super.readFromNBT(compound);
-        NBTTagList items = compound.getTagList("Items");
+        NBTTagList items = compound.getTagList("Items", 10);
         this.inventory = new ItemStack[this.getSizeInventory()];
 
         for (int i = 0; i < items.tagCount(); i++) {
-            NBTTagCompound itemCompound = (NBTTagCompound) items.tagAt(i);
+            NBTTagCompound itemCompound = items.getCompoundTagAt(i);
             byte slot = itemCompound.getByte("Slot");
 
             if (slot >= 0 && slot < this.inventory.length) {
@@ -303,10 +304,10 @@ public class TileEntityFireworksLighter extends TileEntityHeldsPeripheral implem
             }
         }
 
-        NBTTagList tanks = compound.getTagList("Tanks");
+        NBTTagList tanks = compound.getTagList("Tanks", 10);
 
         for (int i = 0; i < tanks.tagCount(); i++) {
-            NBTTagCompound tankCompound = (NBTTagCompound) tanks.tagAt(i);
+            NBTTagCompound tankCompound = tanks.getCompoundTagAt(i);
             byte index = tankCompound.getByte("Index");
 
             if (index >= 0 && index < this.tanks.length) {
@@ -348,7 +349,7 @@ public class TileEntityFireworksLighter extends TileEntityHeldsPeripheral implem
 
         compound.setTag("Tanks", tanks);
 
-        if (this.isInvNameLocalized()) {
+        if (this.hasCustomInventoryName()) {
             compound.setString("CustomName", this.name);
         }
     }
@@ -370,16 +371,22 @@ public class TileEntityFireworksLighter extends TileEntityHeldsPeripheral implem
         return LogicHandler.callMethod(computer, context, method, arguments, this);
     }
 
-    @Override
-    public boolean canAttachToSide(int side) {
-        return true;
-    }
+    //@Override
+   //public boolean canAttachToSide(int side) {
+        //return true;
+    //}
 
     @Override
     public void attach(IComputerAccess computer) {}
 
     @Override
     public void detach(IComputerAccess computer) {}
+
+    @Override
+    public boolean equals(IPeripheral other) {
+        // TODO Auto-generated method stub
+        return other == this;
+    }
 
     // IHeldsPeripheral
 
@@ -449,8 +456,8 @@ public class TileEntityFireworksLighter extends TileEntityHeldsPeripheral implem
         }
 
         if (this.easterEgg && this.rand.nextInt(10) == 0) {
-            NBTTagCompound fireworks = new NBTTagCompound("Fireworks");
-            NBTTagList list = new NBTTagList("Explosions");
+            NBTTagCompound fireworks = new NBTTagCompound();
+            NBTTagList list = new NBTTagList();
 
             NBTTagCompound explosion = new NBTTagCompound();
             explosion.setByte("Type", (byte) 4);
@@ -463,7 +470,7 @@ public class TileEntityFireworksLighter extends TileEntityHeldsPeripheral implem
             fireworks.setTag("Explosions", list);
             fireworks.setShort("Flight", (short) 20);
 
-            stack = new ItemStack(Item.firework);
+            stack = new ItemStack(Items.fireworks);
 
             NBTTagCompound compound = new NBTTagCompound();
             compound.setTag("Fireworks", fireworks);

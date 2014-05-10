@@ -1,19 +1,17 @@
 
 package me.heldplayer.mods.HeldsPeripherals.packet;
 
-import java.io.DataOutputStream;
+import io.netty.buffer.ByteBuf;
+import io.netty.channel.ChannelHandlerContext;
+
 import java.io.IOException;
 
-import me.heldplayer.util.HeldCore.packet.HeldCorePacket;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.network.INetworkManager;
 import net.minecraft.world.World;
-
-import com.google.common.io.ByteArrayDataInput;
-
+import net.specialattack.forge.core.packet.SpACorePacket;
 import cpw.mods.fml.relauncher.Side;
 
-public class Packet1PlaySound extends HeldCorePacket {
+public class Packet1PlaySound extends SpACorePacket {
 
     public double posX;
     public double posY;
@@ -22,12 +20,8 @@ public class Packet1PlaySound extends HeldCorePacket {
     public float volume;
     public float pitch;
 
-    public Packet1PlaySound(int packetId) {
-        super(packetId, null);
-    }
-
     public Packet1PlaySound(double posX, double posY, double posZ, String sound, float volume, float pitch) {
-        super(1, null);
+        super(null);
 
         this.posX = posX;
         this.posY = posY;
@@ -43,7 +37,7 @@ public class Packet1PlaySound extends HeldCorePacket {
     }
 
     @Override
-    public void read(ByteArrayDataInput in) throws IOException {
+    public void read(ChannelHandlerContext context, ByteBuf in) throws IOException {
         this.posX = in.readDouble();
         this.posY = in.readDouble();
         this.posZ = in.readDouble();
@@ -52,12 +46,12 @@ public class Packet1PlaySound extends HeldCorePacket {
 
         int length = in.readInt();
         byte[] nameBytes = new byte[length];
-        in.readFully(nameBytes);
+        in.readBytes(nameBytes);
         this.sound = new String(nameBytes);
     }
 
     @Override
-    public void write(DataOutputStream out) throws IOException {
+    public void write(ChannelHandlerContext context, ByteBuf out) throws IOException {
         byte[] nameBytes = this.sound.getBytes();
 
         out.writeDouble(this.posX);
@@ -66,11 +60,11 @@ public class Packet1PlaySound extends HeldCorePacket {
         out.writeFloat(this.volume);
         out.writeFloat(this.pitch);
         out.writeInt(nameBytes.length);
-        out.write(nameBytes);
+        out.writeBytes(nameBytes);
     }
 
     @Override
-    public void onData(INetworkManager manager, EntityPlayer player) {
+    public void onData(ChannelHandlerContext context, EntityPlayer player) {
         World world = player.worldObj;
         world.playSound(this.posX, this.posY, this.posZ, this.sound, this.volume, this.pitch, false);
     }

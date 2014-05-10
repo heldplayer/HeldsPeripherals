@@ -13,8 +13,8 @@ import net.minecraft.world.World;
 
 public abstract class BlockHeldsPeripheral extends Block {
 
-    public BlockHeldsPeripheral(int blockId) {
-        super(blockId, Material.rock);
+    public BlockHeldsPeripheral() {
+        super(Material.rock);
 
         this.setHardness(2.0F);
     }
@@ -26,7 +26,7 @@ public abstract class BlockHeldsPeripheral extends Block {
         world.setBlockMetadataWithNotify(x, y, z, rotation, 3);
 
         if (stack.hasDisplayName()) {
-            TileEntity tileEntity = world.getBlockTileEntity(x, y, z);
+            TileEntity tileEntity = world.getTileEntity(x, y, z);
 
             if (tileEntity != null && (tileEntity instanceof IHeldsPeripheral)) {
                 ((IHeldsPeripheral) tileEntity).setName(stack.getDisplayName());
@@ -41,7 +41,7 @@ public abstract class BlockHeldsPeripheral extends Block {
 
     @Override
     public void onBlockAdded(World world, int x, int y, int z) {
-        world.setBlockTileEntity(x, y, z, this.createTileEntity(world, world.getBlockMetadata(x, y, z)));
+        world.setTileEntity(x, y, z, this.createTileEntity(world, world.getBlockMetadata(x, y, z)));
         super.onBlockAdded(world, x, y, z);
     }
 
@@ -52,7 +52,7 @@ public abstract class BlockHeldsPeripheral extends Block {
         }
 
         super.onBlockEventReceived(world, blockX, blockY, blockZ, blockId, eventId);
-        TileEntity tileEntity = world.getBlockTileEntity(blockX, blockY, blockZ);
+        TileEntity tileEntity = world.getTileEntity(blockX, blockY, blockZ);
 
         if (tileEntity != null) {
             tileEntity.receiveClientEvent(blockId, eventId);

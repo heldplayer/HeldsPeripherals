@@ -1,7 +1,7 @@
 
 package me.heldplayer.mods.HeldsPeripherals.network;
 
-import dan200.computer.api.IComputerAccess;
+import dan200.computercraft.api.peripheral.IComputerAccess;
 
 public class ComputerConnection {
     protected final IComputerAccess computer;
