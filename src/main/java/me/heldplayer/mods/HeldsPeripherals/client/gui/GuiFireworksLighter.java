@@ -1,13 +1,13 @@
 
 package me.heldplayer.mods.HeldsPeripherals.client.gui;
 
+import me.heldplayer.mods.HeldsPeripherals.Assets;
 import me.heldplayer.mods.HeldsPeripherals.inventory.ContainerFireworksLauncher;
 import me.heldplayer.mods.HeldsPeripherals.tileentity.TileEntityFireworksLighter;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StatCollector;
 import net.minecraftforge.fluids.FluidStack;
 import net.specialattack.forge.core.client.GuiHelper;
@@ -22,8 +22,6 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class GuiFireworksLighter extends GuiContainer {
     private TileEntityFireworksLighter lighter;
     private InventoryPlayer playerInv;
-
-    public static final ResourceLocation background = new ResourceLocation("heldsperipherals:textures/gui/container/gui_fireworks.png");
 
     public GuiFireworksLighter(EntityPlayer player, TileEntityFireworksLighter lighter) {
         super(new ContainerFireworksLauncher(player.inventory, lighter));
@@ -71,7 +69,7 @@ public class GuiFireworksLighter extends GuiContainer {
 
     @Override
     protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
-        this.mc.renderEngine.bindTexture(background);
+        this.mc.renderEngine.bindTexture(Assets.GUI_FIREWORKS);
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize);
 
@@ -95,7 +93,7 @@ public class GuiFireworksLighter extends GuiContainer {
 
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 
-        this.mc.renderEngine.bindTexture(background);
+        this.mc.renderEngine.bindTexture(Assets.GUI_FIREWORKS);
 
         this.drawTexturedModalRect(this.guiLeft + 61, this.guiTop + 14, this.xSize, 0, 18, 34);
         this.drawTexturedModalRect(this.guiLeft + 97, this.guiTop + 14, this.xSize, 0, 18, 34);

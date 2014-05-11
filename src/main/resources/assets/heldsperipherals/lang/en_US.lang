@@ -1,8 +1,8 @@
-itemGroup.CCHeldsPeripherals=Held's Peripherals
+itemGroup.heldsperipherals:creativetab=Held's Peripherals
 
-tile.HP.transWorldModem.name=Ender Modem
-tile.HP.fireworksLighter.name=Electrical Fireworks Lighter
-tile.HP.noiseMaker.name=Noise Maker
+tile.heldsperipherals:transWorldModem.name=Ender Modem
+tile.heldsperipherals:multi1.0.name=Electrical Fireworks Lighter
+tile.heldsperipherals:multi1.1.name=Noise Maker
 
 tile.fluid.dye.molten.white.name=Molten White Dye
 tile.fluid.dye.molten.orange.name=Molten Orange Dye
@@ -21,10 +21,10 @@ tile.fluid.dye.molten.green.name=Molten Green Dye
 tile.fluid.dye.molten.red.name=Molten Red Dye
 tile.fluid.dye.molten.black.name=Molten Black Dye
 
-item.HP.enderCharge.name=Ender Charge
-item.HP.enderCharge.compact.name=Compact Ender Charge
-item.HP.enderCharge.compact.text=Contains %s charges
-item.HP.moltenDye.name=Molten Dye
+item.heldsperipherals:enderCharge.name=Ender Charge
+item.heldsperipherals:enderCharge.compact.name=Compact Ender Charge
+item.heldsperipherals:enderCharge.compact.text=Contains %s charges
+item.heldsperipherals:moltenDye.name=Molten Dye
 
 fluid.dye.molten.white=Molten White Dye
 fluid.dye.molten.orange=Molten Orange Dye

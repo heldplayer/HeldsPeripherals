@@ -3,6 +3,7 @@ package me.heldplayer.mods.HeldsPeripherals.item;
 
 import java.util.List;
 
+import me.heldplayer.mods.HeldsPeripherals.Assets;
 import me.heldplayer.mods.HeldsPeripherals.Objects;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
@@ -44,14 +45,14 @@ public class ItemEnderCharge extends Item {
         super.addInformation(stack, player, list, advanced);
 
         if (stack.getItemDamage() > 0) {
-            list.add(StatCollector.translateToLocalFormatted("item.HP.enderCharge.compact.text", stack.getItemDamage() + 1));
+            list.add(StatCollector.translateToLocalFormatted("item." + Assets.DOMAIN + "enderCharge.compact.text", stack.getItemDamage() + 1));
             //list.add("Contains " + (stack.getItemDamage() + 1) + " charges");
         }
     }
 
     @Override
     public String getUnlocalizedName(ItemStack stack) {
-        String name = "item.HP.enderCharge";
+        String name = "item." + Assets.DOMAIN + "enderCharge";
 
         if (stack.getItemDamage() > 0) {
             name = name + ".compact";

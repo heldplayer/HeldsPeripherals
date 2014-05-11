@@ -1,13 +1,13 @@
 
 package me.heldplayer.mods.HeldsPeripherals.client.gui;
 
+import me.heldplayer.mods.HeldsPeripherals.Assets;
 import me.heldplayer.mods.HeldsPeripherals.inventory.ContainerEnderModem;
 import me.heldplayer.mods.HeldsPeripherals.tileentity.TileEntityEnderModem;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StatCollector;
 import net.minecraftforge.fluids.FluidStack;
 import net.specialattack.forge.core.client.GuiHelper;
@@ -22,8 +22,6 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class GuiEnderModem extends GuiContainer {
     private TileEntityEnderModem modem;
     private InventoryPlayer playerInv;
-
-    public static final ResourceLocation background = new ResourceLocation("heldsperipherals:textures/gui/container/gui_modem.png");
 
     public GuiEnderModem(EntityPlayer player, TileEntityEnderModem modem) {
         super(new ContainerEnderModem(player.inventory, modem));
@@ -68,7 +66,7 @@ public class GuiEnderModem extends GuiContainer {
 
     @Override
     protected void drawGuiContainerBackgroundLayer(float var1, int var2, int var3) {
-        this.mc.renderEngine.bindTexture(background);
+        this.mc.renderEngine.bindTexture(Assets.GUI_MODEM);
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize);
 
@@ -84,7 +82,7 @@ public class GuiEnderModem extends GuiContainer {
 
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 
-        this.mc.renderEngine.bindTexture(background);
+        this.mc.renderEngine.bindTexture(Assets.GUI_MODEM);
 
         this.drawTexturedModalRect(this.guiLeft + 151, this.guiTop + 36, this.xSize, 24, 18, 34);
     }

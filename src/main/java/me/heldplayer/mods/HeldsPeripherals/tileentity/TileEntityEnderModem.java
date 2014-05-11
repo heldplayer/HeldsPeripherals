@@ -1,6 +1,7 @@
 
 package me.heldplayer.mods.HeldsPeripherals.tileentity;
 
+import me.heldplayer.mods.HeldsPeripherals.Assets;
 import me.heldplayer.mods.HeldsPeripherals.CommonProxy;
 import me.heldplayer.mods.HeldsPeripherals.LogicHandler;
 import me.heldplayer.mods.HeldsPeripherals.ModHeldsPeripherals;
@@ -140,7 +141,7 @@ public class TileEntityEnderModem extends TileEntityHeldsPeripheral implements I
 
     @Override
     public String getInventoryName() {
-        return this.hasCustomInventoryName() ? this.name : "tile.HP.transWorldModem.name";
+        return this.hasCustomInventoryName() ? this.name : "tile." + Assets.DOMAIN + "transWorldModem.name";
     }
 
     @Override

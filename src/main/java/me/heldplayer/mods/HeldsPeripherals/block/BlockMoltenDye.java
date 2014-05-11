@@ -14,8 +14,11 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class BlockMoltenDye extends BlockFluidClassic {
 
+    private final Fluid fluid;
+
     public BlockMoltenDye(Fluid fluid, Material material) {
         super(fluid, material);
+        this.fluid = fluid;
     }
 
     @Override
@@ -40,6 +43,11 @@ public class BlockMoltenDye extends BlockFluidClassic {
     @SideOnly(Side.CLIENT)
     public int colorMultiplier(IBlockAccess world, int x, int y, int z) {
         return this.getFluid().getColor();
+    }
+
+    @Override
+    public Fluid getFluid() {
+        return this.fluid;
     }
 
     public static int[] colors = new int[] { 0xFFFFFF, 0xFF7F00, 0xFF00FF, 0x7F7FFF, 0xFFFF00, 0x00FF00, 0xFF7FFF, 0x7F7F7F, 0xBEBEBE, 0x007F7F, 0x8000FF, 0x00007F, 0x7F3F00, 0x007F00, 0xFF0000, 0x3F3F3F };

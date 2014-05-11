@@ -52,7 +52,7 @@ public class ModHeldsPeripherals extends SpACoreMod {
     public void preInit(FMLPreInitializationEvent event) {
         Objects.log = event.getModLog();
 
-        SpACore.packetHandler = new PacketHandler("HeldsPeripherals", Packet1PlaySound.class);
+        SpACore.packetHandler = new PacketHandler(Objects.MOD_CHANNEL, Packet1PlaySound.class);
 
         // Config
         fireworksEntityId = new ConfigValue<Integer>("FireworksEntityID", Configuration.CATEGORY_GENERAL, null, 160, "The entity ID for the custom fireworks entity");

@@ -1,9 +1,11 @@
 
 package me.heldplayer.mods.HeldsPeripherals.client;
 
+import me.heldplayer.mods.HeldsPeripherals.Assets;
 import me.heldplayer.mods.HeldsPeripherals.CommonProxy;
 import me.heldplayer.mods.HeldsPeripherals.ModHeldsPeripherals;
 import me.heldplayer.mods.HeldsPeripherals.Objects;
+import me.heldplayer.mods.HeldsPeripherals.block.BlockMoltenDye;
 import me.heldplayer.mods.HeldsPeripherals.client.gui.GuiEnderModem;
 import me.heldplayer.mods.HeldsPeripherals.client.gui.GuiFireworksLighter;
 import me.heldplayer.mods.HeldsPeripherals.inventory.SlotOreDictionary;
@@ -31,7 +33,6 @@ public class ClientProxy extends CommonProxy {
 
     public static IIcon[] icons = new IIcon[4];
     public static IIcon fireworksUpgrade = null;
-    public static final String textureLocation = "/me/heldplayer/textures/HeldsPeripherals/";
 
     @Override
     public void init(FMLInitializationEvent event) {
@@ -97,16 +98,23 @@ public class ClientProxy extends CommonProxy {
     @SubscribeEvent
     public void registerTextures(TextureStitchEvent.Pre event) {
         if (event.map.getTextureType() == 0) {
-            Objects.ICON_MOLTEN_DYE_STILL.icon = event.map.registerIcon("heldsperipherals:molten_dye_still");
-            Objects.ICON_MOLTEN_DYE_FLOW.icon = event.map.registerIcon("heldsperipherals:molten_dye_flow");
+            Objects.ICON_MOLTEN_DYE_STILL.icon = event.map.registerIcon(Assets.DOMAIN + "molten_dye_still");
+            Objects.ICON_MOLTEN_DYE_FLOW.icon = event.map.registerIcon(Assets.DOMAIN + "molten_dye_flow");
 
-            ClientProxy.fireworksUpgrade = event.map.registerIcon("heldsperipherals:fireworkslighter_peripheral");
+            if (Objects.blocksMoltenDye != null) {
+                for (BlockMoltenDye block : Objects.blocksMoltenDye) {
+                    block.getFluid().setStillIcon(event.map.registerIcon(Assets.DOMAIN + "molten_dye_still"));
+                    block.getFluid().setFlowingIcon(event.map.registerIcon(Assets.DOMAIN + "molten_dye_flow"));
+                }
+            }
+
+            ClientProxy.fireworksUpgrade = event.map.registerIcon(Assets.DOMAIN + "fireworkslighter_peripheral");
         }
         else if (event.map.getTextureType() == 1) {
             String[] icons = new String[] { "dust", "red", "green", "blue" };
 
             for (int i = 0; i < icons.length; i++) {
-                ClientProxy.icons[i] = event.map.registerIcon("heldsperipherals:background_" + icons[i]);
+                ClientProxy.icons[i] = event.map.registerIcon(Assets.DOMAIN + "background_" + icons[i]);
             }
         }
     }

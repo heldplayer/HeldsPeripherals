@@ -53,18 +53,18 @@ public class CommonProxy extends SpACoreProxy implements IGuiHandler {
 
     @Override
     public void init(FMLInitializationEvent event) {
-        Objects.creativeTab = new CreativeTab("CCHeldsPeripherals");
+        Objects.creativeTab = new CreativeTab(Assets.DOMAIN + "creativetab");
 
         // Trans World Modem
         Objects.blockEnderModem = new BlockEnderModem();
-        GameRegistry.registerBlock(Objects.blockEnderModem, Assets.DOMAIN + "transworldmodem");
+        GameRegistry.registerBlock(Objects.blockEnderModem, "endermodem");
         Objects.blockEnderModem.setBlockName(Assets.DOMAIN + "transWorldModem").setCreativeTab(Objects.creativeTab);
 
         GameRegistry.addRecipe(new ItemStack(Objects.blockEnderModem, 1, 0), "STS", "IPG", "SRS", 'S', Blocks.stone, 'T', Blocks.redstone_torch, 'I', Items.iron_ingot, 'P', Items.ender_pearl, 'G', Items.gold_ingot, 'R', Items.redstone);
 
         // Electrical Fireworks Lighter + Noise Maker + Thaumic Scanner
         Objects.blockMulti1 = new BlockMulti1();
-        GameRegistry.registerBlock(Objects.blockMulti1, ItemBlockMulti1.class, Assets.DOMAIN + "fireworkslighter");
+        GameRegistry.registerBlock(Objects.blockMulti1, ItemBlockMulti1.class, "blockmulti1");
         Objects.blockMulti1.setBlockName("HP.fireworksLighter").setCreativeTab(Objects.creativeTab);
 
         GameRegistry.addRecipe(new ItemStack(Objects.blockMulti1, 1, 0), "hpG", "dDg", "ncf", 'h', new ItemStack(Items.skull, 1, OreDictionary.WILDCARD_VALUE), 'p', Items.paper, 'G', Items.gunpowder, 'd', Items.diamond, 'D', Blocks.dispenser, 'g', Items.glowstone_dust, 'n', Items.gold_nugget, 'c', Items.fire_charge, 'f', Items.feather);
@@ -72,8 +72,8 @@ public class CommonProxy extends SpACoreProxy implements IGuiHandler {
 
         // Ender Charge/Ender Pearl Dust
         Objects.itemEnderCharge = new ItemEnderCharge();
-        GameRegistry.registerItem(Objects.itemEnderCharge, Assets.DOMAIN + "endercharge");
-        Objects.itemEnderCharge.setUnlocalizedName("item.HP.enderCharge.name").setCreativeTab(Objects.creativeTab);
+        GameRegistry.registerItem(Objects.itemEnderCharge, "endercharge");
+        Objects.itemEnderCharge.setUnlocalizedName(Assets.DOMAIN + "enderCharge").setCreativeTab(Objects.creativeTab);
 
         OreDictionary.registerOre("dustEnderCharge", Objects.itemEnderCharge);
 
@@ -83,7 +83,8 @@ public class CommonProxy extends SpACoreProxy implements IGuiHandler {
         Objects.blocksMoltenDye = new BlockMoltenDye[fluids.length];
         for (int i = 0; i < fluids.length; i++) {
             Objects.blocksMoltenDye[i] = new BlockMoltenDye(fluids[i], Material.water);
-            GameRegistry.registerBlock(Objects.blocksMoltenDye[i], ItemBlockMoltenDye.class, Assets.DOMAIN + "moltenDye" + i);
+            Objects.blocksMoltenDye[i].setBlockTextureName(Assets.DOMAIN + "molten_dye_still");
+            GameRegistry.registerBlock(Objects.blocksMoltenDye[i], ItemBlockMoltenDye.class, "moltenDye" + i);
             Objects.blocksMoltenDye[i].setTickRate(5).setDensity(1).setCreativeTab(Objects.creativeTab);
             Objects.blocksMoltenDye[i].setBlockName(fluids[i].getUnlocalizedName());
 

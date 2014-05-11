@@ -3,6 +3,7 @@ package me.heldplayer.mods.HeldsPeripherals.block;
 
 import java.util.Random;
 
+import me.heldplayer.mods.HeldsPeripherals.Assets;
 import me.heldplayer.mods.HeldsPeripherals.ModHeldsPeripherals;
 import me.heldplayer.mods.HeldsPeripherals.api.IHeldsPeripheral;
 import me.heldplayer.mods.HeldsPeripherals.tileentity.TileEntityFireworksLighter;
@@ -246,12 +247,12 @@ public class BlockMulti1 extends BlockHeldsPeripheral {
         this.right = new IIcon[prefixes.length];
 
         for (int i = 0; i < prefixes.length; i++) {
-            this.top[i] = register.registerIcon("heldsperipherals:" + prefixes[i] + "_top");
-            this.bottom[i] = register.registerIcon("heldsperipherals:" + prefixes[i] + "_bottom");
-            this.front[i] = register.registerIcon("heldsperipherals:" + prefixes[i] + "_front");
-            this.back[i] = register.registerIcon("heldsperipherals:" + prefixes[i] + "_back");
-            this.left[i] = register.registerIcon("heldsperipherals:" + prefixes[i] + "_left");
-            this.right[i] = register.registerIcon("heldsperipherals:" + prefixes[i] + "_right");
+            this.top[i] = register.registerIcon(Assets.DOMAIN + prefixes[i] + "_top");
+            this.bottom[i] = register.registerIcon(Assets.DOMAIN + prefixes[i] + "_bottom");
+            this.front[i] = register.registerIcon(Assets.DOMAIN + prefixes[i] + "_front");
+            this.back[i] = register.registerIcon(Assets.DOMAIN + prefixes[i] + "_back");
+            this.left[i] = register.registerIcon(Assets.DOMAIN + prefixes[i] + "_left");
+            this.right[i] = register.registerIcon(Assets.DOMAIN + prefixes[i] + "_right");
         }
     }
 

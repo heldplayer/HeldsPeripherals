@@ -3,6 +3,7 @@ package me.heldplayer.mods.HeldsPeripherals.item;
 
 import java.util.List;
 
+import me.heldplayer.mods.HeldsPeripherals.Assets;
 import me.heldplayer.mods.HeldsPeripherals.Objects;
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
@@ -36,18 +37,7 @@ public class ItemBlockMulti1 extends ItemBlock {
     public String getUnlocalizedName(ItemStack stack) {
         int type = (stack.getItemDamage() >> 2 & 0x3);
 
-        String name = "";
-
-        switch (type) {
-        case 0:
-            name = "tile.HP.fireworksLighter.name";
-        break;
-        case 1:
-            name = "tile.HP.noiseMaker.name";
-        break;
-        }
-
-        return name;
+        return "tile." + Assets.DOMAIN + "multi1." + type;
     }
 
     @Override
