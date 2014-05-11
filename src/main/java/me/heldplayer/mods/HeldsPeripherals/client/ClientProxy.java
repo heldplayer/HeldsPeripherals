@@ -5,7 +5,6 @@ import me.heldplayer.mods.HeldsPeripherals.Assets;
 import me.heldplayer.mods.HeldsPeripherals.CommonProxy;
 import me.heldplayer.mods.HeldsPeripherals.ModHeldsPeripherals;
 import me.heldplayer.mods.HeldsPeripherals.Objects;
-import me.heldplayer.mods.HeldsPeripherals.block.BlockMoltenDye;
 import me.heldplayer.mods.HeldsPeripherals.client.gui.GuiEnderModem;
 import me.heldplayer.mods.HeldsPeripherals.client.gui.GuiFireworksLighter;
 import me.heldplayer.mods.HeldsPeripherals.inventory.SlotOreDictionary;
@@ -100,13 +99,6 @@ public class ClientProxy extends CommonProxy {
         if (event.map.getTextureType() == 0) {
             Objects.ICON_MOLTEN_DYE_STILL.icon = event.map.registerIcon(Assets.DOMAIN + "molten_dye_still");
             Objects.ICON_MOLTEN_DYE_FLOW.icon = event.map.registerIcon(Assets.DOMAIN + "molten_dye_flow");
-
-            if (Objects.blocksMoltenDye != null) {
-                for (BlockMoltenDye block : Objects.blocksMoltenDye) {
-                    block.getFluid().setStillIcon(event.map.registerIcon(Assets.DOMAIN + "molten_dye_still"));
-                    block.getFluid().setFlowingIcon(event.map.registerIcon(Assets.DOMAIN + "molten_dye_flow"));
-                }
-            }
 
             ClientProxy.fireworksUpgrade = event.map.registerIcon(Assets.DOMAIN + "fireworkslighter_peripheral");
         }
