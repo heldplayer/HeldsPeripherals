@@ -42,17 +42,17 @@ public class EntityFireworkSparkFX extends EntityFX {
     }
 
     public void setMainColor(int color) {
-        float red = (float) ((color & 16711680) >> 16) / 255.0F;
-        float green = (float) ((color & 65280) >> 8) / 255.0F;
-        float blue = (float) ((color & 255) >> 0) / 255.0F;
+        float red = ((color & 16711680) >> 16) / 255.0F;
+        float green = ((color & 65280) >> 8) / 255.0F;
+        float blue = ((color & 255) >> 0) / 255.0F;
         float brightness = 1.0F;
         this.setRBGColorF(red * brightness, green * brightness, blue * brightness);
     }
 
     public void setFadeColor(int color) {
-        this.fadeRed = (float) ((color & 16711680) >> 16) / 255.0F;
-        this.fadeGreen = (float) ((color & 65280) >> 8) / 255.0F;
-        this.fadeBlue = (float) ((color & 255) >> 0) / 255.0F;
+        this.fadeRed = ((color & 16711680) >> 16) / 255.0F;
+        this.fadeGreen = ((color & 65280) >> 8) / 255.0F;
+        this.fadeBlue = ((color & 255) >> 0) / 255.0F;
         this.hasFadeColor = true;
     }
 
@@ -84,7 +84,7 @@ public class EntityFireworkSparkFX extends EntityFX {
         }
 
         if (this.particleAge > this.particleMaxAge / 2) {
-            this.setAlphaF(1.0F - ((float) this.particleAge - (float) (this.particleMaxAge / 2)) / (float) this.particleMaxAge);
+            this.setAlphaF(1.0F - ((float) this.particleAge - (float) (this.particleMaxAge / 2)) / this.particleMaxAge);
 
             if (this.hasFadeColor) {
                 this.particleRed += (this.fadeRed - this.particleRed) * 0.2F;

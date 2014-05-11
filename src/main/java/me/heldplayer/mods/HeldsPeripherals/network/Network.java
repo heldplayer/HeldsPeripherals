@@ -17,13 +17,13 @@ public class Network {
     private static LinkedList<IModem> modems = new LinkedList<IModem>();
 
     public static void clearModems() {
-        modems.clear();
+        Network.modems.clear();
     }
 
     public static IModem registerModem(IEnderModem modemTile) {
         Modem modem = new Modem(modemTile);
 
-        modems.add(modem);
+        Network.modems.add(modem);
 
         return modem;
     }
@@ -33,7 +33,7 @@ public class Network {
     }
 
     public static boolean transmitSecure(int senderId, int dimension, int target, Object data) {
-        Iterator<IModem> i = modems.iterator();
+        Iterator<IModem> i = Network.modems.iterator();
         while (i.hasNext()) {
             IModem modem = i.next();
 
@@ -52,7 +52,7 @@ public class Network {
             ItemStack newStack = origStack.copy();
             ItemStack sentStack = origStack.copy();
 
-            Iterator<IModem> i = modems.iterator();
+            Iterator<IModem> i = Network.modems.iterator();
             while (i.hasNext()) {
                 IModem modem = i.next();
 
@@ -76,7 +76,7 @@ public class Network {
             FluidStack newStack = origStack.copy();
             FluidStack sentStack = origStack.copy();
 
-            Iterator<IModem> i = modems.iterator();
+            Iterator<IModem> i = Network.modems.iterator();
             while (i.hasNext()) {
                 IModem modem = i.next();
 

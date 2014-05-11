@@ -410,7 +410,7 @@ public class LogicHandler {
     // { "launchFirework" }
     public static Object[] callMethod(IComputerAccess computer, ILuaContext context, int method, Object[] arguments, IElectricalFireworksLighter peripheral) throws Exception {
         if (peripheral.isCoolingDown()) {
-            throw new Exception("This peripheral is cooling down, please wait " + ((int) peripheral.getCoolingTime() / 20) + " more seconds.");
+            throw new Exception("This peripheral is cooling down, please wait " + (peripheral.getCoolingTime() / 20) + " more seconds.");
         }
 
         switch (method) {
@@ -634,7 +634,7 @@ public class LogicHandler {
     // { "makeNoise" }
     public static Object[] callMethod(IComputerAccess computer, ILuaContext context, int method, Object[] arguments, INoiseMaker peripheral) throws Exception {
         if (peripheral.isCoolingDown()) {
-            throw new Exception("This peripheral is cooling down, please wait " + ((int) peripheral.getCoolingTime() / 20) + " more seconds.");
+            throw new Exception("This peripheral is cooling down, please wait " + (peripheral.getCoolingTime() / 20) + " more seconds.");
         }
 
         switch (method) {
@@ -673,7 +673,7 @@ public class LogicHandler {
 
             peripheral.increaseCoolingTime();
 
-            peripheral.getWorld().playSoundEffect((double) peripheral.getX() + 0.5D, (double) peripheral.getY() + 0.5D, (double) peripheral.getZ() + 0.5D, name, volume, pitch);
+            peripheral.getWorld().playSoundEffect(peripheral.getX() + 0.5D, peripheral.getY() + 0.5D, peripheral.getZ() + 0.5D, name, volume, pitch);
             return null;
         default:
             throw new Exception("Error calling method: unknown method ID");

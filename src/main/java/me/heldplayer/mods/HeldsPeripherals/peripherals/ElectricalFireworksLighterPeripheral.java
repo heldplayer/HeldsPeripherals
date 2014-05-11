@@ -77,17 +77,17 @@ public class ElectricalFireworksLighterPeripheral implements IPeripheral, IElect
 
     @Override
     public int getX() {
-        return (int) this.turtle.getPosition().posX;
+        return this.turtle.getPosition().posX;
     }
 
     @Override
     public int getY() {
-        return (int) this.turtle.getPosition().posY;
+        return this.turtle.getPosition().posY;
     }
 
     @Override
     public int getZ() {
-        return (int) this.turtle.getPosition().posZ;
+        return this.turtle.getPosition().posZ;
     }
 
     @Override

@@ -54,12 +54,12 @@ public class BlockMoltenDye extends BlockFluidClassic {
     public static String[] color_names = new String[] { "white", "orange", "magenta", "lightBlue", "yellow", "lime", "pink", "gray", "lightGray", "cyan", "purple", "blue", "brown", "green", "red", "black" };
 
     public static FluidColored[] registerFluids() {
-        FluidColored[] result = new FluidColored[colors.length];
-        for (int i = 0; i < colors.length && i < color_names.length; i++) {
-            FluidColored fluid = new FluidColored("molten " + color_names[i] + " dye");
-            fluid.setUnlocalizedName("dye.molten." + color_names[i]);
+        FluidColored[] result = new FluidColored[BlockMoltenDye.colors.length];
+        for (int i = 0; i < BlockMoltenDye.colors.length && i < BlockMoltenDye.color_names.length; i++) {
+            FluidColored fluid = new FluidColored("molten " + BlockMoltenDye.color_names[i] + " dye");
+            fluid.setUnlocalizedName("dye.molten." + BlockMoltenDye.color_names[i]);
             fluid.setIcons(Objects.ICON_MOLTEN_DYE_STILL, Objects.ICON_MOLTEN_DYE_FLOW);
-            fluid.setColor(colors[i]);
+            fluid.setColor(BlockMoltenDye.colors[i]);
             FluidRegistry.registerFluid(fluid);
 
             result[i] = fluid;

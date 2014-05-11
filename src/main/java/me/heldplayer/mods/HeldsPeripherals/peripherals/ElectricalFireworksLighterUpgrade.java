@@ -53,7 +53,7 @@ public class ElectricalFireworksLighterUpgrade implements ITurtleUpgrade {
     @Override
     public void update(ITurtleAccess turtle, TurtleSide side) {
         // TODO Auto-generated method stub
-        
+
     }
 
 }

@@ -24,7 +24,7 @@ public class Objects {
     public static final String CLIENT_PROXY = "me.heldplayer.mods.HeldsPeripherals.client.ClientProxy";
     public static final String SERVER_PROXY = "me.heldplayer.mods.HeldsPeripherals.CommonProxy";
 
-    public static final ModInfo MOD_INFO = new ModInfo(MOD_ID, MOD_NAME);
+    public static final ModInfo MOD_INFO = new ModInfo(Objects.MOD_ID, Objects.MOD_NAME);
 
     public static BlockMulti1 blockMulti1;
     public static BlockEnderModem blockEnderModem;
@@ -35,7 +35,7 @@ public class Objects {
     public static final String CLOISTER_BELL = "heldsperipherals:bell/cloister-bell";
     public static final String SIREN = "heldsperipherals:bell/siren";
     public static final String BELL = "heldsperipherals:bell/bell";
-    public static final String[] SOUNDS = new String[] { CLOISTER_BELL, SIREN, BELL };
+    public static final String[] SOUNDS = new String[] { Objects.CLOISTER_BELL, Objects.SIREN, Objects.BELL };
     public static Logger log;
 
     public static final IconReference ICON_MOLTEN_DYE_STILL = new IconReference();

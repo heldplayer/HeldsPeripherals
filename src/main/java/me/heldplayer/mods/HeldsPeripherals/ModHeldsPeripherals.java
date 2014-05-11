@@ -55,28 +55,28 @@ public class ModHeldsPeripherals extends SpACoreMod {
         SpACore.packetHandler = new PacketHandler(Objects.MOD_CHANNEL, Packet1PlaySound.class);
 
         // Config
-        fireworksEntityId = new ConfigValue<Integer>("FireworksEntityID", Configuration.CATEGORY_GENERAL, null, 160, "The entity ID for the custom fireworks entity");
-        chargeYieldEnderPearl = new ConfigValue<Integer>("YieldEnderPearl", "charges", null, 40, "The amount of ender charges an ender pearl is worth");
-        chargeYieldEyeOfEnder = new ConfigValue<Integer>("YieldEyeOfEnder", "charges", null, 60, "The amount of ender charges an eye of ender is worth");
-        chargeYieldEnderPearlDust = new ConfigValue<Integer>("YieldEnderPearlDust", "charges", null, 40, "The amount of charges one ender pearl dust is worth (GregTech Compat)");
-        chargeYieldEyeOfEnderDust = new ConfigValue<Integer>("YieldEyeOfEnderDust", "charges", null, 30, "The amount of charges one eye of ender dust is worth (GrehTech Compat)");
-        chargeCostSend = new ConfigValue<Integer>("CostSend", "charges", null, 1, "The amount of charges that are required to send a text message");
-        chargeCostTransport = new ConfigValue<Integer>("CostTransport", "charges", null, 5, "The amount of charges that are required to send matter");
-        chargeCostostTransportFluid = new ConfigValue<Integer>("CostTransportFluid", "charges", null, 4, "The amount of charges that are required to send a fluid");
-        enhancedFireworksEntity = new ConfigValue<Boolean>("EnhancedFireworks", Configuration.CATEGORY_GENERAL, Side.CLIENT, Boolean.TRUE, "Determines whether fireworks launched by the Electrical Fireworks Lighter create grouped particles");
-        enhancedEnderChargeRenderer = new ConfigValue<Boolean>("EnhancedEnderChargeRenderer", Configuration.CATEGORY_GENERAL, Side.CLIENT, Boolean.TRUE, "Determines whether ender charges render with a charge amount counter");
+        ModHeldsPeripherals.fireworksEntityId = new ConfigValue<Integer>("FireworksEntityID", Configuration.CATEGORY_GENERAL, null, 160, "The entity ID for the custom fireworks entity");
+        ModHeldsPeripherals.chargeYieldEnderPearl = new ConfigValue<Integer>("YieldEnderPearl", "charges", null, 40, "The amount of ender charges an ender pearl is worth");
+        ModHeldsPeripherals.chargeYieldEyeOfEnder = new ConfigValue<Integer>("YieldEyeOfEnder", "charges", null, 60, "The amount of ender charges an eye of ender is worth");
+        ModHeldsPeripherals.chargeYieldEnderPearlDust = new ConfigValue<Integer>("YieldEnderPearlDust", "charges", null, 40, "The amount of charges one ender pearl dust is worth (GregTech Compat)");
+        ModHeldsPeripherals.chargeYieldEyeOfEnderDust = new ConfigValue<Integer>("YieldEyeOfEnderDust", "charges", null, 30, "The amount of charges one eye of ender dust is worth (GrehTech Compat)");
+        ModHeldsPeripherals.chargeCostSend = new ConfigValue<Integer>("CostSend", "charges", null, 1, "The amount of charges that are required to send a text message");
+        ModHeldsPeripherals.chargeCostTransport = new ConfigValue<Integer>("CostTransport", "charges", null, 5, "The amount of charges that are required to send matter");
+        ModHeldsPeripherals.chargeCostostTransportFluid = new ConfigValue<Integer>("CostTransportFluid", "charges", null, 4, "The amount of charges that are required to send a fluid");
+        ModHeldsPeripherals.enhancedFireworksEntity = new ConfigValue<Boolean>("EnhancedFireworks", Configuration.CATEGORY_GENERAL, Side.CLIENT, Boolean.TRUE, "Determines whether fireworks launched by the Electrical Fireworks Lighter create grouped particles");
+        ModHeldsPeripherals.enhancedEnderChargeRenderer = new ConfigValue<Boolean>("EnhancedEnderChargeRenderer", Configuration.CATEGORY_GENERAL, Side.CLIENT, Boolean.TRUE, "Determines whether ender charges render with a charge amount counter");
 
         this.config = new Config(event.getSuggestedConfigurationFile());
-        this.config.addConfigKey(fireworksEntityId);
-        this.config.addConfigKey(chargeYieldEnderPearl);
-        this.config.addConfigKey(chargeYieldEyeOfEnder);
-        this.config.addConfigKey(chargeYieldEnderPearlDust);
-        this.config.addConfigKey(chargeYieldEyeOfEnderDust);
-        this.config.addConfigKey(chargeCostSend);
-        this.config.addConfigKey(chargeCostTransport);
-        this.config.addConfigKey(chargeCostostTransportFluid);
-        this.config.addConfigKey(enhancedFireworksEntity);
-        this.config.addConfigKey(enhancedEnderChargeRenderer);
+        this.config.addConfigKey(ModHeldsPeripherals.fireworksEntityId);
+        this.config.addConfigKey(ModHeldsPeripherals.chargeYieldEnderPearl);
+        this.config.addConfigKey(ModHeldsPeripherals.chargeYieldEyeOfEnder);
+        this.config.addConfigKey(ModHeldsPeripherals.chargeYieldEnderPearlDust);
+        this.config.addConfigKey(ModHeldsPeripherals.chargeYieldEyeOfEnderDust);
+        this.config.addConfigKey(ModHeldsPeripherals.chargeCostSend);
+        this.config.addConfigKey(ModHeldsPeripherals.chargeCostTransport);
+        this.config.addConfigKey(ModHeldsPeripherals.chargeCostostTransportFluid);
+        this.config.addConfigKey(ModHeldsPeripherals.enhancedFireworksEntity);
+        this.config.addConfigKey(ModHeldsPeripherals.enhancedEnderChargeRenderer);
 
         super.preInit(event);
     }
@@ -150,7 +150,7 @@ public class ModHeldsPeripherals extends SpACoreMod {
 
     @Override
     public SpACoreProxy getProxy() {
-        return proxy;
+        return ModHeldsPeripherals.proxy;
     }
 
 }

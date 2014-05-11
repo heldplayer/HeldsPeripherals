@@ -36,7 +36,7 @@ public class EnderChargeRecipeHandler extends ShapelessRecipeHandler {
         public void cycle() {
             this.itemList.clear();
 
-            this.itemList.add(new ItemStack(Objects.itemEnderCharge, 1, rnd.nextInt(62) + 1));
+            this.itemList.add(new ItemStack(Objects.itemEnderCharge, 1, EnderChargeRecipeHandler.rnd.nextInt(62) + 1));
 
             this.setIngredients(this.itemList);
 
@@ -71,7 +71,7 @@ public class EnderChargeRecipeHandler extends ShapelessRecipeHandler {
 
             this.itemList.clear();
 
-            int currentCharge = Math.min(rnd.nextInt(this.charge - 1), 63) + 1;
+            int currentCharge = Math.min(EnderChargeRecipeHandler.rnd.nextInt(this.charge - 1), 63) + 1;
 
             this.itemList.add(new ItemStack(Objects.itemEnderCharge, 1, currentCharge - 1));
 
@@ -80,7 +80,7 @@ public class EnderChargeRecipeHandler extends ShapelessRecipeHandler {
                     break;
                 }
 
-                int added = Math.min(rnd.nextInt(this.charge - currentCharge), 63) + 1;
+                int added = Math.min(EnderChargeRecipeHandler.rnd.nextInt(this.charge - currentCharge), 63) + 1;
 
                 this.itemList.add(new ItemStack(Objects.itemEnderCharge, 1, added - 1));
 

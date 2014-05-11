@@ -183,13 +183,13 @@ public class TileEntityEnderModem extends TileEntityHeldsPeripheral implements I
     @Override
     public int[] getAccessibleSlotsFromSide(int side) {
         if (side == 0) {
-            return slotsBottom;
+            return TileEntityEnderModem.slotsBottom;
         }
         if (side == 1) {
-            return slotsTop;
+            return TileEntityEnderModem.slotsTop;
         }
 
-        return slotsSides;
+        return TileEntityEnderModem.slotsSides;
     }
 
     @Override

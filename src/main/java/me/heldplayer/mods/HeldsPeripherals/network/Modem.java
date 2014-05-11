@@ -31,7 +31,7 @@ public class Modem implements IModem {
 
     @Override
     public void detach(IComputerAccess computer) {
-        Iterator<ComputerConnection> i = connections.iterator();
+        Iterator<ComputerConnection> i = this.connections.iterator();
         while (i.hasNext()) {
             ComputerConnection connection = i.next();
 
@@ -43,41 +43,41 @@ public class Modem implements IModem {
 
     @Override
     public boolean isChannelOpen(int channel) {
-        return channelList[channel];
+        return this.channelList[channel];
     }
 
     @Override
     public boolean openChannel(int channel) {
-        if (openChannels > 127) {
+        if (this.openChannels > 127) {
             return false;
         }
-        if (!channelList[channel]) {
-            channelList[channel] = true;
-            openChannels++;
+        if (!this.channelList[channel]) {
+            this.channelList[channel] = true;
+            this.openChannels++;
         }
         return true;
     }
 
     @Override
     public void closeChannel(int channel) {
-        if (channelList[channel]) {
-            channelList[channel] = false;
-            openChannels--;
+        if (this.channelList[channel]) {
+            this.channelList[channel] = false;
+            this.openChannels--;
         }
     }
 
     @Override
     public void closeAllChannels() {
-        for (int i = 0; i < channelList.length; i++) {
-            channelList[i] = false;
+        for (int i = 0; i < this.channelList.length; i++) {
+            this.channelList[i] = false;
         }
-        openChannels = 0;
+        this.openChannels = 0;
     }
 
     @Override
     public void transmit(int origin, int please, Object data) {
-        if (channelList[origin]) {
-            Iterator<ComputerConnection> i = connections.iterator();
+        if (this.channelList[origin]) {
+            Iterator<ComputerConnection> i = this.connections.iterator();
 
             while (i.hasNext()) {
                 ComputerConnection connection = i.next();
@@ -89,7 +89,7 @@ public class Modem implements IModem {
 
     @Override
     public boolean transmitSecure(int senderId, int dimension, int target, Object data) {
-        Iterator<ComputerConnection> i = connections.iterator();
+        Iterator<ComputerConnection> i = this.connections.iterator();
         while (i.hasNext()) {
             ComputerConnection connection = i.next();
 
@@ -105,7 +105,7 @@ public class Modem implements IModem {
 
     @Override
     public boolean transportItem(int senderId, int dimension, ItemStack sentStack, ItemStack newStack, int target) {
-        Iterator<ComputerConnection> i = connections.iterator();
+        Iterator<ComputerConnection> i = this.connections.iterator();
         while (i.hasNext()) {
             ComputerConnection connection = i.next();
 
@@ -146,7 +146,7 @@ public class Modem implements IModem {
 
     @Override
     public boolean transportFluid(int senderId, int dimension, FluidStack sentStack, FluidStack newStack, int target) {
-        Iterator<ComputerConnection> i = connections.iterator();
+        Iterator<ComputerConnection> i = this.connections.iterator();
         while (i.hasNext()) {
             ComputerConnection connection = i.next();
 

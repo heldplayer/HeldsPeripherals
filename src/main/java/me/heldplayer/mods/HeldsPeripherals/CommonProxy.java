@@ -48,7 +48,7 @@ public class CommonProxy extends SpACoreProxy implements IGuiHandler {
     public void preInit(FMLPreInitializationEvent event) {
         MinecraftForge.EVENT_BUS.register(this);
 
-        enderCharges = new HashMap<ItemStack, Integer>();
+        CommonProxy.enderCharges = new HashMap<ItemStack, Integer>();
     }
 
     @Override

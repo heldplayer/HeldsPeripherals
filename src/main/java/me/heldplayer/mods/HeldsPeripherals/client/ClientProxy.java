@@ -56,7 +56,7 @@ public class ClientProxy extends CommonProxy {
     }
 
     public static SlotOreDictionary setIcon(SlotOreDictionary slot, int icon) {
-        slot.icon = icons[icon];
+        slot.icon = ClientProxy.icons[icon];
 
         return slot;
     }

@@ -158,9 +158,9 @@ public class EntityFireworkStarterFX extends EntityFX {
             }
 
             int baseColor = colors[0];
-            float baseR = (float) ((baseColor & 16711680) >> 16) / 255.0F;
-            float baseG = (float) ((baseColor & 65280) >> 8) / 255.0F;
-            float baseB = (float) ((baseColor & 255) >> 0) / 255.0F;
+            float baseR = ((baseColor & 16711680) >> 16) / 255.0F;
+            float baseG = ((baseColor & 65280) >> 8) / 255.0F;
+            float baseB = ((baseColor & 255) >> 0) / 255.0F;
             EntityFireworkBloomFX bloom = new EntityFireworkBloomFX(this.worldObj, this.posX, this.posY, this.posZ, bloomMaxAge);
             bloom.setRBGColorF(baseR, baseG, baseB);
             //this.effectRenderer.addEffect(bloom);
@@ -223,10 +223,10 @@ public class EntityFireworkStarterFX extends EntityFX {
         for (int y = -size; y <= size; y++) {
             for (int x = -size; x <= size; x++) {
                 for (int z = -size; z <= size; z++) {
-                    double motionX = (double) x + (this.rand.nextDouble() - this.rand.nextDouble()) * 0.5D;
-                    double motionY = (double) y + (this.rand.nextDouble() - this.rand.nextDouble()) * 0.5D;
-                    double motionZ = (double) z + (this.rand.nextDouble() - this.rand.nextDouble()) * 0.5D;
-                    double motionFactor = (double) MathHelper.sqrt_double(motionX * motionX + motionY * motionY + motionZ * motionZ) / motion + this.rand.nextGaussian() * 0.05D;
+                    double motionX = x + (this.rand.nextDouble() - this.rand.nextDouble()) * 0.5D;
+                    double motionY = y + (this.rand.nextDouble() - this.rand.nextDouble()) * 0.5D;
+                    double motionZ = z + (this.rand.nextDouble() - this.rand.nextDouble()) * 0.5D;
+                    double motionFactor = MathHelper.sqrt_double(motionX * motionX + motionY * motionY + motionZ * motionZ) / motion + this.rand.nextGaussian() * 0.05D;
                     this.createSpark(posX, posY, posZ, motionX / motionFactor, motionY / motionFactor, motionZ / motionFactor, colors, fadeColors, hasTrail, hasFlicker);
 
                     if (y != -size && y != size && x != -size && x != size) {
@@ -245,7 +245,7 @@ public class EntityFireworkStarterFX extends EntityFX {
         double rotateAmount = rotateable ? 0.034D : 0.34D;
 
         for (int iteration = 0; iteration < 3; ++iteration) {
-            double rotation = (double) baseRotation + (double) ((float) iteration * (float) Math.PI) * rotateAmount;
+            double rotation = baseRotation + iteration * (float) Math.PI * rotateAmount;
             double currentX = baseX;
             double currentY = baseY;
 

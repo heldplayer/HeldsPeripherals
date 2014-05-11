@@ -27,18 +27,18 @@ public class EntityFireworkBloomFX extends EntityFX {
         float startV = 0.125F;
         float endV = startV + 0.25F;
         float size = 5.0F;
-        this.particleAlpha = 0.6F - ((float) this.particleAge + partialTicks - 1.0F) * 0.25F * 0.5F * 4.0F / (float) this.particleMaxAge;
+        this.particleAlpha = 0.6F - (this.particleAge + partialTicks - 1.0F) * 0.25F * 0.5F * 4.0F / this.particleMaxAge;
         if (this.particleMaxAge <= 4) {
-            size = 7.1F * MathHelper.sin(((float) this.particleAge + partialTicks - 1.0F) * 0.25F * (float) Math.PI);
-            this.particleAlpha = 0.6F - ((float) this.particleAge + partialTicks - 1.0F) * 0.25F * 0.5F;
+            size = 7.1F * MathHelper.sin((this.particleAge + partialTicks - 1.0F) * 0.25F * (float) Math.PI);
+            this.particleAlpha = 0.6F - (this.particleAge + partialTicks - 1.0F) * 0.25F * 0.5F;
         }
-        float posX = (float) (this.prevPosX + (this.posX - this.prevPosX) * (double) partialTicks - interpPosX);
-        float posY = (float) (this.prevPosY + (this.posY - this.prevPosY) * (double) partialTicks - interpPosY);
-        float posZ = (float) (this.prevPosZ + (this.posZ - this.prevPosZ) * (double) partialTicks - interpPosZ);
+        float posX = (float) (this.prevPosX + (this.posX - this.prevPosX) * partialTicks - EntityFX.interpPosX);
+        float posY = (float) (this.prevPosY + (this.posY - this.prevPosY) * partialTicks - EntityFX.interpPosY);
+        float posZ = (float) (this.prevPosZ + (this.posZ - this.prevPosZ) * partialTicks - EntityFX.interpPosZ);
         tess.setColorRGBA_F(this.particleRed, this.particleGreen, this.particleBlue, this.particleAlpha);
-        tess.addVertexWithUV((double) (posX - cosYaw * size - xsinPitch * size), (double) (posY - cosPitch * size), (double) (posZ - sinYaw * size - sinPitch * size), (double) endU, (double) endV);
-        tess.addVertexWithUV((double) (posX - cosYaw * size + xsinPitch * size), (double) (posY + cosPitch * size), (double) (posZ - sinYaw * size + sinPitch * size), (double) endU, (double) startV);
-        tess.addVertexWithUV((double) (posX + cosYaw * size + xsinPitch * size), (double) (posY + cosPitch * size), (double) (posZ + sinYaw * size + sinPitch * size), (double) startU, (double) startV);
-        tess.addVertexWithUV((double) (posX + cosYaw * size - xsinPitch * size), (double) (posY - cosPitch * size), (double) (posZ + sinYaw * size - sinPitch * size), (double) startU, (double) endV);
+        tess.addVertexWithUV(posX - cosYaw * size - xsinPitch * size, posY - cosPitch * size, posZ - sinYaw * size - sinPitch * size, endU, endV);
+        tess.addVertexWithUV(posX - cosYaw * size + xsinPitch * size, posY + cosPitch * size, posZ - sinYaw * size + sinPitch * size, endU, startV);
+        tess.addVertexWithUV(posX + cosYaw * size + xsinPitch * size, posY + cosPitch * size, posZ + sinYaw * size + sinPitch * size, startU, startV);
+        tess.addVertexWithUV(posX + cosYaw * size - xsinPitch * size, posY - cosPitch * size, posZ + sinYaw * size - sinPitch * size, startU, endV);
     }
 }

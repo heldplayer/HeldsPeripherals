@@ -29,7 +29,7 @@ public class HeldsPeripheralAPI {
         }
 
         for (int i = 0; i < items.size(); i++) {
-            addCharge(items.get(i), value);
+            HeldsPeripheralAPI.addCharge(items.get(i), value);
         }
     }
 
@@ -43,11 +43,11 @@ public class HeldsPeripheralAPI {
      *        The charge level the item will give. Must be > 0.
      */
     public static void addCharge(ItemStack item, Integer value) {
-        tryInit();
+        HeldsPeripheralAPI.tryInit();
 
-        if (addCharge != null) {
+        if (HeldsPeripheralAPI.addCharge != null) {
             try {
-                addCharge.invoke(null, item, value);
+                HeldsPeripheralAPI.addCharge.invoke(null, item, value);
             }
             catch (Exception e) {
                 System.err.println("Failed calling HeldsPeripherals method 'addCharge(ItemStack, Integer)' through API'");
@@ -61,10 +61,10 @@ public class HeldsPeripheralAPI {
      */
     @SuppressWarnings("unchecked")
     private static void tryInit() {
-        if (!APIInitialized) {
+        if (!HeldsPeripheralAPI.APIInitialized) {
             try {
-                heldsPeripherals = Class.forName("me.heldplayer.mods.HeldsPeripherals.ModHeldsPeripherals");
-                addCharge = heldsPeripherals.getMethod("addCharge", new Class[] { ItemStack.class, Integer.class });
+                HeldsPeripheralAPI.heldsPeripherals = Class.forName("me.heldplayer.mods.HeldsPeripherals.ModHeldsPeripherals");
+                HeldsPeripheralAPI.addCharge = HeldsPeripheralAPI.heldsPeripherals.getMethod("addCharge", new Class[] { ItemStack.class, Integer.class });
             }
             catch (ClassNotFoundException e) {
                 System.out.println("Could not find HeldsPeripherals");
@@ -76,7 +76,7 @@ public class HeldsPeripheralAPI {
                 System.err.println("Failed initializing APi methods");
             }
 
-            APIInitialized = true;
+            HeldsPeripheralAPI.APIInitialized = true;
         }
     }
 
