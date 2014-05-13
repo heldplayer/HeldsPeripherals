@@ -69,7 +69,7 @@ processResources
     // replace stuff in text files, not binary ones.
     from(sourceSets.main.resources.srcDirs) {
         include 'mcmod.info'
-        include 'version.properties'
+        include '*.version'
                 
         // replace version and mcversion
         expand 'version': config.super_number + "." + config.major_number + "." + config.minor_number + "." + config.build_number
@@ -78,7 +78,7 @@ processResources
     // copy everything else, thats not the mcmod.info
     from(sourceSets.main.resources.srcDirs) {
         exclude 'mcmod.info'
-        exclude 'version.properties'
+        exclude '*.version'
     }
 }
 
