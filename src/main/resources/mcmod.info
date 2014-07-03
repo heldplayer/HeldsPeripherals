@@ -1,8 +1,8 @@
 [
     {
-        "modid" : "CCheldsPeripherals",
-        "name" : "CC Held's Peripherals",
-        "version" : "@VERSION@",
+        "modid" : "heldsperipherals",
+        "name" : "Held's Peripherals",
+        "version" : "${version}",
         "credits" : "Dan200 and Cloudy for ComputerCraft and the ComputerCraft API",
         "authors": [
             "heldplayer"
@@ -11,10 +11,10 @@
         "depencies": [
             "after: Thaumcraft",
             "ComputerCraft",
-            "HeldCore"
+            "SpACore"
         ],
         "requiredMods": [
-            "HeldCore"
+            "SpACore"
         ]
     }
 ]

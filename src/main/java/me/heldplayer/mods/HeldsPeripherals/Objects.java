@@ -23,6 +23,7 @@ public class Objects {
     public static final String MOD_CHANNEL = "HeldsPeripherals";
     public static final String CLIENT_PROXY = "me.heldplayer.mods.HeldsPeripherals.client.ClientProxy";
     public static final String SERVER_PROXY = "me.heldplayer.mods.HeldsPeripherals.CommonProxy";
+    public static final String GUI_FACTORY = "me.heldplayer.mods.HeldsPeripherals.client.gui.GuiFactory";
 
     public static final ModInfo MOD_INFO = new ModInfo(Objects.MOD_ID, Objects.MOD_NAME);
 

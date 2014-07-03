@@ -42,3 +42,16 @@ fluid.dye.molten.brown=Molten Brown Dye
 fluid.dye.molten.green=Molten Green Dye
 fluid.dye.molten.red=Molten Red Dye
 fluid.dye.molten.black=Molten Black Dye
+
+config.heldsperipherals.category.general=General
+config.heldsperipherals.key.FireworksEntityID=Fireworks Entity ID
+config.heldsperipherals.key.EnhancedFireworks=Enhanced Fireworks
+config.heldsperipherals.key.EnhancedEnderChargeRenderer=Enhanced Ender Charge renderer
+config.heldsperipherals.category.charges=Charges
+config.heldsperipherals.key.YieldEnderPearl=Ender Pearl charge yield
+config.heldsperipherals.key.YieldEyeOfEnder=Eye of Ender charge yield
+config.heldsperipherals.key.YieldEnderPearlDust=Ender Pearl Dust charge yield
+config.heldsperipherals.key.YieldEyeOfEnderDust=Eye of Ender Dust charge yield
+config.heldsperipherals.key.CostSend=Send cost
+config.heldsperipherals.key.CostTransport=Transport cost
+config.heldsperipherals.key.CostTransportFluid=Fluid transport cost
