@@ -1,4 +1,3 @@
-
 package me.heldplayer.mods.HeldsPeripherals;
 
 import net.minecraft.init.Items;
@@ -7,11 +6,24 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 
 public class FireworksPattern {
+
     public short flight = 0;
     public FireworkStarPattern star = null;
     public NBTTagList arguments = null;
     public boolean hideRocketTrail = false;
     public boolean silent = false;
+
+    public static FireworksPattern readFromNBT(NBTTagCompound compound) {
+        FireworksPattern pattern = new FireworksPattern();
+
+        pattern.flight = compound.getShort("Flight");
+
+        NBTTagList list = compound.getTagList("Explosions", 10);
+
+        pattern.star = FireworkStarPattern.getFromCompound(list.getCompoundTagAt(0));
+
+        return pattern;
+    }
 
     public void writeToNBT(NBTTagCompound compound) {
         compound.setShort("Flight", this.flight);
@@ -51,17 +63,5 @@ public class FireworksPattern {
         stack.setTagCompound(compound);
 
         return stack;
-    }
-
-    public static FireworksPattern readFromNBT(NBTTagCompound compound) {
-        FireworksPattern pattern = new FireworksPattern();
-
-        pattern.flight = compound.getShort("Flight");
-
-        NBTTagList list = compound.getTagList("Explosions", 10);
-
-        pattern.star = FireworkStarPattern.getFromCompound(list.getCompoundTagAt(0));
-
-        return pattern;
     }
 }

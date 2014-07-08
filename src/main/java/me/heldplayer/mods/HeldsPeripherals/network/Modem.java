@@ -1,15 +1,14 @@
-
 package me.heldplayer.mods.HeldsPeripherals.network;
 
-import java.util.Iterator;
-import java.util.LinkedList;
-
+import dan200.computercraft.api.peripheral.IComputerAccess;
 import me.heldplayer.mods.HeldsPeripherals.api.IEnderModem;
 import me.heldplayer.mods.HeldsPeripherals.api.IModem;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
-import dan200.computercraft.api.peripheral.IComputerAccess;
+
+import java.util.Iterator;
+import java.util.LinkedList;
 
 public class Modem implements IModem {
 
@@ -120,8 +119,7 @@ public class Modem implements IModem {
                     newStack.stackSize = 0;
 
                     return true;
-                }
-                else {
+                } else {
                     if (slot != null && slot.getItem() == sentStack.getItem() && (!sentStack.getHasSubtypes() || sentStack.getItemDamage() == slot.getItemDamage()) && ItemStack.areItemStackTagsEqual(sentStack, slot)) {
 
                         if (slot.isStackable() && slot.stackSize < slot.getMaxStackSize()) {
@@ -161,8 +159,7 @@ public class Modem implements IModem {
                     newStack.amount = 0;
 
                     return true;
-                }
-                else if (tank != null) {
+                } else if (tank != null) {
                     FluidStack stack = tank.getFluid();
 
                     if (stack != null && stack.isFluidEqual(sentStack)) {

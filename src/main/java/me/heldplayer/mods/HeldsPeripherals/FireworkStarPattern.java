@@ -1,4 +1,3 @@
-
 package me.heldplayer.mods.HeldsPeripherals;
 
 import net.minecraft.nbt.NBTTagCompound;
@@ -11,18 +10,6 @@ public class FireworkStarPattern {
     public int[] primaryColors;
     public int[] secondaryColors;
 
-    public NBTTagCompound getSavedCompound() {
-        NBTTagCompound compound = new NBTTagCompound();
-
-        compound.setByte("Type", this.type);
-        compound.setBoolean("Trail", this.hasTrail);
-        compound.setBoolean("Flicker", this.hasFlicker);
-        compound.setIntArray("Colors", this.primaryColors);
-        compound.setIntArray("FadeColors", this.secondaryColors);
-
-        return compound;
-    }
-
     public static FireworkStarPattern getFromCompound(NBTTagCompound compound) {
         FireworkStarPattern pattern = new FireworkStarPattern();
 
@@ -33,5 +20,17 @@ public class FireworkStarPattern {
         pattern.secondaryColors = compound.getIntArray("FadeColors");
 
         return pattern;
+    }
+
+    public NBTTagCompound getSavedCompound() {
+        NBTTagCompound compound = new NBTTagCompound();
+
+        compound.setByte("Type", this.type);
+        compound.setBoolean("Trail", this.hasTrail);
+        compound.setBoolean("Flicker", this.hasFlicker);
+        compound.setIntArray("Colors", this.primaryColors);
+        compound.setIntArray("FadeColors", this.secondaryColors);
+
+        return compound;
     }
 }

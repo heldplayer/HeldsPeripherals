@@ -1,9 +1,12 @@
-
 package me.heldplayer.mods.HeldsPeripherals;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-
+import cpw.mods.fml.common.event.FMLInitializationEvent;
+import cpw.mods.fml.common.event.FMLPostInitializationEvent;
+import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import cpw.mods.fml.common.network.IGuiHandler;
+import cpw.mods.fml.common.network.NetworkRegistry;
+import cpw.mods.fml.common.registry.EntityRegistry;
+import cpw.mods.fml.common.registry.GameRegistry;
 import me.heldplayer.mods.HeldsPeripherals.api.HeldsPeripheralAPI;
 import me.heldplayer.mods.HeldsPeripherals.block.BlockEnderModem;
 import me.heldplayer.mods.HeldsPeripherals.block.BlockMoltenDye;
@@ -30,19 +33,43 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.oredict.OreDictionary;
 import net.specialattack.forge.core.SpACoreProxy;
-import cpw.mods.fml.common.event.FMLInitializationEvent;
-import cpw.mods.fml.common.event.FMLPostInitializationEvent;
-import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import cpw.mods.fml.common.network.IGuiHandler;
-import cpw.mods.fml.common.network.NetworkRegistry;
-import cpw.mods.fml.common.registry.EntityRegistry;
-import cpw.mods.fml.common.registry.GameRegistry;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class CommonProxy extends SpACoreProxy implements IGuiHandler {
 
     public static HashMap<ItemStack, Integer> enderCharges;
 
     public static int renderId;
+
+    public static boolean doesItemHaveCharge(ItemStack stack) {
+        int charge = ModHeldsPeripherals.getChargeDelivered(stack);
+        if (charge > 0) {
+            return true;
+        }
+
+        if (stack.getItem() == Objects.itemEnderCharge) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public static boolean isItemOfType(ItemStack stack, String name) {
+        if (stack == null || name == null) {
+            return false;
+        }
+
+        int id = OreDictionary.getOreID(stack);
+        int id2 = OreDictionary.getOreID(name);
+
+        if (id == id2 && id > 0) {
+            return true;
+        }
+
+        return false;
+    }
 
     @Override
     public void preInit(FMLPreInitializationEvent event) {
@@ -100,8 +127,8 @@ public class CommonProxy extends SpACoreProxy implements IGuiHandler {
 
         try {
             // FIXME: TurtleAPI.registerUpgrade(new ElectricalFireworksLighterUpgrade());
+        } catch (NoSuchMethodError e) {
         }
-        catch (NoSuchMethodError e) {}
         GameRegistry.addRecipe(new RecipeEnderCharge());
         OreDictionary.registerOre("dustGunpowder", Items.gunpowder);
 
@@ -121,11 +148,6 @@ public class CommonProxy extends SpACoreProxy implements IGuiHandler {
     }
 
     @Override
-    public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
-        return null;
-    }
-
-    @Override
     public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
         try {
             TileEntity tileEntity = world.getTileEntity(x, y, z);
@@ -133,8 +155,7 @@ public class CommonProxy extends SpACoreProxy implements IGuiHandler {
             if (ID == 0) {
                 if (tileEntity != null && (tileEntity instanceof TileEntityEnderModem)) {
                     return new ContainerEnderModem(player.inventory, ((TileEntityEnderModem) tileEntity));
-                }
-                else {
+                } else {
                     return null;
                 }
             }
@@ -142,15 +163,13 @@ public class CommonProxy extends SpACoreProxy implements IGuiHandler {
             if (ID == 1) {
                 if (tileEntity != null && (tileEntity instanceof TileEntityFireworksLighter)) {
                     return new ContainerFireworksLauncher(player.inventory, ((TileEntityFireworksLighter) tileEntity));
-                }
-                else {
+                } else {
                     return null;
                 }
             }
 
             return null;
-        }
-        catch (Exception ex) {
+        } catch (Exception ex) {
             System.out.println("Failed opening server GUI element.");
 
             ex.printStackTrace();
@@ -159,32 +178,9 @@ public class CommonProxy extends SpACoreProxy implements IGuiHandler {
         }
     }
 
-    public static boolean doesItemHaveCharge(ItemStack stack) {
-        int charge = ModHeldsPeripherals.getChargeDelivered(stack);
-        if (charge > 0) {
-            return true;
-        }
-
-        if (stack.getItem() == Objects.itemEnderCharge) {
-            return true;
-        }
-
-        return false;
-    }
-
-    public static boolean isItemOfType(ItemStack stack, String name) {
-        if (stack == null || name == null) {
-            return false;
-        }
-
-        int id = OreDictionary.getOreID(stack);
-        int id2 = OreDictionary.getOreID(name);
-
-        if (id == id2 && id > 0) {
-            return true;
-        }
-
-        return false;
+    @Override
+    public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
+        return null;
     }
 
 }

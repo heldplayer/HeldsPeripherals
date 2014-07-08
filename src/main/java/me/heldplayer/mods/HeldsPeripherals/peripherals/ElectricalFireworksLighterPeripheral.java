@@ -1,16 +1,15 @@
-
 package me.heldplayer.mods.HeldsPeripherals.peripherals;
 
+import dan200.computercraft.api.lua.ILuaContext;
+import dan200.computercraft.api.peripheral.IComputerAccess;
+import dan200.computercraft.api.peripheral.IPeripheral;
+import dan200.computercraft.api.turtle.ITurtleAccess;
 import me.heldplayer.mods.HeldsPeripherals.LogicHandler;
 import me.heldplayer.mods.HeldsPeripherals.api.IElectricalFireworksLighter;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.minecraftforge.oredict.OreDictionary;
-import dan200.computercraft.api.lua.ILuaContext;
-import dan200.computercraft.api.peripheral.IComputerAccess;
-import dan200.computercraft.api.peripheral.IPeripheral;
-import dan200.computercraft.api.turtle.ITurtleAccess;
 
 public class ElectricalFireworksLighterPeripheral implements IPeripheral, IElectricalFireworksLighter {
 
@@ -47,12 +46,18 @@ public class ElectricalFireworksLighterPeripheral implements IPeripheral, IElect
     //}
 
     @Override
-    public void attach(IComputerAccess computer) {}
+    public void attach(IComputerAccess computer) {
+    }
 
     @Override
-    public void detach(IComputerAccess computer) {}
+    public void detach(IComputerAccess computer) {
+    }
 
     @Override
+    public boolean equals(IPeripheral other) {
+        // TODO Auto-generated method stub
+        return this == other;
+    }    @Override
     public void update() {
         if (this.getWorld().isRemote) {
             return;
@@ -71,54 +76,45 @@ public class ElectricalFireworksLighterPeripheral implements IPeripheral, IElect
     // IHeldsPeripheral
 
     @Override
+    public int getCoolingTime() {
+        return this.launchCount;
+    }    @Override
     public World getWorld() {
         return this.turtle.getWorld();
     }
 
     @Override
+    public void setCoolingDown() {
+        this.coolDown = true;
+    }    @Override
     public int getX() {
         return this.turtle.getPosition().posX;
     }
 
     @Override
+    public boolean isCoolingDown() {
+        return this.coolDown;
+    }    @Override
     public int getY() {
         return this.turtle.getPosition().posY;
     }
 
     @Override
+    public void increaseCoolingTime() {
+        this.launchCount += 2;
+    }    @Override
     public int getZ() {
         return this.turtle.getPosition().posZ;
     }
 
     @Override
-    public void setName(String name) {}
-
-    // IElectricalFireworksLighter
-
-    @Override
-    public int getCoolingTime() {
-        return this.launchCount;
-    }
-
-    @Override
-    public boolean isCoolingDown() {
-        return this.coolDown;
-    }
-
-    @Override
-    public void setCoolingDown() {
-        this.coolDown = true;
-    }
-
-    @Override
-    public void increaseCoolingTime() {
-        this.launchCount += 2;
-    }
-
-    @Override
     public void setCoolingTime(int time) {
         this.launchCount = time;
+    }    @Override
+    public void setName(String name) {
     }
+
+    // IElectricalFireworksLighter
 
     @Override
     public int getFluidLevel(int tankId) {
@@ -126,7 +122,8 @@ public class ElectricalFireworksLighterPeripheral implements IPeripheral, IElect
     }
 
     @Override
-    public void setFluidLevel(int tankId, int amount) {}
+    public void setFluidLevel(int tankId, int amount) {
+    }
 
     @Override
     public ItemStack getStack(int slot) {
@@ -159,10 +156,16 @@ public class ElectricalFireworksLighterPeripheral implements IPeripheral, IElect
         return 0;
     }
 
-    @Override
-    public boolean equals(IPeripheral other) {
-        // TODO Auto-generated method stub
-        return this == other;
-    }
+
+
+
+
+
+
+
+
+
+
+
 
 }

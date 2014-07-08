@@ -1,6 +1,7 @@
-
 package me.heldplayer.mods.HeldsPeripherals.client;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import me.heldplayer.mods.HeldsPeripherals.Objects;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.Tessellator;
@@ -9,11 +10,7 @@ import net.minecraft.util.IIcon;
 import net.minecraftforge.client.IItemRenderer;
 import net.specialattack.forge.core.client.MC;
 import net.specialattack.forge.core.client.RenderHelper;
-
 import org.lwjgl.opengl.GL11;
-
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
 public class ItemRendererEnderCharge implements IItemRenderer {

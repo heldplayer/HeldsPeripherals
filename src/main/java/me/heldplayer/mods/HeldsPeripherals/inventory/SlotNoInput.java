@@ -1,4 +1,3 @@
-
 package me.heldplayer.mods.HeldsPeripherals.inventory;
 
 import net.minecraft.inventory.IInventory;

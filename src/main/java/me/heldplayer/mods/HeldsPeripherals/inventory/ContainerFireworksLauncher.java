@@ -1,8 +1,7 @@
-
 package me.heldplayer.mods.HeldsPeripherals.inventory;
 
-import java.util.Iterator;
-
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import me.heldplayer.mods.HeldsPeripherals.client.ClientProxy;
 import me.heldplayer.mods.HeldsPeripherals.tileentity.TileEntityFireworksLighter;
 import net.minecraft.entity.player.EntityPlayer;
@@ -12,10 +11,11 @@ import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+
+import java.util.Iterator;
 
 public class ContainerFireworksLauncher extends Container {
+
     private TileEntityFireworksLighter lighter;
     private EntityPlayer player;
     private int prevRedAmount;
@@ -29,11 +29,6 @@ public class ContainerFireworksLauncher extends Container {
         this.layoutContainer();
 
         this.lighter.markDirty();
-    }
-
-    @Override
-    public boolean canInteractWith(EntityPlayer player) {
-        return this.lighter.isUseableByPlayer(player);
     }
 
     private void layoutContainer() {
@@ -59,23 +54,6 @@ public class ContainerFireworksLauncher extends Container {
         player.sendProgressBarUpdate(this, 0, this.lighter.getAmount(0));
         player.sendProgressBarUpdate(this, 1, this.lighter.getAmount(1));
         player.sendProgressBarUpdate(this, 2, this.lighter.getAmount(2));
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void updateProgressBar(int barId, int barValue) {
-        this.lighter.setAmount(barId, barValue);
-        switch (barId) {
-        case 0:
-            this.prevRedAmount = barValue;
-        break;
-        case 1:
-            this.prevGreenAmount = barValue;
-        break;
-        case 2:
-            this.prevBlueAmount = barValue;
-        break;
-        }
     }
 
     @SuppressWarnings("rawtypes")
@@ -118,29 +96,23 @@ public class ContainerFireworksLauncher extends Container {
                 }
 
                 slot.onSlotChange(slotStack, stack);
-            }
-            else {
+            } else {
                 if (((Slot) this.inventorySlots.get(0)).isItemValid(slotStack) && this.mergeItemStack(slotStack, 0, 1, false)) {
                     slot.onSlotChange(slotStack, stack);
-                }
-                else if (((Slot) this.inventorySlots.get(1)).isItemValid(slotStack) && this.mergeItemStack(slotStack, 1, 2, false)) {
+                } else if (((Slot) this.inventorySlots.get(1)).isItemValid(slotStack) && this.mergeItemStack(slotStack, 1, 2, false)) {
                     slot.onSlotChange(slotStack, stack);
-                }
-                else if (((Slot) this.inventorySlots.get(2)).isItemValid(slotStack) && this.mergeItemStack(slotStack, 2, 3, false)) {
+                } else if (((Slot) this.inventorySlots.get(2)).isItemValid(slotStack) && this.mergeItemStack(slotStack, 2, 3, false)) {
                     slot.onSlotChange(slotStack, stack);
-                }
-                else if (((Slot) this.inventorySlots.get(3)).isItemValid(slotStack) && this.mergeItemStack(slotStack, 3, 4, false)) {
+                } else if (((Slot) this.inventorySlots.get(3)).isItemValid(slotStack) && this.mergeItemStack(slotStack, 3, 4, false)) {
                     slot.onSlotChange(slotStack, stack);
-                }
-                else {
+                } else {
                     return null;
                 }
             }
 
             if (slotStack.stackSize == 0) {
                 slot.putStack((ItemStack) null);
-            }
-            else {
+            } else {
                 slot.onSlotChanged();
             }
 
@@ -152,6 +124,28 @@ public class ContainerFireworksLauncher extends Container {
         }
 
         return stack;
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void updateProgressBar(int barId, int barValue) {
+        this.lighter.setAmount(barId, barValue);
+        switch (barId) {
+            case 0:
+                this.prevRedAmount = barValue;
+                break;
+            case 1:
+                this.prevGreenAmount = barValue;
+                break;
+            case 2:
+                this.prevBlueAmount = barValue;
+                break;
+        }
+    }
+
+    @Override
+    public boolean canInteractWith(EntityPlayer player) {
+        return this.lighter.isUseableByPlayer(player);
     }
 
 }

@@ -1,8 +1,7 @@
-
 package me.heldplayer.mods.HeldsPeripherals.block;
 
-import java.util.Random;
-
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import me.heldplayer.mods.HeldsPeripherals.ModHeldsPeripherals;
 import me.heldplayer.mods.HeldsPeripherals.Objects;
 import me.heldplayer.mods.HeldsPeripherals.tileentity.TileEntityEnderModem;
@@ -13,10 +12,11 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+
+import java.util.Random;
 
 public class BlockEnderModem extends BlockHeldsPeripheral {
+
     private Random rnd = new Random();
 
     private IIcon top;
@@ -52,73 +52,52 @@ public class BlockEnderModem extends BlockHeldsPeripheral {
 
         if (metadata == 0) {
             switch (side) {
-            case 2:
-                return this.back[offset & 0x1];
-            case 3:
-                return this.front[offset];
-            case 4:
-                return this.left[offset & 0x1];
-            case 5:
-                return this.right[offset & 0x1];
+                case 2:
+                    return this.back[offset & 0x1];
+                case 3:
+                    return this.front[offset];
+                case 4:
+                    return this.left[offset & 0x1];
+                case 5:
+                    return this.right[offset & 0x1];
             }
         }
         if (metadata == 1) {
             switch (side) {
-            case 2:
-                return this.left[offset & 0x1];
-            case 3:
-                return this.right[offset & 0x1];
-            case 4:
-                return this.front[offset];
-            case 5:
-                return this.back[offset & 0x1];
+                case 2:
+                    return this.left[offset & 0x1];
+                case 3:
+                    return this.right[offset & 0x1];
+                case 4:
+                    return this.front[offset];
+                case 5:
+                    return this.back[offset & 0x1];
             }
         }
         if (metadata == 2) {
             switch (side) {
-            case 2:
-                return this.front[offset];
-            case 3:
-                return this.back[offset & 0x1];
-            case 4:
-                return this.right[offset & 0x1];
-            case 5:
-                return this.left[offset & 0x1];
+                case 2:
+                    return this.front[offset];
+                case 3:
+                    return this.back[offset & 0x1];
+                case 4:
+                    return this.right[offset & 0x1];
+                case 5:
+                    return this.left[offset & 0x1];
             }
         }
         switch (side) {
-        case 2:
-            return this.right[offset & 0x1];
-        case 3:
-            return this.left[offset & 0x1];
-        case 4:
-            return this.back[offset & 0x1];
-        case 5:
-            return this.front[offset];
+            case 2:
+                return this.right[offset & 0x1];
+            case 3:
+                return this.left[offset & 0x1];
+            case 4:
+                return this.back[offset & 0x1];
+            case 5:
+                return this.front[offset];
         }
 
         return this.top;
-    }
-
-    @Override
-    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float posX, float posY, float posZ) {
-        if (world.isRemote) {
-            return true;
-        }
-        else {
-            TileEntityEnderModem tileEntity = (TileEntityEnderModem) world.getTileEntity(x, y, z);
-
-            if (tileEntity != null) {
-                player.openGui(ModHeldsPeripherals.instance, 0, world, x, y, z);
-            }
-
-            return true;
-        }
-    }
-
-    @Override
-    public TileEntity createTileEntity(World world, int metadata) {
-        return new TileEntityEnderModem();
     }
 
     @Override
@@ -182,6 +161,21 @@ public class BlockEnderModem extends BlockHeldsPeripheral {
     }
 
     @Override
+    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float posX, float posY, float posZ) {
+        if (world.isRemote) {
+            return true;
+        } else {
+            TileEntityEnderModem tileEntity = (TileEntityEnderModem) world.getTileEntity(x, y, z);
+
+            if (tileEntity != null) {
+                player.openGui(ModHeldsPeripherals.instance, 0, world, x, y, z);
+            }
+
+            return true;
+        }
+    }
+
+    @Override
     @SideOnly(Side.CLIENT)
     public void registerBlockIcons(IIconRegister register) {
         this.top = register.registerIcon("heldsperipherals:endermodem_top");
@@ -205,6 +199,11 @@ public class BlockEnderModem extends BlockHeldsPeripheral {
         this.right = new IIcon[2];
         this.right[0] = register.registerIcon("heldsperipherals:endermodem_right_off");
         this.right[1] = register.registerIcon("heldsperipherals:endermodem_right_off");
+    }
+
+    @Override
+    public TileEntity createTileEntity(World world, int metadata) {
+        return new TileEntityEnderModem();
     }
 
 }

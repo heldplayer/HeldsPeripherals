@@ -1,4 +1,3 @@
-
 package me.heldplayer.mods.HeldsPeripherals.inventory;
 
 import me.heldplayer.mods.HeldsPeripherals.CommonProxy;

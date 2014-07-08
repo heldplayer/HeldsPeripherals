@@ -1,15 +1,15 @@
-
 package me.heldplayer.mods.HeldsPeripherals.client.particle;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.particle.EntityFX;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
 public class EntityFireworkBloomFX extends EntityFX {
+
     public EntityFireworkBloomFX(World world, double posX, double posY, double posZ) {
         super(world, posX, posY, posZ);
         this.particleMaxAge = 4;

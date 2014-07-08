@@ -1,8 +1,7 @@
-
 package me.heldplayer.mods.HeldsPeripherals.client.particle;
 
-import java.util.ArrayList;
-
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import me.heldplayer.mods.HeldsPeripherals.ModHeldsPeripherals;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.EffectRenderer;
@@ -12,15 +11,16 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+
+import java.util.ArrayList;
 
 @SideOnly(Side.CLIENT)
 public class EntityFireworkStarterFX extends EntityFX {
-    private int age = 0;
+
     private final EffectRenderer effectRenderer;
-    private NBTTagList explosions;
     boolean flicker;
+    private int age = 0;
+    private NBTTagList explosions;
     private ArrayList<EntityFX> children;
     private boolean shouldBeDead;
     private boolean specials;
@@ -45,8 +45,7 @@ public class EntityFireworkStarterFX extends EntityFX {
 
             if (this.explosions != null && this.explosions.tagCount() == 0) {
                 this.explosions = null;
-            }
-            else if (this.explosions != null) {
+            } else if (this.explosions != null) {
                 this.particleMaxAge = this.explosions.tagCount() * 2 - 1;
 
                 for (int var16 = 0; var16 < this.explosions.tagCount(); ++var16) {
@@ -57,18 +56,6 @@ public class EntityFireworkStarterFX extends EntityFX {
                         this.particleMaxAge += 15;
                         break;
                     }
-                }
-            }
-        }
-    }
-
-    @Override
-    public void renderParticle(Tessellator tess, float partialTicks, float cosYaw, float cosPitch, float sinYaw, float xsinPitch, float sinPitch) {
-        if (this.children != null) {
-            for (int i = 0; i < this.children.size(); i++) {
-                EntityFX particle = this.children.get(i);
-                if (!particle.isDead) {
-                    particle.renderParticle(tess, partialTicks, cosYaw, cosPitch, sinYaw, xsinPitch, sinPitch);
                 }
             }
         }
@@ -107,54 +94,54 @@ public class EntityFireworkStarterFX extends EntityFX {
             }
 
             switch (type) {
-            case 0:
-            default:
-                this.createBall(0.25D, 2, colors, fadeColors, hasTrail, hasFlicker);
-            break;
-            case 1:
-                this.createBall(0.5D, 4, colors, fadeColors, hasTrail, hasFlicker);
-            break;
-            case 2:
-                this.createMirroredPatern(0.5D, new double[][] { { 0.0D, 1.0D }, { 0.3455D, 0.309D }, { 0.9511D, 0.309D }, { 0.3795918367346939D, -0.12653061224489795D }, { 0.6122448979591837D, -0.8040816326530612D }, { 0.0D, -0.35918367346938773D } }, colors, fadeColors, hasTrail, hasFlicker, false);
-            break;
-            case 3:
-                this.createMirroredPatern(0.5D, new double[][] { { 0.0D, 0.2D }, { 0.2D, 0.2D }, { 0.2D, 0.6D }, { 0.6D, 0.6D }, { 0.6D, 0.2D }, { 0.2D, 0.2D }, { 0.2D, 0.0D }, { 0.4D, 0.0D }, { 0.4D, -0.6D }, { 0.2D, -0.6D }, { 0.2D, -0.4D }, { 0.0D, -0.4D } }, colors, fadeColors, hasTrail, hasFlicker, true);
-            break;
-            case 4:
-                this.createBurst(colors, fadeColors, hasTrail, hasFlicker);
-            break;
-            case 5:
-                bloomMaxAge = 100;
-            break;
-            case 6:
-                this.createBall(1.0D, 8, colors, fadeColors, hasTrail, hasFlicker);
-            break;
-            case 7:
-                double[][] args = new double[arguments.tagCount() / 2][];
+                case 0:
+                default:
+                    this.createBall(0.25D, 2, colors, fadeColors, hasTrail, hasFlicker);
+                    break;
+                case 1:
+                    this.createBall(0.5D, 4, colors, fadeColors, hasTrail, hasFlicker);
+                    break;
+                case 2:
+                    this.createMirroredPatern(0.5D, new double[][] { { 0.0D, 1.0D }, { 0.3455D, 0.309D }, { 0.9511D, 0.309D }, { 0.3795918367346939D, -0.12653061224489795D }, { 0.6122448979591837D, -0.8040816326530612D }, { 0.0D, -0.35918367346938773D } }, colors, fadeColors, hasTrail, hasFlicker, false);
+                    break;
+                case 3:
+                    this.createMirroredPatern(0.5D, new double[][] { { 0.0D, 0.2D }, { 0.2D, 0.2D }, { 0.2D, 0.6D }, { 0.6D, 0.6D }, { 0.6D, 0.2D }, { 0.2D, 0.2D }, { 0.2D, 0.0D }, { 0.4D, 0.0D }, { 0.4D, -0.6D }, { 0.2D, -0.6D }, { 0.2D, -0.4D }, { 0.0D, -0.4D } }, colors, fadeColors, hasTrail, hasFlicker, true);
+                    break;
+                case 4:
+                    this.createBurst(colors, fadeColors, hasTrail, hasFlicker);
+                    break;
+                case 5:
+                    bloomMaxAge = 100;
+                    break;
+                case 6:
+                    this.createBall(1.0D, 8, colors, fadeColors, hasTrail, hasFlicker);
+                    break;
+                case 7:
+                    double[][] args = new double[arguments.tagCount() / 2][];
 
-                for (int i = 0; i < arguments.tagCount() / 2; i++) {
-                    args[i] = new double[2];
+                    for (int i = 0; i < arguments.tagCount() / 2; i++) {
+                        args[i] = new double[2];
 
-                    args[i][0] = arguments.func_150309_d(i * 2);
-                    args[i][1] = arguments.func_150309_d(i * 2 + 1);
-                }
-                if (args.length > 0) {
-                    this.createMirroredPatern(0.5D, args, colors, fadeColors, hasTrail, hasFlicker, true);
-                }
-            break;
-            case 8:
-                args = new double[arguments.tagCount() / 2][];
+                        args[i][0] = arguments.func_150309_d(i * 2);
+                        args[i][1] = arguments.func_150309_d(i * 2 + 1);
+                    }
+                    if (args.length > 0) {
+                        this.createMirroredPatern(0.5D, args, colors, fadeColors, hasTrail, hasFlicker, true);
+                    }
+                    break;
+                case 8:
+                    args = new double[arguments.tagCount() / 2][];
 
-                for (int i = 0; i < arguments.tagCount() / 2; i++) {
-                    args[i] = new double[2];
+                    for (int i = 0; i < arguments.tagCount() / 2; i++) {
+                        args[i] = new double[2];
 
-                    args[i][0] = arguments.func_150309_d(i * 2);
-                    args[i][1] = arguments.func_150309_d(i * 2 + 1);
-                }
-                if (args.length > 0) {
-                    this.createMirroredPatern(0.5D, args, colors, fadeColors, hasTrail, hasFlicker, false);
-                }
-            break;
+                        args[i][0] = arguments.func_150309_d(i * 2);
+                        args[i][1] = arguments.func_150309_d(i * 2 + 1);
+                    }
+                    if (args.length > 0) {
+                        this.createMirroredPatern(0.5D, args, colors, fadeColors, hasTrail, hasFlicker, false);
+                    }
+                    break;
             }
 
             int baseColor = colors[0];
@@ -193,6 +180,18 @@ public class EntityFireworkStarterFX extends EntityFX {
 
         if (!stillAlive) {
             this.setDead();
+        }
+    }
+
+    @Override
+    public void renderParticle(Tessellator tess, float partialTicks, float cosYaw, float cosPitch, float sinYaw, float xsinPitch, float sinPitch) {
+        if (this.children != null) {
+            for (int i = 0; i < this.children.size(); i++) {
+                EntityFX particle = this.children.get(i);
+                if (!particle.isDead) {
+                    particle.renderParticle(tess, partialTicks, cosYaw, cosPitch, sinYaw, xsinPitch, sinPitch);
+                }
+            }
         }
     }
 
@@ -295,8 +294,7 @@ public class EntityFireworkStarterFX extends EntityFX {
     protected void addChild(EntityFX entity) {
         if (this.children != null) {
             this.children.add(entity);
-        }
-        else {
+        } else {
             this.effectRenderer.addEffect(entity);
         }
     }

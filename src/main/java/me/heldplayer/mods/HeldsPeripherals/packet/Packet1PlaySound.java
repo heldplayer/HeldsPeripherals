@@ -1,15 +1,13 @@
-
 package me.heldplayer.mods.HeldsPeripherals.packet;
 
+import cpw.mods.fml.relauncher.Side;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
-
-import java.io.IOException;
-
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 import net.specialattack.forge.core.packet.SpACorePacket;
-import cpw.mods.fml.relauncher.Side;
+
+import java.io.IOException;
 
 public class Packet1PlaySound extends SpACorePacket {
 

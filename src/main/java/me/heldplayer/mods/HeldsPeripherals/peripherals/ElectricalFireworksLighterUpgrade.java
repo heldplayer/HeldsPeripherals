@@ -1,17 +1,11 @@
-
 package me.heldplayer.mods.HeldsPeripherals.peripherals;
 
+import dan200.computercraft.api.peripheral.IPeripheral;
+import dan200.computercraft.api.turtle.*;
 import me.heldplayer.mods.HeldsPeripherals.Objects;
 import me.heldplayer.mods.HeldsPeripherals.client.ClientProxy;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
-import dan200.computercraft.api.peripheral.IPeripheral;
-import dan200.computercraft.api.turtle.ITurtleAccess;
-import dan200.computercraft.api.turtle.ITurtleUpgrade;
-import dan200.computercraft.api.turtle.TurtleCommandResult;
-import dan200.computercraft.api.turtle.TurtleSide;
-import dan200.computercraft.api.turtle.TurtleUpgradeType;
-import dan200.computercraft.api.turtle.TurtleVerb;
 
 public class ElectricalFireworksLighterUpgrade implements ITurtleUpgrade {
 

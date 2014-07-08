@@ -1,11 +1,10 @@
-
 package me.heldplayer.mods.HeldsPeripherals.tileentity;
 
-import me.heldplayer.mods.HeldsPeripherals.LogicHandler;
-import me.heldplayer.mods.HeldsPeripherals.api.INoiseMaker;
 import dan200.computercraft.api.lua.ILuaContext;
 import dan200.computercraft.api.peripheral.IComputerAccess;
 import dan200.computercraft.api.peripheral.IPeripheral;
+import me.heldplayer.mods.HeldsPeripherals.LogicHandler;
+import me.heldplayer.mods.HeldsPeripherals.api.INoiseMaker;
 
 public class TileEntityNoiseMaker extends TileEntityHeldsPeripheral implements INoiseMaker {
 
@@ -35,10 +34,12 @@ public class TileEntityNoiseMaker extends TileEntityHeldsPeripheral implements I
     //}
 
     @Override
-    public void attach(IComputerAccess computer) {}
+    public void attach(IComputerAccess computer) {
+    }
 
     @Override
-    public void detach(IComputerAccess computer) {}
+    public void detach(IComputerAccess computer) {
+    }
 
     @Override
     public boolean equals(IPeripheral obj) {
@@ -63,7 +64,8 @@ public class TileEntityNoiseMaker extends TileEntityHeldsPeripheral implements I
     }
 
     @Override
-    public void setName(String name) {}
+    public void setName(String name) {
+    }
 
     // INoiseMaker
 
@@ -73,13 +75,13 @@ public class TileEntityNoiseMaker extends TileEntityHeldsPeripheral implements I
     }
 
     @Override
-    public boolean isCoolingDown() {
-        return this.coolDown;
+    public void setCoolingDown() {
+        this.coolDown = true;
     }
 
     @Override
-    public void setCoolingDown() {
-        this.coolDown = true;
+    public boolean isCoolingDown() {
+        return this.coolDown;
     }
 
     @Override

@@ -1,7 +1,4 @@
-
 package me.heldplayer.mods.HeldsPeripherals.inventory;
-
-import java.util.Iterator;
 
 import me.heldplayer.mods.HeldsPeripherals.tileentity.TileEntityEnderModem;
 import net.minecraft.entity.player.EntityPlayer;
@@ -13,7 +10,10 @@ import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 
+import java.util.Iterator;
+
 public class ContainerEnderModem extends Container {
+
     private TileEntityEnderModem modem;
     private EntityPlayer player;
     private int prevCharge;
@@ -30,11 +30,6 @@ public class ContainerEnderModem extends Container {
         this.layoutContainer();
 
         this.modem.markDirty();
-    }
-
-    @Override
-    public boolean canInteractWith(EntityPlayer player) {
-        return this.modem.isUseableByPlayer(player);
     }
 
     private void layoutContainer() {
@@ -71,54 +66,6 @@ public class ContainerEnderModem extends Container {
         crafter.sendProgressBarUpdate(this, 5, stack != null ? stack.getFluid().getID() : 0);
     }
 
-    @Override
-    public void updateProgressBar(int barId, int barValue) {
-        FluidStack stack = this.modem.getTank().getFluid();
-
-        switch (barId) {
-        case 0:
-            this.modem.charge = this.prevCharge = barValue;
-        break;
-        case 1:
-            this.modem.chargeCostSend = this.prevChargeCostSend = barValue;
-        break;
-        case 2:
-            this.modem.chargeCostTransport = this.prevChargeCostTransport = barValue;
-        break;
-        case 3:
-            this.modem.chargeCostTransportFluid = this.prevChargeCostTransportFluid = barValue;
-        break;
-        case 4:
-            if (barValue <= 0) {
-                this.modem.getTank().setFluid(null);
-            }
-            else if (stack != null) {
-                stack.amount = barValue;
-            }
-            else {
-                this.modem.getTank().setFluid(new FluidStack(0, barValue));
-            }
-
-            this.prevAmount = barValue;
-        break;
-        case 5:
-            if (barValue <= 0) {
-                this.modem.getTank().setFluid(null);
-            }
-            else if (stack != null) {
-                int amount = stack.amount;
-                int fluidID = barValue;
-                this.modem.getTank().setFluid(new FluidStack(amount, fluidID));
-            }
-            else {
-                this.modem.getTank().setFluid(new FluidStack(barValue, 0));
-            }
-
-            this.prevFluidId = barValue;
-        break;
-        }
-    }
-
     @SuppressWarnings("rawtypes")
     @Override
     public void detectAndSendChanges() {
@@ -150,8 +97,7 @@ public class ContainerEnderModem extends Container {
                 if (this.prevFluidId != stack.fluidID) {
                     crafter.sendProgressBarUpdate(this, 5, stack.fluidID);
                 }
-            }
-            else {
+            } else {
                 if (this.prevAmount > 0 || this.prevFluidId > 0) {
                     crafter.sendProgressBarUpdate(this, 4, 0);
                     crafter.sendProgressBarUpdate(this, 5, 0);
@@ -167,8 +113,7 @@ public class ContainerEnderModem extends Container {
         if (stack != null) {
             this.prevAmount = stack.amount;
             this.prevFluidId = stack.fluidID;
-        }
-        else {
+        } else {
             this.prevAmount = 0;
             this.prevFluidId = 0;
         }
@@ -189,23 +134,19 @@ public class ContainerEnderModem extends Container {
                 }
 
                 slot.onSlotChange(slotStack, stack);
-            }
-            else {
+            } else {
                 if (((Slot) this.inventorySlots.get(0)).isItemValid(slotStack) && this.mergeItemStack(slotStack, 0, 3, false)) {
                     slot.onSlotChange(slotStack, stack);
-                }
-                else if (this.mergeItemStack(slotStack, 3, 4, false)) {
+                } else if (this.mergeItemStack(slotStack, 3, 4, false)) {
                     slot.onSlotChange(slotStack, stack);
-                }
-                else {
+                } else {
                     return null;
                 }
             }
 
             if (slotStack.stackSize == 0) {
                 slot.putStack((ItemStack) null);
-            }
-            else {
+            } else {
                 slot.onSlotChanged();
             }
 
@@ -217,6 +158,55 @@ public class ContainerEnderModem extends Container {
         }
 
         return stack;
+    }
+
+    @Override
+    public void updateProgressBar(int barId, int barValue) {
+        FluidStack stack = this.modem.getTank().getFluid();
+
+        switch (barId) {
+            case 0:
+                this.modem.charge = this.prevCharge = barValue;
+                break;
+            case 1:
+                this.modem.chargeCostSend = this.prevChargeCostSend = barValue;
+                break;
+            case 2:
+                this.modem.chargeCostTransport = this.prevChargeCostTransport = barValue;
+                break;
+            case 3:
+                this.modem.chargeCostTransportFluid = this.prevChargeCostTransportFluid = barValue;
+                break;
+            case 4:
+                if (barValue <= 0) {
+                    this.modem.getTank().setFluid(null);
+                } else if (stack != null) {
+                    stack.amount = barValue;
+                } else {
+                    this.modem.getTank().setFluid(new FluidStack(0, barValue));
+                }
+
+                this.prevAmount = barValue;
+                break;
+            case 5:
+                if (barValue <= 0) {
+                    this.modem.getTank().setFluid(null);
+                } else if (stack != null) {
+                    int amount = stack.amount;
+                    int fluidID = barValue;
+                    this.modem.getTank().setFluid(new FluidStack(amount, fluidID));
+                } else {
+                    this.modem.getTank().setFluid(new FluidStack(barValue, 0));
+                }
+
+                this.prevFluidId = barValue;
+                break;
+        }
+    }
+
+    @Override
+    public boolean canInteractWith(EntityPlayer player) {
+        return this.modem.isUseableByPlayer(player);
     }
 
 }

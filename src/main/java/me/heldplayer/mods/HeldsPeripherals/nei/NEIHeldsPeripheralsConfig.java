@@ -1,4 +1,3 @@
-
 package me.heldplayer.mods.HeldsPeripherals.nei;
 
 import codechicken.nei.api.API;

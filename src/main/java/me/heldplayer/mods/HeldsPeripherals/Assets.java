@@ -1,4 +1,3 @@
-
 package me.heldplayer.mods.HeldsPeripherals;
 
 import net.minecraft.util.ResourceLocation;

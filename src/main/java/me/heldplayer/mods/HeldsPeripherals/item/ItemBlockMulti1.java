@@ -1,8 +1,7 @@
-
 package me.heldplayer.mods.HeldsPeripherals.item;
 
-import java.util.List;
-
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import me.heldplayer.mods.HeldsPeripherals.Assets;
 import me.heldplayer.mods.HeldsPeripherals.Objects;
 import net.minecraft.block.Block;
@@ -11,8 +10,8 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+
+import java.util.List;
 
 public class ItemBlockMulti1 extends ItemBlock {
 
@@ -28,6 +27,15 @@ public class ItemBlockMulti1 extends ItemBlock {
     }
 
     @Override
+    public CreativeTabs[] getCreativeTabs() {
+        if (Objects.creativeTab.equals(CreativeTabs.tabRedstone)) {
+            return new CreativeTabs[] { Objects.creativeTab };
+        }
+
+        return new CreativeTabs[] { Objects.creativeTab, CreativeTabs.tabRedstone };
+    }
+
+    @Override
     @SideOnly(Side.CLIENT)
     public IIcon getIconFromDamage(int meta) {
         return this.field_150939_a.getIcon(0, meta);
@@ -38,15 +46,6 @@ public class ItemBlockMulti1 extends ItemBlock {
         int type = (stack.getItemDamage() >> 2 & 0x3);
 
         return "tile." + Assets.DOMAIN + "multi1." + type;
-    }
-
-    @Override
-    public CreativeTabs[] getCreativeTabs() {
-        if (Objects.creativeTab.equals(CreativeTabs.tabRedstone)) {
-            return new CreativeTabs[] { Objects.creativeTab };
-        }
-
-        return new CreativeTabs[] { Objects.creativeTab, CreativeTabs.tabRedstone };
     }
 
     @Override

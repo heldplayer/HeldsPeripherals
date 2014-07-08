@@ -1,8 +1,7 @@
-
 package me.heldplayer.mods.HeldsPeripherals.item;
 
-import java.util.List;
-
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import me.heldplayer.mods.HeldsPeripherals.Assets;
 import me.heldplayer.mods.HeldsPeripherals.Objects;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -12,8 +11,8 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.StatCollector;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+
+import java.util.List;
 
 public class ItemEnderCharge extends Item {
 
@@ -24,6 +23,23 @@ public class ItemEnderCharge extends Item {
         super();
 
         this.setHasSubtypes(true);
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public IIcon getIconFromDamage(int damage) {
+        return this.icon;
+    }
+
+    @Override
+    public String getUnlocalizedName(ItemStack stack) {
+        String name = "item." + Assets.DOMAIN + "enderCharge";
+
+        if (stack.getItemDamage() > 0) {
+            name = name + ".compact";
+        }
+
+        return name;
     }
 
     @Override
@@ -50,44 +66,6 @@ public class ItemEnderCharge extends Item {
         }
     }
 
-    @Override
-    public String getUnlocalizedName(ItemStack stack) {
-        String name = "item." + Assets.DOMAIN + "enderCharge";
-
-        if (stack.getItemDamage() > 0) {
-            name = name + ".compact";
-        }
-
-        return name;
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void registerIcons(IIconRegister register) {
-        this.icon = register.registerIcon("sugar");
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public IIcon getIconFromDamage(int damage) {
-        return this.icon;
-    }
-
-    @Override
-    public CreativeTabs[] getCreativeTabs() {
-        if (Objects.creativeTab.equals(CreativeTabs.tabRedstone)) {
-            return new CreativeTabs[] { Objects.creativeTab };
-        }
-
-        return new CreativeTabs[] { Objects.creativeTab, CreativeTabs.tabRedstone };
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public CreativeTabs getCreativeTab() {
-        return Objects.creativeTab;
-    }
-
     @SuppressWarnings({ "rawtypes", "unchecked" })
     @Override
     @SideOnly(Side.CLIENT)
@@ -108,6 +86,27 @@ public class ItemEnderCharge extends Item {
             list.add(new ItemStack(item, 1, 59));
             list.add(new ItemStack(item, 1, 63));
         }
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public CreativeTabs getCreativeTab() {
+        return Objects.creativeTab;
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void registerIcons(IIconRegister register) {
+        this.icon = register.registerIcon("sugar");
+    }
+
+    @Override
+    public CreativeTabs[] getCreativeTabs() {
+        if (Objects.creativeTab.equals(CreativeTabs.tabRedstone)) {
+            return new CreativeTabs[] { Objects.creativeTab };
+        }
+
+        return new CreativeTabs[] { Objects.creativeTab, CreativeTabs.tabRedstone };
     }
 
 }

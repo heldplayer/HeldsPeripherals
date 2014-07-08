@@ -1,25 +1,25 @@
-
 package me.heldplayer.mods.HeldsPeripherals.client.particle;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.particle.EffectRenderer;
 import net.minecraft.client.particle.EntityFX;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.World;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
 public class EntityFireworkSparkFX extends EntityFX {
+
+    private final EffectRenderer effectRenderer;
+    private final EntityFireworkStarterFX parent;
     private int particleIndex = 160;
     private boolean hasTrail;
     private boolean hasFlicker;
-    private final EffectRenderer effectRenderer;
     private float fadeRed;
     private float fadeGreen;
     private float fadeBlue;
     private boolean hasFadeColor;
-    private final EntityFireworkStarterFX parent;
 
     public EntityFireworkSparkFX(World world, double posX, double posY, double posZ, double motionX, double motionY, double motionZ, EffectRenderer effectRenderer, EntityFireworkStarterFX parent) {
         super(world, posX, posY, posZ);
@@ -62,15 +62,18 @@ public class EntityFireworkSparkFX extends EntityFX {
     }
 
     @Override
-    public boolean canBePushed() {
-        return false;
+    public int getBrightnessForRender(float partialTicks) {
+        return 15728880;
     }
 
     @Override
-    public void renderParticle(Tessellator tess, float partialTicks, float cosYaw, float cosPitch, float sinYaw, float xsinPitch, float sinPitch) {
-        if (!this.hasFlicker || this.particleAge < this.particleMaxAge / 3 || (this.particleAge + this.particleMaxAge) / 3 % 2 == 0) {
-            super.renderParticle(tess, partialTicks, cosYaw, cosPitch, sinYaw, xsinPitch, sinPitch);
-        }
+    public float getBrightness(float partialTicks) {
+        return 1.0F;
+    }
+
+    @Override
+    public boolean canBePushed() {
+        return false;
     }
 
     @Override
@@ -125,12 +128,9 @@ public class EntityFireworkSparkFX extends EntityFX {
     }
 
     @Override
-    public int getBrightnessForRender(float partialTicks) {
-        return 15728880;
-    }
-
-    @Override
-    public float getBrightness(float partialTicks) {
-        return 1.0F;
+    public void renderParticle(Tessellator tess, float partialTicks, float cosYaw, float cosPitch, float sinYaw, float xsinPitch, float sinPitch) {
+        if (!this.hasFlicker || this.particleAge < this.particleMaxAge / 3 || (this.particleAge + this.particleMaxAge) / 3 % 2 == 0) {
+            super.renderParticle(tess, partialTicks, cosYaw, cosPitch, sinYaw, xsinPitch, sinPitch);
+        }
     }
 }

@@ -1,8 +1,14 @@
-
 package me.heldplayer.mods.HeldsPeripherals;
 
-import java.util.Iterator;
-
+import cpw.mods.fml.common.Mod;
+import cpw.mods.fml.common.Mod.EventHandler;
+import cpw.mods.fml.common.Mod.Instance;
+import cpw.mods.fml.common.SidedProxy;
+import cpw.mods.fml.common.event.FMLInitializationEvent;
+import cpw.mods.fml.common.event.FMLPostInitializationEvent;
+import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import cpw.mods.fml.common.event.FMLServerStoppingEvent;
+import cpw.mods.fml.relauncher.Side;
 import me.heldplayer.mods.HeldsPeripherals.network.Network;
 import me.heldplayer.mods.HeldsPeripherals.packet.Packet1PlaySound;
 import net.minecraft.item.ItemStack;
@@ -15,15 +21,8 @@ import net.specialattack.forge.core.config.Config;
 import net.specialattack.forge.core.config.ConfigCategory;
 import net.specialattack.forge.core.config.ConfigValue;
 import net.specialattack.forge.core.packet.PacketHandler;
-import cpw.mods.fml.common.Mod;
-import cpw.mods.fml.common.Mod.EventHandler;
-import cpw.mods.fml.common.Mod.Instance;
-import cpw.mods.fml.common.SidedProxy;
-import cpw.mods.fml.common.event.FMLInitializationEvent;
-import cpw.mods.fml.common.event.FMLPostInitializationEvent;
-import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import cpw.mods.fml.common.event.FMLServerStoppingEvent;
-import cpw.mods.fml.relauncher.Side;
+
+import java.util.Iterator;
 
 @Mod(name = Objects.MOD_NAME, modid = Objects.MOD_ID, dependencies = Objects.MOD_DEPENCIES, guiFactory = Objects.GUI_FACTORY)
 public class ModHeldsPeripherals extends SpACoreMod {
@@ -46,63 +45,6 @@ public class ModHeldsPeripherals extends SpACoreMod {
     public static ConfigValue<Boolean> enhancedEnderChargeRenderer;
 
     public static PacketHandler packetHandler;
-
-    @Override
-    @SuppressWarnings({ "unchecked", "rawtypes" })
-    @EventHandler
-    public void preInit(FMLPreInitializationEvent event) {
-        Objects.log = event.getModLog();
-
-        SpACore.packetHandler = new PacketHandler(Objects.MOD_CHANNEL, Packet1PlaySound.class);
-
-        // Config
-        this.config = new Config(event.getSuggestedConfigurationFile());
-
-        ConfigCategory<?> category = new ConfigCategory(Configuration.CATEGORY_GENERAL, "config.heldsperipherals.category.general", null, "General mod settings");
-        this.config.addCategory(category);
-        ModHeldsPeripherals.fireworksEntityId = new ConfigValue<Integer>("fireworksEntityId", "config.heldsperipherals.key.FireworksEntityID", null, 160, "The entity ID for the custom fireworks entity");
-        ModHeldsPeripherals.enhancedFireworksEntity = new ConfigValue<Boolean>("enhancedFireworksEntity", "config.heldsperipherals.key.EnhancedFireworks", Side.CLIENT, Boolean.TRUE, "Determines whether fireworks launched by the Electrical Fireworks Lighter create grouped particles");
-        ModHeldsPeripherals.enhancedEnderChargeRenderer = new ConfigValue<Boolean>("enhancedEnderChargeRenderer", "config.heldsperipherals.key.EnhancedEnderChargeRenderer", Side.CLIENT, Boolean.TRUE, "Determines whether ender charges render with a charge amount counter");
-        category.addValue(ModHeldsPeripherals.fireworksEntityId);
-        category.addValue(ModHeldsPeripherals.enhancedFireworksEntity);
-        category.addValue(ModHeldsPeripherals.enhancedEnderChargeRenderer);
-
-        category = new ConfigCategory("charges", "config.heldsperipherals.category.charges", null, "Ender Charge settings");
-        this.config.addCategory(category);
-        ModHeldsPeripherals.chargeYieldEnderPearl = new ConfigValue<Integer>("chargeYieldEnderPearl", "config.heldsperipherals.key.YieldEnderPearl", null, 40, "The amount of ender charges an ender pearl is worth");
-        ModHeldsPeripherals.chargeYieldEyeOfEnder = new ConfigValue<Integer>("chargeYieldEyeOfEnder", "config.heldsperipherals.key.YieldEyeOfEnder", null, 60, "The amount of ender charges an eye of ender is worth");
-        ModHeldsPeripherals.chargeYieldEnderPearlDust = new ConfigValue<Integer>("chargeYieldEnderPearlDust", "config.heldsperipherals.key.YieldEnderPearlDust", null, 40, "The amount of charges one ender pearl dust is worth (GregTech Compat)");
-        ModHeldsPeripherals.chargeYieldEyeOfEnderDust = new ConfigValue<Integer>("chargeYieldEyeOfEnderDust", "config.heldsperipherals.key.YieldEyeOfEnderDust", null, 30, "The amount of charges one eye of ender dust is worth (GrehTech Compat)");
-        ModHeldsPeripherals.chargeCostSend = new ConfigValue<Integer>("chargeCostSend", "config.heldsperipherals.key.CostSend", null, 1, "The amount of charges that are required to send a text message");
-        ModHeldsPeripherals.chargeCostTransport = new ConfigValue<Integer>("chargeCostTransport", "config.heldsperipherals.key.CostTransport", null, 5, "The amount of charges that are required to send matter");
-        ModHeldsPeripherals.chargeCostostTransportFluid = new ConfigValue<Integer>("chargeCostostTransportFluid", "config.heldsperipherals.key.CostTransportFluid", null, 4, "The amount of charges that are required to send a fluid");
-        category.addValue(ModHeldsPeripherals.chargeYieldEnderPearl);
-        category.addValue(ModHeldsPeripherals.chargeYieldEyeOfEnder);
-        category.addValue(ModHeldsPeripherals.chargeYieldEnderPearlDust);
-        category.addValue(ModHeldsPeripherals.chargeYieldEyeOfEnderDust);
-        category.addValue(ModHeldsPeripherals.chargeCostSend);
-        category.addValue(ModHeldsPeripherals.chargeCostTransport);
-        category.addValue(ModHeldsPeripherals.chargeCostostTransportFluid);
-
-        super.preInit(event);
-    }
-
-    @Override
-    @EventHandler
-    public void init(FMLInitializationEvent event) {
-        super.init(event);
-    }
-
-    @Override
-    @EventHandler
-    public void postInit(FMLPostInitializationEvent event) {
-        super.postInit(event);
-    }
-
-    @EventHandler
-    public void onServerStopping(FMLServerStoppingEvent event) {
-        Network.clearModems();
-    }
 
     public static void addCharge(ItemStack item, Integer value) {
         if (value <= 0) {
@@ -150,6 +92,46 @@ public class ModHeldsPeripherals extends SpACoreMod {
     }
 
     @Override
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @EventHandler
+    public void preInit(FMLPreInitializationEvent event) {
+        Objects.log = event.getModLog();
+
+        SpACore.packetHandler = new PacketHandler(Objects.MOD_CHANNEL, Packet1PlaySound.class);
+
+        // Config
+        this.config = new Config(event.getSuggestedConfigurationFile());
+
+        ConfigCategory<?> category = new ConfigCategory(Configuration.CATEGORY_GENERAL, "config.heldsperipherals.category.general", null, "General mod settings");
+        this.config.addCategory(category);
+        ModHeldsPeripherals.fireworksEntityId = new ConfigValue<Integer>("fireworksEntityId", "config.heldsperipherals.key.FireworksEntityID", null, 160, "The entity ID for the custom fireworks entity");
+        ModHeldsPeripherals.enhancedFireworksEntity = new ConfigValue<Boolean>("enhancedFireworksEntity", "config.heldsperipherals.key.EnhancedFireworks", Side.CLIENT, Boolean.TRUE, "Determines whether fireworks launched by the Electrical Fireworks Lighter create grouped particles");
+        ModHeldsPeripherals.enhancedEnderChargeRenderer = new ConfigValue<Boolean>("enhancedEnderChargeRenderer", "config.heldsperipherals.key.EnhancedEnderChargeRenderer", Side.CLIENT, Boolean.TRUE, "Determines whether ender charges render with a charge amount counter");
+        category.addValue(ModHeldsPeripherals.fireworksEntityId);
+        category.addValue(ModHeldsPeripherals.enhancedFireworksEntity);
+        category.addValue(ModHeldsPeripherals.enhancedEnderChargeRenderer);
+
+        category = new ConfigCategory("charges", "config.heldsperipherals.category.charges", null, "Ender Charge settings");
+        this.config.addCategory(category);
+        ModHeldsPeripherals.chargeYieldEnderPearl = new ConfigValue<Integer>("chargeYieldEnderPearl", "config.heldsperipherals.key.YieldEnderPearl", null, 40, "The amount of ender charges an ender pearl is worth");
+        ModHeldsPeripherals.chargeYieldEyeOfEnder = new ConfigValue<Integer>("chargeYieldEyeOfEnder", "config.heldsperipherals.key.YieldEyeOfEnder", null, 60, "The amount of ender charges an eye of ender is worth");
+        ModHeldsPeripherals.chargeYieldEnderPearlDust = new ConfigValue<Integer>("chargeYieldEnderPearlDust", "config.heldsperipherals.key.YieldEnderPearlDust", null, 40, "The amount of charges one ender pearl dust is worth (GregTech Compat)");
+        ModHeldsPeripherals.chargeYieldEyeOfEnderDust = new ConfigValue<Integer>("chargeYieldEyeOfEnderDust", "config.heldsperipherals.key.YieldEyeOfEnderDust", null, 30, "The amount of charges one eye of ender dust is worth (GrehTech Compat)");
+        ModHeldsPeripherals.chargeCostSend = new ConfigValue<Integer>("chargeCostSend", "config.heldsperipherals.key.CostSend", null, 1, "The amount of charges that are required to send a text message");
+        ModHeldsPeripherals.chargeCostTransport = new ConfigValue<Integer>("chargeCostTransport", "config.heldsperipherals.key.CostTransport", null, 5, "The amount of charges that are required to send matter");
+        ModHeldsPeripherals.chargeCostostTransportFluid = new ConfigValue<Integer>("chargeCostostTransportFluid", "config.heldsperipherals.key.CostTransportFluid", null, 4, "The amount of charges that are required to send a fluid");
+        category.addValue(ModHeldsPeripherals.chargeYieldEnderPearl);
+        category.addValue(ModHeldsPeripherals.chargeYieldEyeOfEnder);
+        category.addValue(ModHeldsPeripherals.chargeYieldEnderPearlDust);
+        category.addValue(ModHeldsPeripherals.chargeYieldEyeOfEnderDust);
+        category.addValue(ModHeldsPeripherals.chargeCostSend);
+        category.addValue(ModHeldsPeripherals.chargeCostTransport);
+        category.addValue(ModHeldsPeripherals.chargeCostostTransportFluid);
+
+        super.preInit(event);
+    }
+
+    @Override
     public ModInfo getModInfo() {
         return Objects.MOD_INFO;
     }
@@ -157,6 +139,23 @@ public class ModHeldsPeripherals extends SpACoreMod {
     @Override
     public SpACoreProxy getProxy() {
         return ModHeldsPeripherals.proxy;
+    }
+
+    @Override
+    @EventHandler
+    public void init(FMLInitializationEvent event) {
+        super.init(event);
+    }
+
+    @Override
+    @EventHandler
+    public void postInit(FMLPostInitializationEvent event) {
+        super.postInit(event);
+    }
+
+    @EventHandler
+    public void onServerStopping(FMLServerStoppingEvent event) {
+        Network.clearModems();
     }
 
 }

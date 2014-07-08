@@ -1,4 +1,3 @@
-
 package me.heldplayer.mods.HeldsPeripherals.inventory;
 
 import net.minecraft.tileentity.TileEntity;
@@ -41,19 +40,19 @@ public class RestrictedFluidTank extends FluidTank {
         return 0;
     }
 
-    public void setAllowedType(FluidStack stack) {
-        this.allowedType = stack;
+    public boolean isAllowed(FluidStack stack) {
+        if (stack == null || this.allowedType == null) {
+            return false;
+        }
+        return stack.isFluidEqual(this.allowedType);
     }
 
     public FluidStack getAllowedType() {
         return this.allowedType;
     }
 
-    public boolean isAllowed(FluidStack stack) {
-        if (stack == null || this.allowedType == null) {
-            return false;
-        }
-        return stack.isFluidEqual(this.allowedType);
+    public void setAllowedType(FluidStack stack) {
+        this.allowedType = stack;
     }
 
     public boolean isAllowed(Fluid fluid) {

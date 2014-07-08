@@ -1,10 +1,9 @@
-
 package me.heldplayer.mods.HeldsPeripherals.client.gui;
 
+import cpw.mods.fml.client.config.GuiConfig;
 import me.heldplayer.mods.HeldsPeripherals.ModHeldsPeripherals;
 import me.heldplayer.mods.HeldsPeripherals.Objects;
 import net.minecraft.client.gui.GuiScreen;
-import cpw.mods.fml.client.config.GuiConfig;
 
 public class GuiConfiguration extends GuiConfig {
 

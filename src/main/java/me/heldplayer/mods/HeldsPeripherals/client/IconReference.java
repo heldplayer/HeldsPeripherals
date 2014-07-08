@@ -1,9 +1,8 @@
-
 package me.heldplayer.mods.HeldsPeripherals.client;
 
-import net.minecraft.util.IIcon;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.util.IIcon;
 
 public class IconReference implements IIcon {
 
@@ -11,14 +10,14 @@ public class IconReference implements IIcon {
 
     @Override
     @SideOnly(Side.CLIENT)
-    public int getIconHeight() {
-        return this.icon.getIconHeight();
+    public int getIconWidth() {
+        return this.icon.getIconWidth();
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public int getIconWidth() {
-        return this.icon.getIconWidth();
+    public int getIconHeight() {
+        return this.icon.getIconHeight();
     }
 
     @Override

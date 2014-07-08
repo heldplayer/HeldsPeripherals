@@ -1,4 +1,3 @@
-
 package me.heldplayer.mods.HeldsPeripherals.block;
 
 import me.heldplayer.mods.HeldsPeripherals.CommonProxy;
@@ -20,6 +19,17 @@ public abstract class BlockHeldsPeripheral extends Block {
     }
 
     @Override
+    public int getRenderType() {
+        return CommonProxy.renderId;
+    }
+
+    @Override
+    public void onBlockAdded(World world, int x, int y, int z) {
+        world.setTileEntity(x, y, z, this.createTileEntity(world, world.getBlockMetadata(x, y, z)));
+        super.onBlockAdded(world, x, y, z);
+    }
+
+    @Override
     public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase placer, ItemStack stack) {
         int rotation = ((MathHelper.floor_double((placer.rotationYaw * 4.0F / 360.0F) + 0.5D) & 0x3) + 2) % 4;
 
@@ -32,17 +42,6 @@ public abstract class BlockHeldsPeripheral extends Block {
                 ((IHeldsPeripheral) tileEntity).setName(stack.getDisplayName());
             }
         }
-    }
-
-    @Override
-    public boolean hasTileEntity(int metadata) {
-        return true;
-    }
-
-    @Override
-    public void onBlockAdded(World world, int x, int y, int z) {
-        world.setTileEntity(x, y, z, this.createTileEntity(world, world.getBlockMetadata(x, y, z)));
-        super.onBlockAdded(world, x, y, z);
     }
 
     @Override
@@ -64,8 +63,8 @@ public abstract class BlockHeldsPeripheral extends Block {
     }
 
     @Override
-    public int getRenderType() {
-        return CommonProxy.renderId;
+    public boolean hasTileEntity(int metadata) {
+        return true;
     }
 
 }

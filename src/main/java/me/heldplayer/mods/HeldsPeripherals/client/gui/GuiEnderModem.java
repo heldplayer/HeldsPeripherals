@@ -1,6 +1,7 @@
-
 package me.heldplayer.mods.HeldsPeripherals.client.gui;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import me.heldplayer.mods.HeldsPeripherals.Assets;
 import me.heldplayer.mods.HeldsPeripherals.inventory.ContainerEnderModem;
 import me.heldplayer.mods.HeldsPeripherals.tileentity.TileEntityEnderModem;
@@ -11,15 +12,12 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.StatCollector;
 import net.minecraftforge.fluids.FluidStack;
 import net.specialattack.forge.core.client.GuiHelper;
-
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-
 @SideOnly(Side.CLIENT)
 public class GuiEnderModem extends GuiContainer {
+
     private TileEntityEnderModem modem;
     private InventoryPlayer playerInv;
 

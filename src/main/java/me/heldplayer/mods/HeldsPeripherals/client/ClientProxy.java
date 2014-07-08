@@ -1,6 +1,11 @@
-
 package me.heldplayer.mods.HeldsPeripherals.client;
 
+import cpw.mods.fml.client.registry.RenderingRegistry;
+import cpw.mods.fml.common.event.FMLInitializationEvent;
+import cpw.mods.fml.common.event.FMLPostInitializationEvent;
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import me.heldplayer.mods.HeldsPeripherals.Assets;
 import me.heldplayer.mods.HeldsPeripherals.CommonProxy;
 import me.heldplayer.mods.HeldsPeripherals.ModHeldsPeripherals;
@@ -20,18 +25,18 @@ import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 import net.minecraftforge.client.MinecraftForgeClient;
 import net.minecraftforge.client.event.TextureStitchEvent;
-import cpw.mods.fml.client.registry.RenderingRegistry;
-import cpw.mods.fml.common.event.FMLInitializationEvent;
-import cpw.mods.fml.common.event.FMLPostInitializationEvent;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
 public class ClientProxy extends CommonProxy {
 
     public static IIcon[] icons = new IIcon[4];
     public static IIcon fireworksUpgrade = null;
+
+    public static SlotOreDictionary setIcon(SlotOreDictionary slot, int icon) {
+        slot.icon = ClientProxy.icons[icon];
+
+        return slot;
+    }
 
     @Override
     public void init(FMLInitializationEvent event) {
@@ -55,12 +60,6 @@ public class ClientProxy extends CommonProxy {
         }
     }
 
-    public static SlotOreDictionary setIcon(SlotOreDictionary slot, int icon) {
-        slot.icon = ClientProxy.icons[icon];
-
-        return slot;
-    }
-
     @Override
     public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
         try {
@@ -69,23 +68,20 @@ public class ClientProxy extends CommonProxy {
             if (ID == 0) {
                 if (tileEntity != null && (tileEntity instanceof TileEntityEnderModem)) {
                     return new GuiEnderModem(player, ((TileEntityEnderModem) tileEntity));
-                }
-                else {
+                } else {
                     return null;
                 }
             }
             if (ID == 1) {
                 if (tileEntity != null && (tileEntity instanceof TileEntityFireworksLighter)) {
                     return new GuiFireworksLighter(player, ((TileEntityFireworksLighter) tileEntity));
-                }
-                else {
+                } else {
                     return null;
                 }
             }
 
             return null;
-        }
-        catch (Exception ex) {
+        } catch (Exception ex) {
             System.out.println("Failed opening client GUI element.");
 
             ex.printStackTrace();
@@ -101,8 +97,7 @@ public class ClientProxy extends CommonProxy {
             Objects.ICON_MOLTEN_DYE_FLOW.icon = event.map.registerIcon(Assets.DOMAIN + "molten_dye_flow");
 
             ClientProxy.fireworksUpgrade = event.map.registerIcon(Assets.DOMAIN + "fireworkslighter_peripheral");
-        }
-        else if (event.map.getTextureType() == 1) {
+        } else if (event.map.getTextureType() == 1) {
             String[] icons = new String[] { "dust", "red", "green", "blue" };
 
             for (int i = 0; i < icons.length; i++) {

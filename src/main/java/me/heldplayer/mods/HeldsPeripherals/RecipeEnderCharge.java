@@ -1,4 +1,3 @@
-
 package me.heldplayer.mods.HeldsPeripherals;
 
 import net.minecraft.inventory.InventoryCrafting;
@@ -22,8 +21,7 @@ public class RecipeEnderCharge implements IRecipe {
             if (stack != null && stack.getItem() == Objects.itemEnderCharge) {
                 charge += stack.getItemDamage() + 1;
                 filledSlots++;
-            }
-            else if (stack != null) {
+            } else if (stack != null) {
                 return false;
             }
         }
@@ -32,20 +30,17 @@ public class RecipeEnderCharge implements IRecipe {
 
         if (item != null) {
             this.result = item;
-        }
-        else if (charge > 0) {
+        } else if (charge > 0) {
             if (charge >= 64) {
                 return false;
             }
 
             if (filledSlots == 1) {
                 this.result = new ItemStack(Objects.itemEnderCharge, charge + 1, 0);
-            }
-            else {
+            } else {
                 this.result = new ItemStack(Objects.itemEnderCharge, 1, charge);
             }
-        }
-        else {
+        } else {
             return false;
         }
 

@@ -1,8 +1,8 @@
-
 package me.heldplayer.mods.HeldsPeripherals.tileentity;
 
-import java.util.Random;
-
+import dan200.computercraft.api.lua.ILuaContext;
+import dan200.computercraft.api.peripheral.IComputerAccess;
+import dan200.computercraft.api.peripheral.IPeripheral;
 import me.heldplayer.mods.HeldsPeripherals.Assets;
 import me.heldplayer.mods.HeldsPeripherals.LogicHandler;
 import me.heldplayer.mods.HeldsPeripherals.api.IElectricalFireworksLighter;
@@ -15,25 +15,19 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraftforge.common.util.ForgeDirection;
-import net.minecraftforge.fluids.Fluid;
-import net.minecraftforge.fluids.FluidRegistry;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.FluidTank;
-import net.minecraftforge.fluids.FluidTankInfo;
-import net.minecraftforge.fluids.IFluidHandler;
+import net.minecraftforge.fluids.*;
 import net.minecraftforge.oredict.OreDictionary;
 import net.specialattack.util.MathHelper;
-import dan200.computercraft.api.lua.ILuaContext;
-import dan200.computercraft.api.peripheral.IComputerAccess;
-import dan200.computercraft.api.peripheral.IPeripheral;
+
+import java.util.Random;
 
 public class TileEntityFireworksLighter extends TileEntityHeldsPeripheral implements IInventory, IElectricalFireworksLighter, IFluidHandler {
 
+    public int timer = 0;
+    public boolean coolDown = false;
     private ItemStack[] inventory = new ItemStack[4];
     private RestrictedFluidTank[] tanks = new RestrictedFluidTank[3];
     private FluidTankInfo[] tank_infos = new FluidTankInfo[3];
-    public int timer = 0;
-    public boolean coolDown = false;
     private boolean easterEgg = false;
     private Random rand = new Random();
     private String name;
@@ -50,18 +44,6 @@ public class TileEntityFireworksLighter extends TileEntityHeldsPeripheral implem
         this.tanks[1].setFluid(FluidRegistry.getFluidStack("molten green dye", 0));
         this.tanks[2].setAllowedType(FluidRegistry.getFluidStack("molten blue dye", 1000));
         this.tanks[2].setFluid(FluidRegistry.getFluidStack("molten blue dye", 0));
-    }
-
-    private FluidTank getTank(FluidStack resource) {
-        for (RestrictedFluidTank tank : this.tanks) {
-            if (tank != null) {
-                if (tank.isAllowed(resource)) {
-                    return tank;
-                }
-            }
-        }
-
-        return null;
     }
 
     public FluidTank getTank(int index) {
@@ -90,125 +72,6 @@ public class TileEntityFireworksLighter extends TileEntityHeldsPeripheral implem
         this.tanks[index].getFluid().amount = amount;
     }
 
-    // IInventory
-
-    @Override
-    public int getSizeInventory() {
-        return this.inventory.length;
-    }
-
-    @Override
-    public ItemStack getStackInSlot(int index) {
-        return this.inventory[index];
-    }
-
-    @Override
-    public ItemStack decrStackSize(int index, int amount) {
-        if (this.inventory[index] != null) {
-            ItemStack var3;
-
-            if (this.inventory[index].stackSize <= amount) {
-                var3 = this.inventory[index];
-                this.inventory[index] = null;
-                return var3;
-            }
-            else {
-                var3 = this.inventory[index].splitStack(amount);
-
-                if (this.inventory[index].stackSize == 0) {
-                    this.inventory[index] = null;
-                }
-
-                return var3;
-            }
-        }
-        else {
-            return null;
-        }
-    }
-
-    @Override
-    public ItemStack getStackInSlotOnClosing(int index) {
-        if (this.inventory[index] != null) {
-            ItemStack var2 = this.inventory[index];
-            this.inventory[index] = null;
-            return var2;
-        }
-        else {
-            return null;
-        }
-    }
-
-    @Override
-    public void setInventorySlotContents(int index, ItemStack newStack) {
-        this.inventory[index] = newStack;
-
-        if (newStack != null && newStack.stackSize > this.getInventoryStackLimit()) {
-            newStack.stackSize = this.getInventoryStackLimit();
-        }
-    }
-
-    @Override
-    public String getInventoryName() {
-        return this.hasCustomInventoryName() ? this.name : "tile." + Assets.DOMAIN + "multi1.0.name";
-    }
-
-    @Override
-    public int getInventoryStackLimit() {
-        return 64;
-    }
-
-    @Override
-    public boolean isUseableByPlayer(EntityPlayer player) {
-        return this.worldObj.getTileEntity(this.xCoord, this.yCoord, this.zCoord) == this && player.getDistanceSq(this.xCoord + 0.5, this.yCoord + 0.5, this.zCoord + 0.5) < 64;
-    }
-
-    @Override
-    public void openInventory() {}
-
-    @Override
-    public void closeInventory() {}
-
-    @Override
-    public boolean hasCustomInventoryName() {
-        return this.name != null && this.name.length() > 0;
-    }
-
-    @Override
-    public boolean isItemValidForSlot(int slot, ItemStack stack) {
-        String type = "";
-
-        switch (slot) {
-        case 0:
-            type = "dustGunpowder";
-        break;
-        case 1:
-            type = "dyeRed";
-        break;
-        case 2:
-            type = "dyeGreen";
-        break;
-        case 3:
-            type = "dyeBlue";
-        break;
-        }
-
-        if (type.isEmpty()) {
-            return false;
-        }
-
-        int id = OreDictionary.getOreID(stack);
-        int id2 = OreDictionary.getOreID(type);
-
-        if (id == id2 && id > 0) {
-            return true;
-        }
-
-        return false;
-    }
-
-    // IFluidHandler
-
     @Override
     public int fill(ForgeDirection from, FluidStack resource, boolean doFill) {
         FluidTank tank = this.getTank(resource);
@@ -236,15 +99,14 @@ public class TileEntityFireworksLighter extends TileEntityHeldsPeripheral implem
         return 0;
     }
 
-    @Override
-    public FluidStack drain(ForgeDirection from, int maxDrain, boolean doDrain) {
-        for (int i = 0; i < this.tanks.length; i++) {
-            FluidTank tank = this.tanks[i];
+    // IInventory
 
-            FluidStack stack = tank.getFluid();
-
-            if (stack != null && stack.amount > 0) {
-                return tank.drain(maxDrain, doDrain);
+    private FluidTank getTank(FluidStack resource) {
+        for (RestrictedFluidTank tank : this.tanks) {
+            if (tank != null) {
+                if (tank.isAllowed(resource)) {
+                    return tank;
+                }
             }
         }
 
@@ -260,6 +122,21 @@ public class TileEntityFireworksLighter extends TileEntityHeldsPeripheral implem
 
             if (stack != null && stack.amount > 0 && stack.isFluidEqual(resource)) {
                 int maxDrain = MathHelper.min(resource.amount, stack.amount);
+                return tank.drain(maxDrain, doDrain);
+            }
+        }
+
+        return null;
+    }
+
+    @Override
+    public FluidStack drain(ForgeDirection from, int maxDrain, boolean doDrain) {
+        for (int i = 0; i < this.tanks.length; i++) {
+            FluidTank tank = this.tanks[i];
+
+            FluidStack stack = tank.getFluid();
+
+            if (stack != null && stack.amount > 0) {
                 return tank.drain(maxDrain, doDrain);
             }
         }
@@ -287,8 +164,6 @@ public class TileEntityFireworksLighter extends TileEntityHeldsPeripheral implem
     public FluidTankInfo[] getTankInfo(ForgeDirection from) {
         return this.tank_infos;
     }
-
-    // TileEntity
 
     @Override
     public void readFromNBT(NBTTagCompound compound) {
@@ -319,6 +194,124 @@ public class TileEntityFireworksLighter extends TileEntityHeldsPeripheral implem
         if (compound.hasKey("CustomName")) {
             this.name = compound.getString("CustomName");
         }
+    }
+
+    @Override
+    public int getSizeInventory() {
+        return this.inventory.length;
+    }
+
+    @Override
+    public ItemStack getStackInSlot(int index) {
+        return this.inventory[index];
+    }
+
+    @Override
+    public ItemStack decrStackSize(int index, int amount) {
+        if (this.inventory[index] != null) {
+            ItemStack var3;
+
+            if (this.inventory[index].stackSize <= amount) {
+                var3 = this.inventory[index];
+                this.inventory[index] = null;
+                return var3;
+            } else {
+                var3 = this.inventory[index].splitStack(amount);
+
+                if (this.inventory[index].stackSize == 0) {
+                    this.inventory[index] = null;
+                }
+
+                return var3;
+            }
+        } else {
+            return null;
+        }
+    }
+
+    @Override
+    public ItemStack getStackInSlotOnClosing(int index) {
+        if (this.inventory[index] != null) {
+            ItemStack var2 = this.inventory[index];
+            this.inventory[index] = null;
+            return var2;
+        } else {
+            return null;
+        }
+    }
+
+    @Override
+    public void setInventorySlotContents(int index, ItemStack newStack) {
+        this.inventory[index] = newStack;
+
+        if (newStack != null && newStack.stackSize > this.getInventoryStackLimit()) {
+            newStack.stackSize = this.getInventoryStackLimit();
+        }
+    }
+
+    // IFluidHandler
+
+    @Override
+    public String getInventoryName() {
+        return this.hasCustomInventoryName() ? this.name : "tile." + Assets.DOMAIN + "multi1.0.name";
+    }
+
+    @Override
+    public boolean hasCustomInventoryName() {
+        return this.name != null && this.name.length() > 0;
+    }
+
+    @Override
+    public int getInventoryStackLimit() {
+        return 64;
+    }
+
+    @Override
+    public boolean isUseableByPlayer(EntityPlayer player) {
+        return this.worldObj.getTileEntity(this.xCoord, this.yCoord, this.zCoord) == this && player.getDistanceSq(this.xCoord + 0.5, this.yCoord + 0.5, this.zCoord + 0.5) < 64;
+    }
+
+    @Override
+    public void openInventory() {
+    }
+
+    @Override
+    public void closeInventory() {
+    }
+
+    // TileEntity
+
+    @Override
+    public boolean isItemValidForSlot(int slot, ItemStack stack) {
+        String type = "";
+
+        switch (slot) {
+            case 0:
+                type = "dustGunpowder";
+                break;
+            case 1:
+                type = "dyeRed";
+                break;
+            case 2:
+                type = "dyeGreen";
+                break;
+            case 3:
+                type = "dyeBlue";
+                break;
+        }
+
+        if (type.isEmpty()) {
+            return false;
+        }
+
+        int id = OreDictionary.getOreID(stack);
+        int id2 = OreDictionary.getOreID(type);
+
+        if (id == id2 && id > 0) {
+            return true;
+        }
+
+        return false;
     }
 
     @Override
@@ -378,10 +371,12 @@ public class TileEntityFireworksLighter extends TileEntityHeldsPeripheral implem
     //}
 
     @Override
-    public void attach(IComputerAccess computer) {}
+    public void attach(IComputerAccess computer) {
+    }
 
     @Override
-    public void detach(IComputerAccess computer) {}
+    public void detach(IComputerAccess computer) {
+    }
 
     @Override
     public boolean equals(IPeripheral other) {
@@ -495,13 +490,13 @@ public class TileEntityFireworksLighter extends TileEntityHeldsPeripheral implem
     }
 
     @Override
-    public boolean isCoolingDown() {
-        return this.coolDown;
+    public void setCoolingDown() {
+        this.coolDown = true;
     }
 
     @Override
-    public void setCoolingDown() {
-        this.coolDown = true;
+    public boolean isCoolingDown() {
+        return this.coolDown;
     }
 
     @Override
@@ -538,13 +533,13 @@ public class TileEntityFireworksLighter extends TileEntityHeldsPeripheral implem
     }
 
     @Override
-    public void setStack(int slot, ItemStack stack) {
-        this.inventory[slot] = stack;
+    public ItemStack getStack(int index) {
+        return this.inventory[index];
     }
 
     @Override
-    public ItemStack getStack(int index) {
-        return this.inventory[index];
+    public void setStack(int slot, ItemStack stack) {
+        this.inventory[slot] = stack;
     }
 
     @Override

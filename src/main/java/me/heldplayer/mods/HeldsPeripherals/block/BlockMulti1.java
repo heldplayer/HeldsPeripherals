@@ -1,8 +1,7 @@
-
 package me.heldplayer.mods.HeldsPeripherals.block;
 
-import java.util.Random;
-
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import me.heldplayer.mods.HeldsPeripherals.Assets;
 import me.heldplayer.mods.HeldsPeripherals.ModHeldsPeripherals;
 import me.heldplayer.mods.HeldsPeripherals.api.IHeldsPeripheral;
@@ -17,8 +16,8 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+
+import java.util.Random;
 
 public class BlockMulti1 extends BlockHeldsPeripheral {
 
@@ -53,76 +52,6 @@ public class BlockMulti1 extends BlockHeldsPeripheral {
     }
 
     @Override
-    public IIcon getIcon(int side, int metadata) {
-        int type = (metadata >> 2 & 0x3) % 2;
-
-        if ((metadata & 0x3) == 0) {
-            switch (side) {
-            case 0:
-                return this.bottom[type];
-            case 1:
-                return this.top[type];
-            case 2:
-                return this.back[type];
-            case 3:
-                return this.front[type];
-            case 4:
-                return this.left[type];
-            case 5:
-                return this.right[type];
-            }
-        }
-        if ((metadata & 0x3) == 1) {
-            switch (side) {
-            case 0:
-                return this.bottom[type];
-            case 1:
-                return this.top[type];
-            case 2:
-                return this.left[type];
-            case 3:
-                return this.right[type];
-            case 4:
-                return this.front[type];
-            case 5:
-                return this.back[type];
-            }
-        }
-        if ((metadata & 0x3) == 2) {
-            switch (side) {
-            case 0:
-                return this.bottom[type];
-            case 1:
-                return this.top[type];
-            case 2:
-                return this.front[type];
-            case 3:
-                return this.back[type];
-            case 4:
-                return this.right[type];
-            case 5:
-                return this.left[type];
-            }
-        }
-        switch (side) {
-        case 0:
-            return this.bottom[type];
-        case 1:
-            return this.top[type];
-        case 2:
-            return this.right[type];
-        case 3:
-            return this.left[type];
-        case 4:
-            return this.back[type];
-        case 5:
-            return this.front[type];
-        }
-
-        return this.front[1];
-    }
-
-    @Override
     public boolean hasTileEntity(int metadata) {
         int type = (metadata >> 2 & 0x3);
 
@@ -133,52 +62,73 @@ public class BlockMulti1 extends BlockHeldsPeripheral {
     }
 
     @Override
-    public TileEntity createTileEntity(World world, int metadata) {
-        int type = (metadata >> 2 & 0x3);
+    public IIcon getIcon(int side, int metadata) {
+        int type = (metadata >> 2 & 0x3) % 2;
 
-        if (type == 0) {
-            return new TileEntityFireworksLighter();
-        }
-        else if (type == 1) {
-            return new TileEntityNoiseMaker();
-        }
-
-        return null;
-    }
-
-    @Override
-    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float posX, float posY, float posZ) {
-        int meta = world.getBlockMetadata(x, y, z);
-
-        if ((meta >> 2 & 0x3) != 0) {
-            return false;
-        }
-
-        if (world.isRemote) {
-            return true;
-        }
-        else {
-            TileEntity tileEntity = world.getTileEntity(x, y, z);
-
-            if (tileEntity instanceof TileEntityFireworksLighter) {
-                if (player.isSneaking()) {
-                    ((TileEntityFireworksLighter) tileEntity).toggleEasterEgg();
-
-                    return true;
-                }
-
-                player.openGui(ModHeldsPeripherals.instance, 1, world, x, y, z);
-
-                return true;
+        if ((metadata & 0x3) == 0) {
+            switch (side) {
+                case 0:
+                    return this.bottom[type];
+                case 1:
+                    return this.top[type];
+                case 2:
+                    return this.back[type];
+                case 3:
+                    return this.front[type];
+                case 4:
+                    return this.left[type];
+                case 5:
+                    return this.right[type];
             }
-
-            return false;
         }
-    }
+        if ((metadata & 0x3) == 1) {
+            switch (side) {
+                case 0:
+                    return this.bottom[type];
+                case 1:
+                    return this.top[type];
+                case 2:
+                    return this.left[type];
+                case 3:
+                    return this.right[type];
+                case 4:
+                    return this.front[type];
+                case 5:
+                    return this.back[type];
+            }
+        }
+        if ((metadata & 0x3) == 2) {
+            switch (side) {
+                case 0:
+                    return this.bottom[type];
+                case 1:
+                    return this.top[type];
+                case 2:
+                    return this.front[type];
+                case 3:
+                    return this.back[type];
+                case 4:
+                    return this.right[type];
+                case 5:
+                    return this.left[type];
+            }
+        }
+        switch (side) {
+            case 0:
+                return this.bottom[type];
+            case 1:
+                return this.top[type];
+            case 2:
+                return this.right[type];
+            case 3:
+                return this.left[type];
+            case 4:
+                return this.back[type];
+            case 5:
+                return this.front[type];
+        }
 
-    @Override
-    public int damageDropped(int metadata) {
-        return metadata & 0xC;
+        return this.front[1];
     }
 
     @Override
@@ -191,8 +141,7 @@ public class BlockMulti1 extends BlockHeldsPeripheral {
 
         try {
             lighter = (TileEntityFireworksLighter) world.getTileEntity(x, y, z);
-        }
-        catch (ClassCastException ex) {
+        } catch (ClassCastException ex) {
             return;
         }
 
@@ -236,6 +185,40 @@ public class BlockMulti1 extends BlockHeldsPeripheral {
     }
 
     @Override
+    public int damageDropped(int metadata) {
+        return metadata & 0xC;
+    }
+
+    @Override
+    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float posX, float posY, float posZ) {
+        int meta = world.getBlockMetadata(x, y, z);
+
+        if ((meta >> 2 & 0x3) != 0) {
+            return false;
+        }
+
+        if (world.isRemote) {
+            return true;
+        } else {
+            TileEntity tileEntity = world.getTileEntity(x, y, z);
+
+            if (tileEntity instanceof TileEntityFireworksLighter) {
+                if (player.isSneaking()) {
+                    ((TileEntityFireworksLighter) tileEntity).toggleEasterEgg();
+
+                    return true;
+                }
+
+                player.openGui(ModHeldsPeripherals.instance, 1, world, x, y, z);
+
+                return true;
+            }
+
+            return false;
+        }
+    }
+
+    @Override
     @SideOnly(Side.CLIENT)
     public void registerBlockIcons(IIconRegister register) {
         String[] prefixes = new String[] { "fireworkslighter", "noisemaker" };
@@ -254,6 +237,19 @@ public class BlockMulti1 extends BlockHeldsPeripheral {
             this.left[i] = register.registerIcon(Assets.DOMAIN + prefixes[i] + "_left");
             this.right[i] = register.registerIcon(Assets.DOMAIN + prefixes[i] + "_right");
         }
+    }
+
+    @Override
+    public TileEntity createTileEntity(World world, int metadata) {
+        int type = (metadata >> 2 & 0x3);
+
+        if (type == 0) {
+            return new TileEntityFireworksLighter();
+        } else if (type == 1) {
+            return new TileEntityNoiseMaker();
+        }
+
+        return null;
     }
 
 }

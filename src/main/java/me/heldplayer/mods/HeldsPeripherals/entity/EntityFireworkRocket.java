@@ -1,6 +1,7 @@
-
 package me.heldplayer.mods.HeldsPeripherals.entity;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import me.heldplayer.mods.HeldsPeripherals.client.particle.EntityFireworkStarterFX;
 import net.minecraft.client.particle.EffectRenderer;
 import net.minecraft.entity.Entity;
@@ -10,10 +11,9 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.specialattack.forge.core.client.MC;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 public class EntityFireworkRocket extends Entity {
+
     private int age;
     private int maxAge;
 
@@ -54,26 +54,6 @@ public class EntityFireworkRocket extends Entity {
     protected void entityInit() {
         this.dataWatcher.addObject(8, new ItemStack(Blocks.air, 0, 0));
         this.dataWatcher.addObject(9, Byte.valueOf((byte) 0));
-    }
-
-    @SideOnly(Side.CLIENT)
-    @Override
-    public boolean isInRangeToRenderDist(double distance) {
-        return distance < 4096.0D;
-    }
-
-    @SideOnly(Side.CLIENT)
-    @Override
-    public void setVelocity(double par1, double par3, double par5) {
-        this.motionX = par1;
-        this.motionY = par3;
-        this.motionZ = par5;
-
-        if (this.prevRotationPitch == 0.0F && this.prevRotationYaw == 0.0F) {
-            float var7 = MathHelper.sqrt_double(par1 * par1 + par5 * par5);
-            this.prevRotationYaw = this.rotationYaw = (float) (Math.atan2(par1, par5) * 180.0D / Math.PI);
-            this.prevRotationPitch = this.rotationPitch = (float) (Math.atan2(par3, var7) * 180.0D / Math.PI);
-        }
     }
 
     @Override
@@ -128,34 +108,19 @@ public class EntityFireworkRocket extends Entity {
 
     @SideOnly(Side.CLIENT)
     @Override
-    public void handleHealthUpdate(byte health) {
-        if (health == 17 && this.worldObj.isRemote) {
-            ItemStack stack = this.dataWatcher.getWatchableObjectItemStack(8);
-            NBTTagCompound component = null;
-
-            if (stack != null && stack.hasTagCompound()) {
-                component = stack.getTagCompound().getCompoundTag("Fireworks");
-            }
-
-            EffectRenderer effectRenderer = MC.getEffectRenderer();
-            effectRenderer.addEffect(new EntityFireworkStarterFX(this.worldObj, this.posX, this.posY, this.posZ, this.motionX, this.motionY, this.motionZ, effectRenderer, component));
-        }
-
-        super.handleHealthUpdate(health);
+    public int getBrightnessForRender(float partialTicks) {
+        return super.getBrightnessForRender(partialTicks);
     }
 
     @Override
-    public void writeEntityToNBT(NBTTagCompound compound) {
-        compound.setInteger("Life", this.age);
-        compound.setInteger("LifeTime", this.maxAge);
-        compound.setByte("HideTrail", this.dataWatcher.getWatchableObjectByte(9));
-        ItemStack stack = this.dataWatcher.getWatchableObjectItemStack(8);
+    public float getBrightness(float partialTicks) {
+        return super.getBrightness(partialTicks);
+    }
 
-        if (stack != null) {
-            NBTTagCompound component = new NBTTagCompound();
-            stack.writeToNBT(component);
-            compound.setTag("FireworksItem", component);
-        }
+    @SideOnly(Side.CLIENT)
+    @Override
+    public boolean isInRangeToRenderDist(double distance) {
+        return distance < 4096.0D;
     }
 
     @Override
@@ -174,21 +139,56 @@ public class EntityFireworkRocket extends Entity {
         }
     }
 
+    @Override
+    public void writeEntityToNBT(NBTTagCompound compound) {
+        compound.setInteger("Life", this.age);
+        compound.setInteger("LifeTime", this.maxAge);
+        compound.setByte("HideTrail", this.dataWatcher.getWatchableObjectByte(9));
+        ItemStack stack = this.dataWatcher.getWatchableObjectItemStack(8);
+
+        if (stack != null) {
+            NBTTagCompound component = new NBTTagCompound();
+            stack.writeToNBT(component);
+            compound.setTag("FireworksItem", component);
+        }
+    }
+
     @SideOnly(Side.CLIENT)
     @Override
     public float getShadowSize() {
         return 0.0F;
     }
 
+    @SideOnly(Side.CLIENT)
     @Override
-    public float getBrightness(float partialTicks) {
-        return super.getBrightness(partialTicks);
+    public void setVelocity(double par1, double par3, double par5) {
+        this.motionX = par1;
+        this.motionY = par3;
+        this.motionZ = par5;
+
+        if (this.prevRotationPitch == 0.0F && this.prevRotationYaw == 0.0F) {
+            float var7 = MathHelper.sqrt_double(par1 * par1 + par5 * par5);
+            this.prevRotationYaw = this.rotationYaw = (float) (Math.atan2(par1, par5) * 180.0D / Math.PI);
+            this.prevRotationPitch = this.rotationPitch = (float) (Math.atan2(par3, var7) * 180.0D / Math.PI);
+        }
     }
 
     @SideOnly(Side.CLIENT)
     @Override
-    public int getBrightnessForRender(float partialTicks) {
-        return super.getBrightnessForRender(partialTicks);
+    public void handleHealthUpdate(byte health) {
+        if (health == 17 && this.worldObj.isRemote) {
+            ItemStack stack = this.dataWatcher.getWatchableObjectItemStack(8);
+            NBTTagCompound component = null;
+
+            if (stack != null && stack.hasTagCompound()) {
+                component = stack.getTagCompound().getCompoundTag("Fireworks");
+            }
+
+            EffectRenderer effectRenderer = MC.getEffectRenderer();
+            effectRenderer.addEffect(new EntityFireworkStarterFX(this.worldObj, this.posX, this.posY, this.posZ, this.motionX, this.motionY, this.motionZ, effectRenderer, component));
+        }
+
+        super.handleHealthUpdate(health);
     }
 
     @Override
