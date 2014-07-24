@@ -119,7 +119,7 @@ public class ModHeldsPeripherals extends SpACoreMod {
         ModHeldsPeripherals.chargeYieldEyeOfEnderDust = new ConfigValue<Integer>("chargeYieldEyeOfEnderDust", "config.heldsperipherals.key.YieldEyeOfEnderDust", null, 30, "The amount of charges one eye of ender dust is worth (GrehTech Compat)");
         ModHeldsPeripherals.chargeCostSend = new ConfigValue<Integer>("chargeCostSend", "config.heldsperipherals.key.CostSend", null, 1, "The amount of charges that are required to send a text message");
         ModHeldsPeripherals.chargeCostTransport = new ConfigValue<Integer>("chargeCostTransport", "config.heldsperipherals.key.CostTransport", null, 5, "The amount of charges that are required to send matter");
-        ModHeldsPeripherals.chargeCostostTransportFluid = new ConfigValue<Integer>("chargeCostostTransportFluid", "config.heldsperipherals.key.CostTransportFluid", null, 4, "The amount of charges that are required to send a fluid");
+        ModHeldsPeripherals.chargeCostostTransportFluid = new ConfigValue<Integer>("chargeCostostTransportFluid", "config.heldsperipherals.key.CostTransportFluid", null, 4, "The amount of charges that are required to send fluid");
         category.addValue(ModHeldsPeripherals.chargeYieldEnderPearl);
         category.addValue(ModHeldsPeripherals.chargeYieldEyeOfEnder);
         category.addValue(ModHeldsPeripherals.chargeYieldEnderPearlDust);
@@ -139,18 +139,6 @@ public class ModHeldsPeripherals extends SpACoreMod {
     @Override
     public SpACoreProxy getProxy() {
         return ModHeldsPeripherals.proxy;
-    }
-
-    @Override
-    @EventHandler
-    public void init(FMLInitializationEvent event) {
-        super.init(event);
-    }
-
-    @Override
-    @EventHandler
-    public void postInit(FMLPostInitializationEvent event) {
-        super.postInit(event);
     }
 
     @EventHandler
