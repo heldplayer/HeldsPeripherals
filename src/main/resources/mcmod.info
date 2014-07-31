@@ -1,20 +1,21 @@
-[
-    {
-        "modid" : "heldsperipherals",
-        "name" : "Held's Peripherals",
-        "version" : "${version}",
-        "credits" : "Dan200 and Cloudy for ComputerCraft and the ComputerCraft API",
-        "authors": [
-            "heldplayer"
-        ],
-        "description": "CC Held's Peripherals adds some peripherals that extend the possibilities of ComputerCraft",
-        "depencies": [
-            "after: Thaumcraft",
-            "ComputerCraft",
-            "SpACore"
-        ],
-        "requiredMods": [
-            "SpACore"
-        ]
-    }
-]
+{
+    "modListVersion" : 2,
+    "modList" : [
+        {
+            "modid" : "heldsperipherals",
+            "name" : "Held's Peripherals",
+            "description" : "CC Held's Peripherals adds some peripherals that extend the possibilities of ComputerCraft",
+            "credits" : "Dan200 and Cloudy for ComputerCraft and the ComputerCraft API",
+            "version" : "${version}",
+            "mcversion" : "${minecraft_version}",
+            "authorList" : [
+                "heldplayer"
+            ],
+            "url" : "http://www.computercraft.info/forums2/index.php?/topic/4882-",
+            "useDependencyInformation" : true,
+            "requiredMods" : [ "spacoreforge", "spacore" ],
+            "dependencies" : [ "spacore" ],
+            "dependants" : []
+        }
+    ]
+}
