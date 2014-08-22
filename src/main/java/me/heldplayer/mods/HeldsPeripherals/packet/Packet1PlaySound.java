@@ -5,11 +5,10 @@ import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
-import net.specialattack.forge.core.packet.SpACorePacket;
 
 import java.io.IOException;
 
-public class Packet1PlaySound extends SpACorePacket {
+public class Packet1PlaySound extends HeldsPeripheralsPacket {
 
     public double posX;
     public double posY;
@@ -17,6 +16,10 @@ public class Packet1PlaySound extends SpACorePacket {
     public String sound;
     public float volume;
     public float pitch;
+
+    public Packet1PlaySound() {
+        super(null);
+    }
 
     public Packet1PlaySound(double posX, double posY, double posZ, String sound, float volume, float pitch) {
         super(null);

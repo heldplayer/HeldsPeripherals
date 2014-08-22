@@ -4,17 +4,15 @@ import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.SidedProxy;
-import cpw.mods.fml.common.event.FMLInitializationEvent;
-import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStoppingEvent;
 import cpw.mods.fml.relauncher.Side;
 import me.heldplayer.mods.HeldsPeripherals.network.Network;
+import me.heldplayer.mods.HeldsPeripherals.packet.HeldsPeripheralsPacket;
 import me.heldplayer.mods.HeldsPeripherals.packet.Packet1PlaySound;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.config.Configuration;
 import net.specialattack.forge.core.ModInfo;
-import net.specialattack.forge.core.SpACore;
 import net.specialattack.forge.core.SpACoreMod;
 import net.specialattack.forge.core.SpACoreProxy;
 import net.specialattack.forge.core.config.Config;
@@ -44,7 +42,7 @@ public class ModHeldsPeripherals extends SpACoreMod {
     public static ConfigValue<Boolean> enhancedFireworksEntity;
     public static ConfigValue<Boolean> enhancedEnderChargeRenderer;
 
-    public static PacketHandler packetHandler;
+    public static PacketHandler<HeldsPeripheralsPacket> packetHandler;
 
     public static void addCharge(ItemStack item, Integer value) {
         if (value <= 0) {
@@ -97,7 +95,7 @@ public class ModHeldsPeripherals extends SpACoreMod {
     public void preInit(FMLPreInitializationEvent event) {
         Objects.log = event.getModLog();
 
-        SpACore.packetHandler = new PacketHandler(Objects.MOD_CHANNEL, Packet1PlaySound.class);
+        ModHeldsPeripherals.packetHandler = new PacketHandler<HeldsPeripheralsPacket>(Objects.MOD_CHANNEL, Packet1PlaySound.class);
 
         // Config
         this.config = new Config(event.getSuggestedConfigurationFile());
