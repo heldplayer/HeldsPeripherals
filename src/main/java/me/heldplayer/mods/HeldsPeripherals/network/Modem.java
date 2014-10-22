@@ -1,14 +1,13 @@
 package me.heldplayer.mods.HeldsPeripherals.network;
 
 import dan200.computercraft.api.peripheral.IComputerAccess;
+import java.util.Iterator;
+import java.util.LinkedList;
 import me.heldplayer.mods.HeldsPeripherals.api.IEnderModem;
 import me.heldplayer.mods.HeldsPeripherals.api.IModem;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
-
-import java.util.Iterator;
-import java.util.LinkedList;
 
 public class Modem implements IModem {
 
@@ -76,23 +75,17 @@ public class Modem implements IModem {
     @Override
     public void transmit(int origin, int please, Object data) {
         if (this.channelList[origin]) {
-            Iterator<ComputerConnection> i = this.connections.iterator();
 
-            while (i.hasNext()) {
-                ComputerConnection connection = i.next();
-
-                connection.queueEvent(origin, "modem_message", new Object[] { connection.computer.getAttachmentName(), origin, please, data, Double.valueOf(0.0D) });
+            for (ComputerConnection connection : this.connections) {
+                connection.queueEvent(origin, "modem_message", new Object[] { connection.computer.getAttachmentName(), origin, please, data, 0.0D });
             }
         }
     }
 
     @Override
     public boolean transmitSecure(int senderId, int dimension, int target, Object data) {
-        Iterator<ComputerConnection> i = this.connections.iterator();
-        while (i.hasNext()) {
-            ComputerConnection connection = i.next();
-
-            boolean sent = connection.queueEvent(target, "modem_message_secure", new Object[] { connection.computer.getAttachmentName(), Double.valueOf(senderId), Double.valueOf(dimension), data });
+        for (ComputerConnection connection : this.connections) {
+            boolean sent = connection.queueEvent(target, "modem_message_secure", new Object[] { connection.computer.getAttachmentName(), (double) senderId, (double) dimension, data });
 
             if (sent) {
                 return true;
@@ -104,15 +97,12 @@ public class Modem implements IModem {
 
     @Override
     public boolean transportItem(int senderId, int dimension, ItemStack sentStack, ItemStack newStack, int target) {
-        Iterator<ComputerConnection> i = this.connections.iterator();
-        while (i.hasNext()) {
-            ComputerConnection connection = i.next();
-
+        for (ComputerConnection connection : this.connections) {
             if (connection.isConnected(target)) {
                 ItemStack slot = this.modem.getStackInSlot(4);
 
                 if (slot == null) {
-                    connection.queueEvent(target, "modem_item", new Object[] { Double.valueOf(senderId), Double.valueOf(dimension) });
+                    connection.queueEvent(target, "modem_item", new Object[] { (double) senderId, (double) dimension });
 
                     this.modem.setStackInSlot(4, sentStack);
 
@@ -120,10 +110,10 @@ public class Modem implements IModem {
 
                     return true;
                 } else {
-                    if (slot != null && slot.getItem() == sentStack.getItem() && (!sentStack.getHasSubtypes() || sentStack.getItemDamage() == slot.getItemDamage()) && ItemStack.areItemStackTagsEqual(sentStack, slot)) {
+                    if (slot.getItem() == sentStack.getItem() && (!sentStack.getHasSubtypes() || sentStack.getItemDamage() == slot.getItemDamage()) && ItemStack.areItemStackTagsEqual(sentStack, slot)) {
 
                         if (slot.isStackable() && slot.stackSize < slot.getMaxStackSize()) {
-                            connection.queueEvent(target, "modem_item", new Object[] { Double.valueOf(senderId), Double.valueOf(dimension) });
+                            connection.queueEvent(target, "modem_item", new Object[] { (double) senderId, (double) dimension });
 
                             while (slot.stackSize < slot.getMaxStackSize() && newStack.stackSize > 0) {
                                 slot.stackSize++;
@@ -144,15 +134,12 @@ public class Modem implements IModem {
 
     @Override
     public boolean transportFluid(int senderId, int dimension, FluidStack sentStack, FluidStack newStack, int target) {
-        Iterator<ComputerConnection> i = this.connections.iterator();
-        while (i.hasNext()) {
-            ComputerConnection connection = i.next();
-
+        for (ComputerConnection connection : this.connections) {
             if (connection.isConnected(target)) {
                 FluidTank tank = this.modem.getFluidTank();
 
                 if (tank != null && tank.getFluid() == null) {
-                    connection.queueEvent(target, "modem_fluid", new Object[] { Double.valueOf(senderId), Double.valueOf(dimension) });
+                    connection.queueEvent(target, "modem_fluid", new Object[] { (double) senderId, (double) dimension });
 
                     tank.setFluid(sentStack);
 
@@ -162,11 +149,11 @@ public class Modem implements IModem {
                 } else if (tank != null) {
                     FluidStack stack = tank.getFluid();
 
-                    if (stack != null && stack.isFluidEqual(sentStack)) {
+                    if (stack.isFluidEqual(sentStack)) {
                         int amount = tank.fill(sentStack, false);
 
                         if (amount > 0) {
-                            connection.queueEvent(target, "transworld_liquid", new Object[] { Double.valueOf(senderId), Double.valueOf(dimension) });
+                            connection.queueEvent(target, "transworld_liquid", new Object[] { (double) senderId, (double) dimension });
 
                             tank.fill(sentStack, true);
 

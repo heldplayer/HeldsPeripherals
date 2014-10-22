@@ -12,8 +12,6 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
-import java.util.Iterator;
-
 public class ContainerFireworksLauncher extends Container {
 
     private TileEntityFireworksLighter lighter;
@@ -60,10 +58,9 @@ public class ContainerFireworksLauncher extends Container {
     @Override
     public void detectAndSendChanges() {
         super.detectAndSendChanges();
-        Iterator iterator = this.crafters.iterator();
 
-        while (iterator.hasNext()) {
-            ICrafting crafter = (ICrafting) iterator.next();
+        for (Object crafter1 : this.crafters) {
+            ICrafting crafter = (ICrafting) crafter1;
 
             if (this.prevRedAmount != this.lighter.getAmount(0)) {
                 crafter.sendProgressBarUpdate(this, 0, this.lighter.getAmount(0));
@@ -111,7 +108,7 @@ public class ContainerFireworksLauncher extends Container {
             }
 
             if (slotStack.stackSize == 0) {
-                slot.putStack((ItemStack) null);
+                slot.putStack(null);
             } else {
                 slot.onSlotChanged();
             }

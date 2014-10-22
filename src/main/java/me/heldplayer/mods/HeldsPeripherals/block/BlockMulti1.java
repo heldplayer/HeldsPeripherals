@@ -2,6 +2,7 @@ package me.heldplayer.mods.HeldsPeripherals.block;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import java.util.Random;
 import me.heldplayer.mods.HeldsPeripherals.Assets;
 import me.heldplayer.mods.HeldsPeripherals.ModHeldsPeripherals;
 import me.heldplayer.mods.HeldsPeripherals.api.IHeldsPeripheral;
@@ -16,8 +17,6 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
-
-import java.util.Random;
 
 public class BlockMulti1 extends BlockHeldsPeripheral {
 
@@ -55,10 +54,7 @@ public class BlockMulti1 extends BlockHeldsPeripheral {
     public boolean hasTileEntity(int metadata) {
         int type = (metadata >> 2 & 0x3);
 
-        if (type == 0 || type == 1) {
-            return true;
-        }
-        return false;
+        return type == 0 || type == 1;
     }
 
     @Override
@@ -137,7 +133,7 @@ public class BlockMulti1 extends BlockHeldsPeripheral {
             return;
         }
 
-        TileEntityFireworksLighter lighter = null;
+        TileEntityFireworksLighter lighter;
 
         try {
             lighter = (TileEntityFireworksLighter) world.getTileEntity(x, y, z);

@@ -2,6 +2,7 @@ package me.heldplayer.mods.HeldsPeripherals.client.particle;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import java.util.ArrayList;
 import me.heldplayer.mods.HeldsPeripherals.ModHeldsPeripherals;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.EffectRenderer;
@@ -11,8 +12,6 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
-
-import java.util.ArrayList;
 
 @SideOnly(Side.CLIENT)
 public class EntityFireworkStarterFX extends EntityFX {
@@ -147,7 +146,7 @@ public class EntityFireworkStarterFX extends EntityFX {
             int baseColor = colors[0];
             float baseR = ((baseColor & 16711680) >> 16) / 255.0F;
             float baseG = ((baseColor & 65280) >> 8) / 255.0F;
-            float baseB = ((baseColor & 255) >> 0) / 255.0F;
+            float baseB = ((baseColor & 255)) / 255.0F;
             EntityFireworkBloomFX bloom = new EntityFireworkBloomFX(this.worldObj, this.posX, this.posY, this.posZ, bloomMaxAge);
             bloom.setRBGColorF(baseR, baseG, baseB);
             //this.effectRenderer.addEffect(bloom);
@@ -157,8 +156,7 @@ public class EntityFireworkStarterFX extends EntityFX {
         boolean stillAlive = false;
 
         if (this.children != null) {
-            for (int i = 0; i < this.children.size(); i++) {
-                EntityFX particle = this.children.get(i);
+            for (EntityFX particle : this.children) {
                 if (!particle.isDead) {
                     particle.onUpdate();
                     stillAlive = true;
@@ -186,8 +184,7 @@ public class EntityFireworkStarterFX extends EntityFX {
     @Override
     public void renderParticle(Tessellator tess, float partialTicks, float cosYaw, float cosPitch, float sinYaw, float xsinPitch, float sinPitch) {
         if (this.children != null) {
-            for (int i = 0; i < this.children.size(); i++) {
-                EntityFX particle = this.children.get(i);
+            for (EntityFX particle : this.children) {
                 if (!particle.isDead) {
                     particle.renderParticle(tess, partialTicks, cosYaw, cosPitch, sinYaw, xsinPitch, sinPitch);
                 }

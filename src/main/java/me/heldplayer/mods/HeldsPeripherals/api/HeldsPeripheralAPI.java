@@ -1,13 +1,12 @@
 package me.heldplayer.mods.HeldsPeripherals.api;
 
-import net.minecraft.item.ItemStack;
-
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import net.minecraft.item.ItemStack;
 
 /**
  * Bridge class for the HeldsPeripherals mod. Methods in this class must be
- * during or after {@link cpw.mods.fml.common.Mod.Init @Init}
+ * during or after {@link cpw.mods.fml.common.event.FMLInitializationEvent @Init}
  *
  * @author heldplayer
  */
@@ -21,16 +20,18 @@ public class HeldsPeripheralAPI {
     /**
      * Convenience method for adding multiple items with the same charge level.
      *
-     * @param items The items to be added.
-     * @param value The charge level the items will give. Must be > 0.
+     * @param items
+     *         The items to be added.
+     * @param value
+     *         The charge level the items will give. Must be > 0.
      */
     public static void addCharges(ArrayList<ItemStack> items, Integer value) {
         if (value <= 0) {
             return;
         }
 
-        for (int i = 0; i < items.size(); i++) {
-            HeldsPeripheralAPI.addCharge(items.get(i), value);
+        for (ItemStack item : items) {
+            HeldsPeripheralAPI.addCharge(item, value);
         }
     }
 
@@ -38,8 +39,10 @@ public class HeldsPeripheralAPI {
      * Method for adding a charge level to an item. Only checks for same itemID
      * and damage value when trying to consume.
      *
-     * @param item  The item to be added.
-     * @param value The charge level the item will give. Must be > 0.
+     * @param item
+     *         The item to be added.
+     * @param value
+     *         The charge level the item will give. Must be > 0.
      */
     public static void addCharge(ItemStack item, Integer value) {
         HeldsPeripheralAPI.tryInit();

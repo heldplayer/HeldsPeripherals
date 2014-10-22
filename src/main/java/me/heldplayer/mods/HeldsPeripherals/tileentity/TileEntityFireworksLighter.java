@@ -3,6 +3,7 @@ package me.heldplayer.mods.HeldsPeripherals.tileentity;
 import dan200.computercraft.api.lua.ILuaContext;
 import dan200.computercraft.api.peripheral.IComputerAccess;
 import dan200.computercraft.api.peripheral.IPeripheral;
+import java.util.Random;
 import me.heldplayer.mods.HeldsPeripherals.Assets;
 import me.heldplayer.mods.HeldsPeripherals.LogicHandler;
 import me.heldplayer.mods.HeldsPeripherals.api.IElectricalFireworksLighter;
@@ -18,8 +19,6 @@ import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.*;
 import net.minecraftforge.oredict.OreDictionary;
 import net.specialattack.util.MathHelper;
-
-import java.util.Random;
 
 public class TileEntityFireworksLighter extends TileEntityHeldsPeripheral implements IInventory, IElectricalFireworksLighter, IFluidHandler {
 
@@ -115,9 +114,7 @@ public class TileEntityFireworksLighter extends TileEntityHeldsPeripheral implem
 
     @Override
     public FluidStack drain(ForgeDirection from, FluidStack resource, boolean doDrain) {
-        for (int i = 0; i < this.tanks.length; i++) {
-            FluidTank tank = this.tanks[i];
-
+        for (RestrictedFluidTank tank : this.tanks) {
             FluidStack stack = tank.getFluid();
 
             if (stack != null && stack.amount > 0 && stack.isFluidEqual(resource)) {
@@ -131,9 +128,7 @@ public class TileEntityFireworksLighter extends TileEntityHeldsPeripheral implem
 
     @Override
     public FluidStack drain(ForgeDirection from, int maxDrain, boolean doDrain) {
-        for (int i = 0; i < this.tanks.length; i++) {
-            FluidTank tank = this.tanks[i];
-
+        for (RestrictedFluidTank tank : this.tanks) {
             FluidStack stack = tank.getFluid();
 
             if (stack != null && stack.amount > 0) {
@@ -146,8 +141,8 @@ public class TileEntityFireworksLighter extends TileEntityHeldsPeripheral implem
 
     @Override
     public boolean canFill(ForgeDirection from, Fluid fluid) {
-        for (int i = 0; i < this.tanks.length; i++) {
-            if (this.tanks[i].isAllowed(fluid)) {
+        for (RestrictedFluidTank tank : this.tanks) {
+            if (tank.isAllowed(fluid)) {
                 return true;
             }
         }
@@ -304,11 +299,13 @@ public class TileEntityFireworksLighter extends TileEntityHeldsPeripheral implem
             return false;
         }
 
-        int id = OreDictionary.getOreID(stack);
+        int[] ids = OreDictionary.getOreIDs(stack);
         int id2 = OreDictionary.getOreID(type);
 
-        if (id == id2 && id > 0) {
-            return true;
+        for (int id : ids) {
+            if (id == id2) {
+                return true;
+            }
         }
 
         return false;
@@ -407,7 +404,7 @@ public class TileEntityFireworksLighter extends TileEntityHeldsPeripheral implem
                 this.tanks[0].setFluid(FluidRegistry.getFluidStack("molten red dye", 0));
             }
 
-            if (this.tanks[0].getFluid().amount <= 1800 && OreDictionary.getOreName(OreDictionary.getOreID(stack)).equalsIgnoreCase("dyeRed")) {
+            if (this.tanks[0].getFluid().amount <= 1800 && OreDictionary.itemMatches(new ItemStack(Items.dye, 1, 1), stack, true)) {
                 this.tanks[0].getFluid().amount += 200;
                 stack.stackSize--;
 
@@ -424,7 +421,7 @@ public class TileEntityFireworksLighter extends TileEntityHeldsPeripheral implem
                 this.tanks[1].setFluid(FluidRegistry.getFluidStack("molten green dye", 0));
             }
 
-            if (this.tanks[1].getFluid().amount <= 1800 && OreDictionary.getOreName(OreDictionary.getOreID(stack)).equalsIgnoreCase("dyeGreen")) {
+            if (this.tanks[1].getFluid().amount <= 1800 && OreDictionary.itemMatches(new ItemStack(Items.dye, 1, 2), stack, true)) {
                 this.tanks[1].getFluid().amount += 200;
                 stack.stackSize--;
 
@@ -441,7 +438,7 @@ public class TileEntityFireworksLighter extends TileEntityHeldsPeripheral implem
                 this.tanks[2].setFluid(FluidRegistry.getFluidStack("molten blue dye", 0));
             }
 
-            if (this.tanks[2].getFluid().amount <= 1800 && OreDictionary.getOreName(OreDictionary.getOreID(stack)).equalsIgnoreCase("dyeBlue")) {
+            if (this.tanks[2].getFluid().amount <= 1800 && OreDictionary.itemMatches(new ItemStack(Items.dye, 1, 4), stack, true)) {
                 this.tanks[2].getFluid().amount += 200;
                 stack.stackSize--;
 

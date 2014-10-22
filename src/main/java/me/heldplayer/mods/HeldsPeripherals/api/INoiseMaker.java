@@ -18,7 +18,8 @@ public interface INoiseMaker extends IHeldsPeripheral {
     /**
      * Sets the remaining ticks this noise maker should cool down.
      *
-     * @param time The new amount of ticks
+     * @param time
+     *         The new amount of ticks
      */
     void setCoolingTime(int time);
 

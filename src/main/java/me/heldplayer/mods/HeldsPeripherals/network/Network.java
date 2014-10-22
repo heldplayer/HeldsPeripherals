@@ -1,14 +1,12 @@
 package me.heldplayer.mods.HeldsPeripherals.network;
 
+import java.util.LinkedList;
 import me.heldplayer.mods.HeldsPeripherals.api.IEnderModem;
 import me.heldplayer.mods.HeldsPeripherals.api.IModem;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
-
-import java.util.Iterator;
-import java.util.LinkedList;
 
 // FIXME: check for world leaking, as it most likely happens
 public class Network {
@@ -32,10 +30,7 @@ public class Network {
     }
 
     public static boolean transmitSecure(int senderId, int dimension, int target, Object data) {
-        Iterator<IModem> i = Network.modems.iterator();
-        while (i.hasNext()) {
-            IModem modem = i.next();
-
+        for (IModem modem : Network.modems) {
             if (modem != null) {
                 if (modem.transmitSecure(senderId, dimension, target, data)) {
                     return true;
@@ -51,10 +46,7 @@ public class Network {
             ItemStack newStack = origStack.copy();
             ItemStack sentStack = origStack.copy();
 
-            Iterator<IModem> i = Network.modems.iterator();
-            while (i.hasNext()) {
-                IModem modem = i.next();
-
+            for (IModem modem : Network.modems) {
                 if (modem != null) {
                     if (modem.transportItem(senderId, dimension, sentStack, newStack, target)) {
                         if (newStack.stackSize <= 0) {
@@ -75,10 +67,7 @@ public class Network {
             FluidStack newStack = origStack.copy();
             FluidStack sentStack = origStack.copy();
 
-            Iterator<IModem> i = Network.modems.iterator();
-            while (i.hasNext()) {
-                IModem modem = i.next();
-
+            for (IModem modem : Network.modems) {
                 if (modem != null) {
                     if (modem.transportFluid(senderId, dimension, sentStack, newStack, target)) {
                         if (newStack.amount <= 0) {

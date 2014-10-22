@@ -20,7 +20,8 @@ public interface IElectricalFireworksLighter extends IHeldsPeripheral {
     /**
      * Sets the remaining ticks this fireworks lighter should cool down.
      *
-     * @param time The new amount of ticks
+     * @param time
+     *         The new amount of ticks
      */
     void setCoolingTime(int time);
 
@@ -50,7 +51,9 @@ public interface IElectricalFireworksLighter extends IHeldsPeripheral {
      * <li>Blue dye tank</li>
      * </ol>
      *
-     * @param tankId The ID of the tank.
+     * @param tankId
+     *         The ID of the tank.
+     *
      * @return The fluid level in the specified tank.
      */
     int getFluidLevel(int tankId);
@@ -58,8 +61,11 @@ public interface IElectricalFireworksLighter extends IHeldsPeripheral {
     /**
      * Sets the fluid level in the specified tank.
      *
-     * @param tankId The ID of the tank.
-     * @param amount The new amount of fluid in the tank.
+     * @param tankId
+     *         The ID of the tank.
+     * @param amount
+     *         The new amount of fluid in the tank.
+     *
      * @see #getFluidLevel(int)
      */
     void setFluidLevel(int tankId, int amount);
@@ -67,8 +73,10 @@ public interface IElectricalFireworksLighter extends IHeldsPeripheral {
     /**
      * Returns the direct stack in the specified slot.
      *
-     * @param slot The slot, ranging from 0 to 3 on a regular block and ranging from
-     *             0 to 15 on a turtle.
+     * @param slot
+     *         The slot, ranging from 0 to 3 on a regular block and ranging from
+     *         0 to 15 on a turtle.
+     *
      * @return The ItemStack in the specified slot.
      */
     ItemStack getStack(int slot);
@@ -76,8 +84,10 @@ public interface IElectricalFireworksLighter extends IHeldsPeripheral {
     /**
      * Sets the stack in the specified slot.
      *
-     * @param slot  The slot, ranging from 0 to 3.
-     * @param stack The stack to set the slot to.
+     * @param slot
+     *         The slot, ranging from 0 to 3.
+     * @param stack
+     *         The stack to set the slot to.
      */
     void setStack(int slot, ItemStack stack);
 
@@ -85,7 +95,9 @@ public interface IElectricalFireworksLighter extends IHeldsPeripheral {
      * Returns the first slot with an item containing the specified ore
      * dictionary name. Used for turtles.
      *
-     * @param name The name of the to be searched ore dictionary object.
+     * @param name
+     *         The name of the to be searched ore dictionary object.
+     *
      * @return The first slot with an item containing the specified ore
      * dictionary name.
      */

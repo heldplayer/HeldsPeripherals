@@ -1,5 +1,6 @@
 package me.heldplayer.mods.HeldsPeripherals.inventory;
 
+import java.util.Iterator;
 import me.heldplayer.mods.HeldsPeripherals.tileentity.TileEntityEnderModem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -9,8 +10,6 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
-
-import java.util.Iterator;
 
 public class ContainerEnderModem extends Container {
 
@@ -145,7 +144,7 @@ public class ContainerEnderModem extends Container {
             }
 
             if (slotStack.stackSize == 0) {
-                slot.putStack((ItemStack) null);
+                slot.putStack(null);
             } else {
                 slot.onSlotChanged();
             }
@@ -193,8 +192,7 @@ public class ContainerEnderModem extends Container {
                     this.modem.getTank().setFluid(null);
                 } else if (stack != null) {
                     int amount = stack.amount;
-                    int fluidID = barValue;
-                    this.modem.getTank().setFluid(new FluidStack(amount, fluidID));
+                    this.modem.getTank().setFluid(new FluidStack(amount, barValue));
                 } else {
                     this.modem.getTank().setFluid(new FluidStack(barValue, 0));
                 }

@@ -2,6 +2,7 @@ package me.heldplayer.mods.HeldsPeripherals.item;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import java.util.List;
 import me.heldplayer.mods.HeldsPeripherals.Assets;
 import me.heldplayer.mods.HeldsPeripherals.Objects;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -11,8 +12,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.StatCollector;
-
-import java.util.List;
 
 public class ItemEnderCharge extends Item {
 

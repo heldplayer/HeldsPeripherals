@@ -41,10 +41,7 @@ public class RestrictedFluidTank extends FluidTank {
     }
 
     public boolean isAllowed(FluidStack stack) {
-        if (stack == null || this.allowedType == null) {
-            return false;
-        }
-        return stack.isFluidEqual(this.allowedType);
+        return !(stack == null || this.allowedType == null) && stack.isFluidEqual(this.allowedType);
     }
 
     public FluidStack getAllowedType() {
@@ -56,10 +53,7 @@ public class RestrictedFluidTank extends FluidTank {
     }
 
     public boolean isAllowed(Fluid fluid) {
-        if (fluid == null || this.allowedType == null) {
-            return false;
-        }
-        return this.allowedType.fluidID == fluid.getID();
+        return !(fluid == null || this.allowedType == null) && this.allowedType.fluidID == fluid.getID();
     }
 
 }

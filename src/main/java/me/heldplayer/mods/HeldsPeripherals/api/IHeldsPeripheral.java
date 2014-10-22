@@ -50,7 +50,8 @@ public interface IHeldsPeripheral {
      * Sets the name of a HeldsPeripheral, drawn instead of the standard GUI
      * title.
      *
-     * @param name The new name of the peripheral
+     * @param name
+     *         The new name of the peripheral
      */
     void setName(String name);
 

@@ -20,8 +20,6 @@ import net.specialattack.forge.core.config.ConfigCategory;
 import net.specialattack.forge.core.config.ConfigValue;
 import net.specialattack.forge.core.packet.PacketHandler;
 
-import java.util.Iterator;
-
 @Mod(name = Objects.MOD_NAME, modid = Objects.MOD_ID, dependencies = Objects.MOD_DEPENCIES, guiFactory = Objects.GUI_FACTORY)
 public class ModHeldsPeripherals extends SpACoreMod {
 
@@ -49,11 +47,7 @@ public class ModHeldsPeripherals extends SpACoreMod {
             return;
         }
 
-        Iterator<ItemStack> iterator = CommonProxy.enderCharges.keySet().iterator();
-
-        while (iterator.hasNext()) {
-            ItemStack stack = iterator.next();
-
+        for (ItemStack stack : CommonProxy.enderCharges.keySet()) {
             if (stack.getItem() == item.getItem() && stack.getItemDamage() == item.getItemDamage()) {
                 return;
             }
@@ -63,11 +57,8 @@ public class ModHeldsPeripherals extends SpACoreMod {
     }
 
     public static int getChargeDelivered(ItemStack item) {
-        Iterator<ItemStack> iterator = CommonProxy.enderCharges.keySet().iterator();
 
-        while (iterator.hasNext()) {
-            ItemStack stack = iterator.next();
-
+        for (ItemStack stack : CommonProxy.enderCharges.keySet()) {
             if (stack.getItem() == item.getItem() && stack.getItemDamage() == item.getItemDamage()) {
                 return CommonProxy.enderCharges.get(stack);
             }
@@ -77,11 +68,8 @@ public class ModHeldsPeripherals extends SpACoreMod {
     }
 
     public static ItemStack getItemForCharge(int charge) {
-        Iterator<ItemStack> iterator = CommonProxy.enderCharges.keySet().iterator();
 
-        while (iterator.hasNext()) {
-            ItemStack stack = iterator.next();
-
+        for (ItemStack stack : CommonProxy.enderCharges.keySet()) {
             if (CommonProxy.enderCharges.get(stack) == charge) {
                 return stack;
             }

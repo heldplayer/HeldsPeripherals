@@ -23,11 +23,7 @@ public class ItemRendererEnderCharge implements IItemRenderer {
 
     @Override
     public boolean handleRenderType(ItemStack item, ItemRenderType type) {
-        if (item.getItem() == Objects.itemEnderCharge && type == ItemRenderType.INVENTORY) {
-            return true;
-        }
-
-        return false;
+        return item.getItem() == Objects.itemEnderCharge && type == ItemRenderType.INVENTORY;
     }
 
     @Override

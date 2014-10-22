@@ -7,6 +7,8 @@ import cpw.mods.fml.common.network.IGuiHandler;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
+import java.util.ArrayList;
+import java.util.HashMap;
 import me.heldplayer.mods.HeldsPeripherals.api.HeldsPeripheralAPI;
 import me.heldplayer.mods.HeldsPeripherals.block.BlockEnderModem;
 import me.heldplayer.mods.HeldsPeripherals.block.BlockMoltenDye;
@@ -34,9 +36,6 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.oredict.OreDictionary;
 import net.specialattack.forge.core.SpACoreProxy;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-
 public class CommonProxy extends SpACoreProxy implements IGuiHandler {
 
     public static HashMap<ItemStack, Integer> enderCharges;
@@ -45,15 +44,7 @@ public class CommonProxy extends SpACoreProxy implements IGuiHandler {
 
     public static boolean doesItemHaveCharge(ItemStack stack) {
         int charge = ModHeldsPeripherals.getChargeDelivered(stack);
-        if (charge > 0) {
-            return true;
-        }
-
-        if (stack.getItem() == Objects.itemEnderCharge) {
-            return true;
-        }
-
-        return false;
+        return charge > 0 || stack.getItem() == Objects.itemEnderCharge;
     }
 
     public static boolean isItemOfType(ItemStack stack, String name) {
@@ -61,11 +52,13 @@ public class CommonProxy extends SpACoreProxy implements IGuiHandler {
             return false;
         }
 
-        int id = OreDictionary.getOreID(stack);
+        int[] ids = OreDictionary.getOreIDs(stack);
         int id2 = OreDictionary.getOreID(name);
 
-        if (id == id2 && id > 0) {
-            return true;
+        for (int id : ids) {
+            if (id == id2 && id > 0) {
+                return true;
+            }
         }
 
         return false;

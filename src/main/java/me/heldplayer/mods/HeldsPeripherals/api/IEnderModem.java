@@ -20,7 +20,8 @@ public interface IEnderModem extends IHeldsPeripheral {
     /**
      * Decreases the charge in this modem with specified amount.
      *
-     * @param amount The amount of charge to decrease with.
+     * @param amount
+     *         The amount of charge to decrease with.
      */
     void decreaseCharge(int amount);
 
@@ -48,7 +49,9 @@ public interface IEnderModem extends IHeldsPeripheral {
     /**
      * Returns the direct stack in the specified slot.
      *
-     * @param slot The slot, ranging from 0 to 3.
+     * @param slot
+     *         The slot, ranging from 0 to 3.
+     *
      * @return The ItemStack in the specified slot.
      */
     ItemStack getStackInSlot(int slot);
@@ -56,8 +59,10 @@ public interface IEnderModem extends IHeldsPeripheral {
     /**
      * Sets the stack in the specified slot.
      *
-     * @param slot  The slot, ranging from 0 to 3.
-     * @param stack The stack to set the slot to.
+     * @param slot
+     *         The slot, ranging from 0 to 3.
+     * @param stack
+     *         The stack to set the slot to.
      */
     void setStackInSlot(int slot, ItemStack stack);
 

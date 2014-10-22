@@ -41,7 +41,7 @@ public class EntityFireworkRocket extends Entity {
 
             boolean hideTrail = compound.getBoolean("HideTrail");
 
-            this.dataWatcher.updateObject(9, Byte.valueOf((byte) (hideTrail ? 1 : 0)));
+            this.dataWatcher.updateObject(9, (byte) (hideTrail ? 1 : 0));
         }
 
         this.motionX = this.rand.nextGaussian() * 0.001D;
@@ -53,7 +53,7 @@ public class EntityFireworkRocket extends Entity {
     @Override
     protected void entityInit() {
         this.dataWatcher.addObject(8, new ItemStack(Blocks.air, 0, 0));
-        this.dataWatcher.addObject(9, Byte.valueOf((byte) 0));
+        this.dataWatcher.addObject(9, (byte) 0);
     }
 
     @Override
@@ -66,12 +66,14 @@ public class EntityFireworkRocket extends Entity {
         //this.motionZ *= 1.15D;
         this.motionY += 0.04D;
         this.moveEntity(this.motionX, this.motionY, this.motionZ);
-        float var1 = MathHelper.sqrt_double(this.motionX * this.motionX + this.motionZ * this.motionZ);
+        //float var1 = MathHelper.sqrt_double(this.motionX * this.motionX + this.motionZ * this.motionZ);
         this.rotationYaw = (float) (Math.atan2(this.motionX, this.motionZ) * 180.0D / Math.PI);
 
-        for (this.rotationPitch = (float) (Math.atan2(this.motionY, var1) * 180.0D / Math.PI); this.rotationPitch - this.prevRotationPitch < -180.0F; this.prevRotationPitch -= 360.0F) {
-            ;
-        }
+        /*
+         for (this.rotationPitch = (float) (Math.atan2(this.motionY, var1) * 180.0D / Math.PI); this.rotationPitch - this.prevRotationPitch < -180.0F; this.prevRotationPitch -= 360.0F) {
+
+         }
+         */
 
         while (this.rotationPitch - this.prevRotationPitch >= 180.0F) {
             this.prevRotationPitch += 360.0F;
@@ -127,7 +129,7 @@ public class EntityFireworkRocket extends Entity {
     public void readEntityFromNBT(NBTTagCompound compound) {
         this.age = compound.getInteger("Life");
         this.maxAge = compound.getInteger("LifeTime");
-        this.dataWatcher.updateObject(9, Byte.valueOf(compound.getByte("HideTrail")));
+        this.dataWatcher.updateObject(9, compound.getByte("HideTrail"));
         NBTTagCompound component = compound.getCompoundTag("FireworksItem");
 
         if (component != null) {

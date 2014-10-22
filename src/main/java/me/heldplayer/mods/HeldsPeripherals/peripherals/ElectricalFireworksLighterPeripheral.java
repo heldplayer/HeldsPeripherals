@@ -57,7 +57,9 @@ public class ElectricalFireworksLighterPeripheral implements IPeripheral, IElect
     public boolean equals(IPeripheral other) {
         // TODO Auto-generated method stub
         return this == other;
-    }    @Override
+    }
+
+    @Override
     public void update() {
         if (this.getWorld().isRemote) {
             return;
@@ -78,7 +80,9 @@ public class ElectricalFireworksLighterPeripheral implements IPeripheral, IElect
     @Override
     public int getCoolingTime() {
         return this.launchCount;
-    }    @Override
+    }
+
+    @Override
     public World getWorld() {
         return this.turtle.getWorld();
     }
@@ -86,7 +90,9 @@ public class ElectricalFireworksLighterPeripheral implements IPeripheral, IElect
     @Override
     public void setCoolingDown() {
         this.coolDown = true;
-    }    @Override
+    }
+
+    @Override
     public int getX() {
         return this.turtle.getPosition().posX;
     }
@@ -94,7 +100,9 @@ public class ElectricalFireworksLighterPeripheral implements IPeripheral, IElect
     @Override
     public boolean isCoolingDown() {
         return this.coolDown;
-    }    @Override
+    }
+
+    @Override
     public int getY() {
         return this.turtle.getPosition().posY;
     }
@@ -102,7 +110,9 @@ public class ElectricalFireworksLighterPeripheral implements IPeripheral, IElect
     @Override
     public void increaseCoolingTime() {
         this.launchCount += 2;
-    }    @Override
+    }
+
+    @Override
     public int getZ() {
         return this.turtle.getPosition().posZ;
     }
@@ -110,7 +120,9 @@ public class ElectricalFireworksLighterPeripheral implements IPeripheral, IElect
     @Override
     public void setCoolingTime(int time) {
         this.launchCount = time;
-    }    @Override
+    }
+
+    @Override
     public void setName(String name) {
     }
 
@@ -139,33 +151,23 @@ public class ElectricalFireworksLighterPeripheral implements IPeripheral, IElect
 
     @Override
     public int getOredictStack(String name) {
-        int oreName = OreDictionary.getOreID(name);
+        int oreId = OreDictionary.getOreID(name);
 
         IInventory inventory = this.turtle.getInventory();
 
         for (int i = 0; i < 16; i++) {
             ItemStack stack = inventory.getStackInSlot(i);
 
-            int stackName = OreDictionary.getOreID(stack);
+            int[] stackIds = OreDictionary.getOreIDs(stack);
 
-            if (stackName == oreName && stackName > 0) {
-                return i;
+            for (int id : stackIds) {
+                if (id == oreId && id > 0) {
+                    return i;
+                }
             }
         }
 
         return 0;
     }
-
-
-
-
-
-
-
-
-
-
-
-
 
 }

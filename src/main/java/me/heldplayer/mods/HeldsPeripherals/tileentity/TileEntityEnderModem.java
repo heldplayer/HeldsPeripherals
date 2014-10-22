@@ -88,10 +88,7 @@ public class TileEntityEnderModem extends TileEntityHeldsPeripheral implements I
     @Override
     public boolean canFill(ForgeDirection from, Fluid fluid) {
         FluidStack stack = this.tanks[0].getFluid();
-        if (stack != null && fluid != null && stack.getFluid().getID() == fluid.getID()) {
-            return true;
-        }
-        return false;
+        return stack != null && fluid != null && stack.getFluid().getID() == fluid.getID();
     }
 
     @Override
@@ -228,11 +225,7 @@ public class TileEntityEnderModem extends TileEntityHeldsPeripheral implements I
             return CommonProxy.doesItemHaveCharge(stack);
         }
 
-        if (slot == 3) {
-            return true;
-        }
-
-        return false;
+        return slot == 3;
     }
 
     @Override

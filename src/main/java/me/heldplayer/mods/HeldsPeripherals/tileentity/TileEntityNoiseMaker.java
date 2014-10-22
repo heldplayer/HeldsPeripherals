@@ -57,10 +57,6 @@ public class TileEntityNoiseMaker extends TileEntityHeldsPeripheral implements I
         if (this.timer == 0 && this.coolDown) {
             this.coolDown = false;
         }
-
-        if (this.coolDown) {
-            return;
-        }
     }
 
     @Override

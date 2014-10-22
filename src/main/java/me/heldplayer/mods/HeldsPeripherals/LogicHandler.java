@@ -12,7 +12,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagDouble;
 import net.minecraft.nbt.NBTTagList;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
@@ -41,7 +40,7 @@ public class LogicHandler {
                     throw new Exception("Expected number in range 0-65535");
                 }
 
-                return new Object[] { Boolean.valueOf(peripheral.getModem().isChannelOpen(channel)) };
+                return new Object[] { peripheral.getModem().isChannelOpen(channel) };
             case 1: // open
                 if (arguments.length < 1) {
                     throw new Exception("Too little arguments, expected 1 argument");
@@ -125,7 +124,7 @@ public class LogicHandler {
             case 5: // isWireless
                 return new Object[] { Boolean.TRUE };
             case 6: // getChargeLevel
-                return new Object[] { Double.valueOf(peripheral.getChargeLevel()) };
+                return new Object[] { (double) peripheral.getChargeLevel() };
             case 7: // getInputOccupied
                 ItemStack stack = peripheral.getStackInSlot(3);
 
@@ -279,12 +278,12 @@ public class LogicHandler {
                         peripheral.getWorld().playSoundEffect(peripheral.getX() + 0.5D, peripheral.getY() + 0.5D, peripheral.getZ() + 0.5D, "mob.endermen.portal", 0.2F, 1.5F);
                     }
 
-                    return new Object[] { Boolean.valueOf(hasSent) };
+                    return new Object[] { hasSent };
                 }
 
                 return new Object[] { Boolean.FALSE };
             case 1: // getChargeLevel
-                return new Object[] { Double.valueOf(peripheral.getChargeLevel()) };
+                return new Object[] { (double) peripheral.getChargeLevel() };
             case 2: // transport
                 if (arguments.length < 1) {
                     throw new Exception("Too little arguments, expected 1 argument");
@@ -517,8 +516,6 @@ public class LogicHandler {
                 boolean found = false;
 
                 try {
-                    @SuppressWarnings("unused") TileEntity TE = (TileEntity) peripheral;
-
                     ItemStack stack = peripheral.getStack(0);
 
                     if (CommonProxy.isItemOfType(stack, "dustGunpowder")) {

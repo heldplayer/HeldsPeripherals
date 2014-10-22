@@ -21,18 +21,10 @@ public class ComputerConnection {
     }
 
     public boolean isConnected(int id) {
-        if (this.computer.getID() == id) {
-            return true;
-        }
-
-        return false;
+        return this.computer.getID() == id;
     }
 
     public boolean matches(Object obj) {
-        if (obj == this.computer) {
-            return true;
-        }
-
-        return false;
+        return obj == this.computer;
     }
 }

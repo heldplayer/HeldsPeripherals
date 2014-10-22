@@ -22,11 +22,13 @@ public class SlotOreDictionary extends Slot {
 
     @Override
     public boolean isItemValid(ItemStack stack) {
-        int id = OreDictionary.getOreID(stack);
+        int[] ids = OreDictionary.getOreIDs(stack);
         int id2 = OreDictionary.getOreID(this.ore);
 
-        if (id == id2 && id > 0) {
-            return true;
+        for (int id : ids) {
+            if (id == id2) {
+                return true;
+            }
         }
 
         return false;

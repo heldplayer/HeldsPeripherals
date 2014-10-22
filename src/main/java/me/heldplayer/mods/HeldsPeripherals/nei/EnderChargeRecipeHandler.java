@@ -7,16 +7,15 @@ import codechicken.nei.PositionedStack;
 import codechicken.nei.recipe.ShapelessRecipeHandler;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Random;
 import me.heldplayer.mods.HeldsPeripherals.ModHeldsPeripherals;
 import me.heldplayer.mods.HeldsPeripherals.Objects;
 import me.heldplayer.mods.HeldsPeripherals.RecipeEnderCharge;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
-
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Random;
 
 @SideOnly(Side.CLIENT)
 public class EnderChargeRecipeHandler extends ShapelessRecipeHandler {
@@ -25,6 +24,7 @@ public class EnderChargeRecipeHandler extends ShapelessRecipeHandler {
     public ArrayList<CachedEnderChargeRecipe> recipes = new ArrayList<CachedEnderChargeRecipe>();
     private InventoryCrafting inventoryCrafting = new InventoryCraftingDummy();
     private RecipeEnderCharge recipe = new RecipeEnderCharge();
+
     public EnderChargeRecipeHandler() {
         super();
         this.stackorder = new int[][] { { 0, 0 }, { 1, 0 }, { 2, 0 }, { 0, 1 }, { 1, 1 }, { 2, 1 }, { 0, 2 }, { 1, 2 }, { 2, 2 } };
@@ -65,8 +65,7 @@ public class EnderChargeRecipeHandler extends ShapelessRecipeHandler {
     @Override
     public void loadCraftingRecipes(String outputId, Object... results) {
         if (outputId.equals("crafting") && this.getClass() == EnderChargeRecipeHandler.class) {
-            for (int i = 0; i < this.recipes.size(); i++) {
-                CachedEnderChargeRecipe recipe = this.recipes.get(i);
+            for (CachedEnderChargeRecipe recipe : this.recipes) {
                 recipe.cycle();
                 this.arecipes.add(recipe);
             }
@@ -139,7 +138,6 @@ public class EnderChargeRecipeHandler extends ShapelessRecipeHandler {
     public class CachedEnderChargeCombineRecipe extends CachedEnderChargeRecipe {
 
         protected int charge = -1;
-        ;
 
         public CachedEnderChargeCombineRecipe(ItemStack result, int charge) {
             super(result);

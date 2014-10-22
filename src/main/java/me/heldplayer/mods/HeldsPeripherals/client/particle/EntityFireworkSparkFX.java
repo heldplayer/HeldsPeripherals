@@ -44,7 +44,7 @@ public class EntityFireworkSparkFX extends EntityFX {
     public void setMainColor(int color) {
         float red = ((color & 16711680) >> 16) / 255.0F;
         float green = ((color & 65280) >> 8) / 255.0F;
-        float blue = ((color & 255) >> 0) / 255.0F;
+        float blue = ((color & 255)) / 255.0F;
         float brightness = 1.0F;
         this.setRBGColorF(red * brightness, green * brightness, blue * brightness);
     }
@@ -52,7 +52,7 @@ public class EntityFireworkSparkFX extends EntityFX {
     public void setFadeColor(int color) {
         this.fadeRed = ((color & 16711680) >> 16) / 255.0F;
         this.fadeGreen = ((color & 65280) >> 8) / 255.0F;
-        this.fadeBlue = ((color & 255) >> 0) / 255.0F;
+        this.fadeBlue = ((color & 255)) / 255.0F;
         this.hasFadeColor = true;
     }
 
