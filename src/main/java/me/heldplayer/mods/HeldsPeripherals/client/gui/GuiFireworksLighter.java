@@ -11,7 +11,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.StatCollector;
 import net.minecraftforge.fluids.FluidStack;
-import net.specialattack.forge.core.client.GuiHelper;
+import net.specialattack.forge.core.client.gui.GuiHelper;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
@@ -74,19 +74,19 @@ public class GuiFireworksLighter extends GuiContainer {
         FluidStack stack = this.lighter.getTank(0).getFluid();
         if (stack != null && stack.amount > 0) {
             int scaled = GuiHelper.getScaled(32, stack.amount, 2000);
-            GuiHelper.drawFluid(stack.getFluid(), this.guiLeft + 62, this.guiTop + 15 + 32 - scaled, 16, scaled);
+            GuiHelper.drawFluid(stack.getFluid(), this.guiLeft + 62, this.guiTop + 15 + 32 - scaled, 16, scaled, 0.0F);
         }
 
         stack = this.lighter.getTank(1).getFluid();
         if (stack != null && stack.amount > 0) {
             int scaled = GuiHelper.getScaled(32, stack.amount, 2000);
-            GuiHelper.drawFluid(stack.getFluid(), this.guiLeft + 98, this.guiTop + 15 + 32 - scaled, 16, scaled);
+            GuiHelper.drawFluid(stack.getFluid(), this.guiLeft + 98, this.guiTop + 15 + 32 - scaled, 16, scaled, 0.0F);
         }
 
         stack = this.lighter.getTank(2).getFluid();
         if (stack != null && stack.amount > 0) {
             int scaled = GuiHelper.getScaled(32, stack.amount, 2000);
-            GuiHelper.drawFluid(stack.getFluid(), this.guiLeft + 134, this.guiTop + 15 + 32 - scaled, 16, scaled);
+            GuiHelper.drawFluid(stack.getFluid(), this.guiLeft + 134, this.guiTop + 15 + 32 - scaled, 16, scaled, 0.0F);
         }
 
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);

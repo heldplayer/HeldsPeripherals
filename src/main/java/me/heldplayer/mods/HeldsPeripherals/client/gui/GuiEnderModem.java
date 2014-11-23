@@ -11,7 +11,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.StatCollector;
 import net.minecraftforge.fluids.FluidStack;
-import net.specialattack.forge.core.client.GuiHelper;
+import net.specialattack.forge.core.client.gui.GuiHelper;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
@@ -75,7 +75,7 @@ public class GuiEnderModem extends GuiContainer {
 
         if (stack != null) {
             int scaled = GuiHelper.getScaled(32, stack.amount, 4000);
-            GuiHelper.drawFluid(stack.getFluid(), this.guiLeft + 152, this.guiTop + 37 + 32 - scaled, 16, scaled);
+            GuiHelper.drawFluid(stack.getFluid(), this.guiLeft + 152, this.guiTop + 37 + 32 - scaled, 16, scaled, 0.0F);
         }
 
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
